@@ -13,6 +13,7 @@ class Twibot20(Dataset):
     def __init__(self,root='./Data/',device='cpu',process=True,save=True):
         self.root = root
         self.device = device
+        self.device_value = -1 if self.device=='cpu' else 0
         if process:
             print('Loading train.json')
             df_train=pd.read_json('./Twibot-20/train.json')
@@ -71,7 +72,7 @@ class Twibot20(Dataset):
         if not os.path.exists(path):
             description=np.load(self.root+'description.npy',allow_pickle=True)
             print('Loading RoBerta')
-            feature_extraction = pipeline('feature-extraction', model="distilroberta-base", tokenizer="distilroberta-base",device=0)
+            feature_extraction = pipeline('feature-extraction', model="distilroberta-base", tokenizer="distilroberta-base",device=self.device_value)
             des_vec=[]
             #for (j,each) in tqdm(enumerate(description)):
             for each in tqdm(description):
@@ -120,7 +121,7 @@ class Twibot20(Dataset):
         if not os.path.exists(path):
             tweets=np.load("./Data/tweets.npy",allow_pickle=True)
             print('Loading RoBerta')
-            feature_extract=pipeline('feature-extraction',model='roberta-base',tokenizer='roberta-base',device=0,padding=True, truncation=True,max_length=500, add_special_tokens = True)
+            feature_extract=pipeline('feature-extraction',model='roberta-base',tokenizer='roberta-base',device=self.device_value,padding=True, truncation=True,max_length=500, add_special_tokens = True)
             tweets_list=[]
             for each_person_tweets in tqdm(tweets):
                 for j,each_tweet in enumerate(each_person_tweets):
