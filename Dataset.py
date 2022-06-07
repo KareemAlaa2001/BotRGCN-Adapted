@@ -13,7 +13,7 @@ class Twibot20(Dataset):
     def __init__(self,root='./Data/',device='cpu',process=True,save=True):
         self.root = root
         self.device = device
-        self.device_value = -1 if self.device=='cpu' else 0
+        self.device_value = -1 if self.device.type =='cpu' else 0
         if process:
             print('Loading train.json')
             df_train=pd.read_json('./Twibot-20/train.json')
@@ -121,6 +121,7 @@ class Twibot20(Dataset):
         if not os.path.exists(path):
             tweets=np.load("./Data/tweets.npy",allow_pickle=True)
             print('Loading RoBerta')
+            print('current device value', self.device_value)
             feature_extract=pipeline('feature-extraction',model='roberta-base',tokenizer='roberta-base',device=self.device_value,padding=True, truncation=True,max_length=500, add_special_tokens = True)
             tweets_list=[]
             for each_person_tweets in tqdm(tweets):
