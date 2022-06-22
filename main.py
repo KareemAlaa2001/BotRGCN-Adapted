@@ -9,13 +9,13 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import matthews_corrcoef
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-embedding_size,dropout,lr,weight_decay=128,0.3,1e-3,5e-3
+embedding_size,dropout,lr,weight_decay, svdComponents=128,0.3,1e-3,5e-3, 100
 
 # dataset=Twibot20(device=device,process=True,save=True)
 dataset = TwibotSmallTruncatedSVD(device=device,process=True,save=True,dev=True)
 des_tensor,tweets_tensor,num_prop,category_prop,edge_index,edge_type,labels,train_idx,val_idx,test_idx=dataset.dataloader()
 
-model=BotRGCN(embedding_dimension=embedding_size).to(device)
+model=BotRGCN(embedding_dimension=embedding_size, des_size=svdComponents, tweet_size=svdComponents).to(device)
 loss=nn.CrossEntropyLoss()
 optimizer = torch.optim.AdamW(model.parameters(),
                     lr=lr,weight_decay=weight_decay)
