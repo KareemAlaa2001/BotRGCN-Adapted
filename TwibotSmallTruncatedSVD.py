@@ -1,40 +1,49 @@
 import torch
 import numpy as np
+from sklearn.decomposition import TruncatedSVD
+from scipy.sparse import csr_matrix, vstack
+from sklearn.feature_extraction.text import TfidfVectorizer
 import pandas as pd
 import json
 import os
-from transformers import pipeline
+# from transformers import pipeline
 from datetime import datetime as dt
 from torch.utils.data import Dataset
 from tqdm import tqdm
 
-
-class Twibot20(Dataset):
-    def __init__(self,root='./Data/OGTwiBot20',device='cpu',process=True,save=True):
-        self.root = root
+class TwibotSmallTruncatedSVD(Dataset):
+    def __init__(self,root='./Data/TruncSVDSmall/',device='cpu',process=True,save=True,dev=False):
+        self.root = './Data/TruncSVDSmallDev/' if dev else './Data/TruncSVDSmall/'
         self.device = device
         self.device_value = -1 if self.device.type =='cpu' else 0
+        
         if process:
-            print('Loading train.json')
-            df_train=pd.read_json('./Twibot-20/train.json')
-            print('Loading test.json')
-            df_test=pd.read_json('./Twibot-20/test.json')
-            print('Loading support.json')
-            df_support=pd.read_json('./Twibot-20/support.json')
+            
+            if not dev:
+                print('Loading train.json')
+                df_train=pd.read_json('./Twibot-20/train.json')
+                print('Loading test.json')
+                df_test=pd.read_json('./Twibot-20/test.json')
+                print('Small dataset version, not loading support.json')
+
+                df_train=df_train.iloc[:,[0,1,2,3,5]]
+                df_test=df_test.iloc[:,[0,1,2,3,5]]
+
+            
+            # df_support=pd.read_json('./Twibot-20/support.json')
             print('Loading dev.json')
             df_dev=pd.read_json('./Twibot-20/dev.json')
             print('Finished')
-            df_train=df_train.iloc[:,[0,1,2,3,5]]
-            df_test=df_test.iloc[:,[0,1,2,3,5]]
-            df_support=df_support.iloc[:,[0,1,2,3]]
             df_dev=df_dev.iloc[:,[0,1,2,3,5]]
-            df_support['label']='None'
-            self.df_data_labeled=pd.concat([df_train,df_dev,df_test],ignore_index=True)
-            self.df_data=pd.concat([df_train,df_dev,df_test,df_support],ignore_index=True)
-            self.df_data=self.df_data
-            self.df_data_labeled=self.df_data_labeled
+
+            if not dev:
+                self.df_data_labeled=pd.concat([df_train,df_dev,df_test],ignore_index=True)
+                self.df_data=pd.concat([df_train,df_dev,df_test],ignore_index=True)
+            else:
+                self.df_data_labeled=df_dev
+                self.df_data=df_dev
             self.save=save
-        
+
     def load_labels(self):
         print('Loading labels...',end='   ')
         path=self.root+'label.pt'
@@ -47,10 +56,10 @@ class Twibot20(Dataset):
         print('Finished')
         
         return labels
-    
-    def Des_Preprocess(self):
-        print('Loading raw feature1...',end='   ')
-        path=self.root+'description.npy'
+
+    def preprocess_descriptions(self):
+        print('Loading raw descriptions',end='   ')
+        path=self.root+'descriptions.npy'
         if not os.path.exists(path):
             description=[]
             for i in range (self.df_data.shape[0]):
@@ -67,35 +76,51 @@ class Twibot20(Dataset):
         return description
 
     def Des_embbeding(self):
-        print('Running feature1 embedding')
+        print('Running description embedding')
         path=self.root+"des_tensor.pt"
         if not os.path.exists(path):
-            description=np.load(self.root+'description.npy',allow_pickle=True)
-            print('Loading RoBerta')
-            feature_extraction = pipeline('feature-extraction', model="distilroberta-base", tokenizer="distilroberta-base",device=self.device_value)
-            des_vec=[]
-            #for (j,each) in tqdm(enumerate(description)):
-            for each in tqdm(description):
-                feature=torch.Tensor(feature_extraction(each))
-                for (i,tensor) in enumerate(feature[0]):
-                    if i==0:
-                        feature_tensor=tensor
-                    else:
-                        feature_tensor+=tensor
-                feature_tensor/=feature.shape[1]
-                des_vec.append(feature_tensor)
-                #if (j%1000==0):
-                    #print('[{:>6d}/229580]'.format(j+1))
-            des_tensor=torch.stack(des_vec,0).to(self.device)
+            description=np.load(self.root+'descriptions.npy',allow_pickle=True)
+            print('Size of descriptions matrix:',description.shape)
+            print('loading tf-idf + truncated SVD')
+            print('extracting tf-idf matrix')
+            vectorizer = TfidfVectorizer()
+            tf_idf_matrix = vectorizer.fit_transform(description)
+            csr_tfidf_matrix = csr_matrix(tf_idf_matrix)
+
+            print("tf-idf matrix dimensions:", tf_idf_matrix.shape)
+            print('fitting truncated SVD')
+            svd = TruncatedSVD(n_components=100, n_iter=5, random_state=42) # n_iter=5 is the default, n_components=2 is the default but we want to use 100 components (to test it out)
+            svd.fit(csr_tfidf_matrix)
+
+            trunc_svd_matrix = svd.fit_transform(csr_tfidf_matrix)
+            # print('Loading RoBerta')
+            # feature_extraction = pipeline('feature-extraction', model="distilroberta-base", tokenizer="distilroberta-base",device=self.device_value)
+
+            # des_vec=[]
+            # #for (j,each) in tqdm(enumerate(description)):
+            # for each in tqdm(description):
+            #     feature=torch.Tensor(feature_extraction(each))
+            #     for (i,tensor) in enumerate(feature[0]):
+            #         if i==0:
+            #             feature_tensor=tensor
+            #         else:
+            #             feature_tensor+=tensor
+            #     feature_tensor/=feature.shape[1]
+            #     des_vec.append(feature_tensor)
+            #     #if (j%1000==0):
+            #         #print('[{:>6d}/229580]'.format(j+1))
+            # des_tensor=torch.stack(des_vec,0).to(self.device)
+
+            des_tensor=torch.Tensor(trunc_svd_matrix).to(self.device)
             if self.save:
                 torch.save(des_tensor,'./Data/des_tensor.pt')
         else:
             des_tensor=torch.load(self.root+"des_tensor.pt").to(self.device)
         print('Finished')
         return des_tensor
-    
+
     def tweets_preprocess(self):
-        print('Loading raw feature2...',end='   ')
+        print('Loading tweet features...',end='   ')
         path=self.root+'tweets.npy'
         if not os.path.exists(path):
             tweets=[]
@@ -108,6 +133,7 @@ class Twibot20(Dataset):
                         one_usr_tweets.append(each)
                 tweets.append(one_usr_tweets)
             tweets=np.array(tweets)
+            # tweets = self.df_data[self.df_data.tweet.notnull()]['tweet'].values
             if self.save:
                 np.save(path,tweets)
         else:
@@ -120,32 +146,34 @@ class Twibot20(Dataset):
         path=self.root+"tweets_tensor.pt"
         if not os.path.exists(path):
             tweets=np.load("./Data/tweets.npy",allow_pickle=True)
-            print('Loading RoBerta')
-            print('current device value', self.device_value)
-            feature_extract=pipeline('feature-extraction',model='roberta-base',tokenizer='roberta-base',device=self.device_value,padding=True, truncation=True,max_length=500, add_special_tokens = True)
-            tweets_list=[]
-            for each_person_tweets in tqdm(tweets):
-                for j,each_tweet in enumerate(each_person_tweets):
-                    each_tweet_tensor=torch.tensor(feature_extract(each_tweet))
-                    for k,each_word_tensor in enumerate(each_tweet_tensor[0]):
-                        if k==0:
-                            total_word_tensor=each_word_tensor
-                        else:
-                            total_word_tensor+=each_word_tensor
-                    total_word_tensor/=each_tweet_tensor.shape[1]
-                    if j==0:
-                        total_each_person_tweets=total_word_tensor
-                    else:
-                        total_each_person_tweets+=total_word_tensor
-                total_each_person_tweets/=len(each_person_tweets)
-                tweets_list.append(total_each_person_tweets)
-                #if (i%500==0):
-                    #print('[{:>6d}/229580]'.format(i+1))
-            tweet_tensor=torch.stack(tweets_list).to(self.device)
+            # print('Loading RoBerta')
+            # print('current device value', self.device_value)
+            # feature_extract=pipeline('feature-extraction',model='roberta-base',tokenizer='roberta-base',device=self.device_value,padding=True, truncation=True,max_length=500, add_special_tokens = True)
+            
+            print('Size of tweets matrix:',tweets.shape)
+            print('loading tf-idf + truncated SVD')
+            print('extracting tf-idf matrix')
+            vectorizer = TfidfVectorizer()
+            vectorizer.fit(np.concatenate(tweets))
+            # tf_idf_matrix = vectorizer.fit_transform(tweets)
+            tf_idf_matrix = np.array([vectorizer.transform(usrtweets) for usrtweets in tqdm(tweets)])
+
+
+            print("tf-idf matrix dimensions:", tf_idf_matrix.shape)
+            print('fitting truncated SVD')
+            svd = TruncatedSVD(n_components=100, n_iter=5, random_state=42) # n_iter=5 is the default, n_components=2 is the default but we want to use 100 components (to test it out)
+            svd.fit(vstack(tf_idf_matrix))
+            user_tweet_svds = np.array([svd.transform(usertweettfidf) for usertweettfidf in tqdm(tf_idf_matrix)])
+            
+            averaged_tweet_embeddings = [np.mean(usertweetembeddings, axis=0) for usertweetembeddings in tqdm(user_tweet_svds)]
+            # trunc_svd_matrix = svd.fit_transform(csr_tfidf_matrix)
+            # print('dimensionality of tweets truncated svd matrix:',trunc_svd_matrix.shape)
+            
+            tweet_tensor=torch.stack(averaged_tweet_embeddings).to(self.device)
             if self.save:
                 torch.save(tweet_tensor,path)
         else:
-            tweets_tensor=torch.load(self.root+"tweets_tensor.pt").to(self.device)
+            tweets_tensor=torch.load(path).to(self.device)
         print('Finished')
         return tweets_tensor
     
@@ -156,6 +184,7 @@ class Twibot20(Dataset):
             path=self.root
             if not os.path.exists(path+"followers_count.pt"):
                 followers_count=[]
+
                 for i in range (self.df_data.shape[0]):
                     if self.df_data['profile'][i] is None or self.df_data['profile'][i]['followers_count'] is None:
                         followers_count.append(0)
@@ -175,6 +204,7 @@ class Twibot20(Dataset):
                 if self.save:
                     torch.save(friends_count,path+'friends_count.pt')
             
+                ## TODO handle this separately from the other classes being cleaned up
                 screen_name_length=[]
                 for i in range (self.df_data.shape[0]):
                     if self.df_data['profile'][i] is None or self.df_data['profile'][i]['screen_name'] is None:
@@ -195,8 +225,9 @@ class Twibot20(Dataset):
                 if self.save:
                     torch.save(favourites_count,path+'favourites_count.pt')
                 
+                ## TODO handle this separately from the other classes being cleaned up
                 active_days=[]
-                date0=dt.strptime('Tue Sep 1 00:00:00 +0000 2020 ','%a %b %d %X %z %Y ')
+                date0=dt.strptime('Fri Jul 1 00:00:00 +0000 2022 ','%a %b %d %X %z %Y ')
                 for i in range (self.df_data.shape[0]):
                     if self.df_data['profile'][i] is None or self.df_data['profile'][i]['created_at'] is None:
                         active_days.append(0)
@@ -268,8 +299,7 @@ class Twibot20(Dataset):
             for i in range (self.df_data.shape[0]):
                 prop=[]
                 if self.df_data['profile'][i] is None:
-                    for i in range(11):
-                        prop.append(0)
+                    prop = [0] * len(properties)
                 else:
                     for each in properties:
                         if self.df_data['profile'][i][each] is None:
@@ -279,6 +309,7 @@ class Twibot20(Dataset):
                                 prop.append(1)
                             else:
                                 prop.append(0)
+
                 prop=np.array(prop)
                 category_properties.append(prop)
             category_properties=torch.tensor(np.array(category_properties,dtype=np.float32)).to(self.device)
@@ -332,10 +363,10 @@ class Twibot20(Dataset):
         val_idx=range(8278,8278+2365)
         test_idx=range(8278+2365,8278+2365+1183)
         return train_idx,val_idx,test_idx
-    
+
     def dataloader(self):
         labels=self.load_labels()
-        self.Des_Preprocess()
+        self.preprocess_descriptions()
         des_tensor=self.Des_embbeding()
         self.tweets_preprocess()
         tweets_tensor=self.tweets_embedding()
@@ -344,4 +375,3 @@ class Twibot20(Dataset):
         edge_index,edge_type=self.Build_Graph()
         train_idx,val_idx,test_idx=self.train_val_test_mask()
         return des_tensor,tweets_tensor,num_prop,category_prop,edge_index,edge_type,labels,train_idx,val_idx,test_idx
-    
