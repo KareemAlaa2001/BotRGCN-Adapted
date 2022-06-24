@@ -13,7 +13,7 @@ from tqdm import tqdm
 
 class TwibotSmallTruncatedSVD(Dataset):
     def __init__(self,root='./Data/TruncSVDSmall/',device='cpu',process=True,save=True,dev=False, svdComponents=100):
-        self.root = './Data/TruncSVDSmallDev/' if dev else './Data/TruncSVDSmall/'
+        self.root = root[:-1]+'Dev/' if dev else './Data/TruncSVDSmall/'
         self.device = device
         self.device_value = -1 if self.device.type =='cpu' else 0
         self.save=save

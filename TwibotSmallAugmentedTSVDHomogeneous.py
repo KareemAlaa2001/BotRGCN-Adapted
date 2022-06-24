@@ -13,6 +13,8 @@ from TwibotSmallTruncatedSVD import TwibotSmallTruncatedSVD
 
 class TwibotSmallAugmentedTSVDHomogeneous(TwibotSmallTruncatedSVD):
 
-    def __init__(self, root='./Data/TwibotSmallAugmentedTSVDHomogeneous/',device='cpu', process=True, save=True, dev=True):
+    def __init__(self, root='./Data/TwibotSmallAugmentedTSVDHomogeneous/',device='cpu', process=True, save=True, dev=False):
         super(TwibotSmallAugmentedTSVDHomogeneous, self).__init__(root=root,device=device, process=process, save=save, dev=dev)
+    
+
     
