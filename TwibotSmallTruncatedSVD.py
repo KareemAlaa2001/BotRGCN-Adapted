@@ -131,7 +131,8 @@ class TwibotSmallTruncatedSVD(Dataset):
         print('Running tweet embedding')
         path=self.root+"tweets_tensor.pt"
         if not os.path.exists(path):
-            tweets = pd.DataFrame(self.df_data['tweet'].apply(lambda tweets: [''] * 200 if tweets is None else self.pad_list_out_to_length(tweets, 200)).values.tolist()).values
+            maxLength = self.df_data['tweet'].apply(lambda tweets: len(tweets) if tweets is not None else 0).max()
+            tweets = pd.DataFrame(self.df_data['tweet'].apply(lambda tweets: [''] * maxLength if tweets is None else self.pad_list_out_to_length(tweets, maxLength)).values.tolist()).values
             # print('Loading RoBerta')
             # print('current device value', self.device_value)
             # feature_extract=pipeline('feature-extraction',model='roberta-base',tokenizer='roberta-base',device=self.device_value,padding=True, truncation=True,max_length=500, add_special_tokens = True)
