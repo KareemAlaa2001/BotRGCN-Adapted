@@ -1,21 +1,42 @@
-from model import BotRGCN
+from model import BotRGCN, TweetAugmentedRGCN
 from Dataset import Twibot20
 from TwibotSmallTruncatedSVD import TwibotSmallTruncatedSVD
+from TwibotSmallAugmentedTSVDHomogeneous import TwibotSmallAugmentedTSVDHomogeneous
+from TwibotSmallEdgeHetero import TwibotSmallEdgeHetero
+
 import torch
-from torch import nn
+from tqdm import tqdm
+
+from torch import nn, svd
 from utils import accuracy,init_weights
 
 from sklearn.metrics import f1_score
 from sklearn.metrics import matthews_corrcoef
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-embedding_size,dropout,lr,weight_decay, svdComponents=128,0.3,1e-3,5e-3, 100
 
+## HYPERPARAMETERS
+# TODO implement an arg_parser module for the hyperparameters
+
+# Default values
+# embedding_size,dropout,lr,weight_decay, svdComponents, thirds=128,0.3,1e-3,5e-3, 100, False
+
+# Current Values
+embedding_size,dropout,lr,weight_decay, svdComponents, thirds=96,0.3,1e-3,5e-3, 100, False
+
+## IMPORTING THE DATASET
+print("importing the dataset...")
 # dataset=Twibot20(device=device,process=True,save=True)
-dataset = TwibotSmallTruncatedSVD(device=device,process=True,save=True,dev=False)
+# dataset = TwibotSmallTruncatedSVD(device=device,process=True,save=True,dev=False, svdComponents=svdComponents)
+dataset = TwibotSmallAugmentedTSVDHomogeneous(device=device,process=True,save=True,dev=False, svdComponents=svdComponents)
+# dataset = TwibotSmallEdgeHetero(device=device,process=True,save=True,dev=False, svdComponents=svdComponents)
+
 des_tensor,tweets_tensor,num_prop,category_prop,edge_index,edge_type,labels,train_idx,val_idx,test_idx=dataset.dataloader()
 
-model=BotRGCN(embedding_dimension=embedding_size, des_size=svdComponents, tweet_size=svdComponents).to(device)
+## IMPORTING THE MODEL
+print("setting up the model...")
+model = TweetAugmentedRGCN(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents).to(device)
+# model=BotRGCN(embedding_dimension=embedding_size, des_size=svdComponents, tweet_size=svdComponents).to(device)
 loss=nn.CrossEntropyLoss()
 optimizer = torch.optim.AdamW(model.parameters(),
                     lr=lr,weight_decay=weight_decay)
@@ -55,7 +76,7 @@ def test():
 model.apply(init_weights)
 
 epochs=100
-for epoch in range(epochs):
+for epoch in tqdm(range(epochs)):
     train(epoch)
     
 test()

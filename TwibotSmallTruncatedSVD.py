@@ -41,10 +41,10 @@ class TwibotSmallTruncatedSVD(Dataset):
 
             if not dev:
                 self.df_data_labeled=pd.concat([df_train,df_dev,df_test],ignore_index=True)
-                self.df_data=pd.concat([df_train,df_dev,df_test],ignore_index=True)
+                self.df_users=pd.concat([df_train,df_dev,df_test],ignore_index=True)
             else:
                 self.df_data_labeled=df_dev
-                self.df_data=df_dev
+                self.df_users=df_dev
             
 
     def load_labels(self):
@@ -65,11 +65,11 @@ class TwibotSmallTruncatedSVD(Dataset):
         path=self.root+'descriptions.npy'
         if not os.path.exists(path):
             description=[]
-            for i in range (self.df_data.shape[0]):
-                if self.df_data['profile'][i] is None or self.df_data['profile'][i]['description'] is None:
+            for i in range (self.df_users.shape[0]):
+                if self.df_users['profile'][i] is None or self.df_users['profile'][i]['description'] is None:
                     description.append('None')
                 else:
-                    description.append(self.df_data['profile'][i]['description'])
+                    description.append(self.df_users['profile'][i]['description'])
             description=np.array(description)
             if self.save:
                 np.save(path,description)
@@ -131,8 +131,8 @@ class TwibotSmallTruncatedSVD(Dataset):
         print('Running tweet embedding')
         path=self.root+"tweets_tensor.pt"
         if not os.path.exists(path):
-            maxLength = self.df_data['tweet'].apply(lambda tweets: len(tweets) if tweets is not None else 0).max()
-            tweets = pd.DataFrame(self.df_data['tweet'].apply(lambda tweets: [''] * maxLength if tweets is None else self.pad_list_out_to_length(tweets, maxLength)).values.tolist()).values
+            maxLength = self.df_users['tweet'].apply(lambda tweets: len(tweets) if tweets is not None else 0).max()
+            tweets = pd.DataFrame(self.df_users['tweet'].apply(lambda tweets: [''] * maxLength if tweets is None else self.pad_list_out_to_length(tweets, maxLength)).values.tolist()).values
             # print('Loading RoBerta')
             # print('current device value', self.device_value)
             # feature_extract=pipeline('feature-extraction',model='roberta-base',tokenizer='roberta-base',device=self.device_value,padding=True, truncation=True,max_length=500, add_special_tokens = True)
@@ -181,7 +181,7 @@ class TwibotSmallTruncatedSVD(Dataset):
             if not os.path.exists(path+"followers_count.pt"):
 
                 numerical_feature_names = ['followers_count', 'friends_count','favourites_count','statuses_count']
-                followers_count, friends_count, favourites_count, statuses_count = [self.extractNumericalFeatureFromDf(feature_name, self.df_data).to(self.device) for feature_name in numerical_feature_names]
+                followers_count, friends_count, favourites_count, statuses_count = [self.extractNumericalFeatureFromDf(feature_name, self.df_users).to(self.device) for feature_name in numerical_feature_names]
                 print('typeof followers_count:',type(followers_count))
                 print('followers_count shape:', followers_count.shape)
                 if self.save:
@@ -190,11 +190,11 @@ class TwibotSmallTruncatedSVD(Dataset):
                     
                 ## TODO handle this separately from the other classes being cleaned up
                 screen_name_length=[]
-                for i in range (self.df_data.shape[0]):
-                    if self.df_data['profile'][i] is None or self.df_data['profile'][i]['screen_name'] is None:
+                for i in range (self.df_users.shape[0]):
+                    if self.df_users['profile'][i] is None or self.df_users['profile'][i]['screen_name'] is None:
                         screen_name_length.append(0)
                     else:
-                        screen_name_length.append(len(self.df_data['profile'][i]['screen_name']))
+                        screen_name_length.append(len(self.df_users['profile'][i]['screen_name']))
                 screen_name_length=torch.tensor(np.array(screen_name_length,dtype=np.float32)).to(self.device)
                 if self.save:
                     torch.save(screen_name_length,path+'screen_name_length.pt')
@@ -202,11 +202,11 @@ class TwibotSmallTruncatedSVD(Dataset):
                 ## TODO handle this separately from the other classes being cleaned up
                 active_days=[]
                 date0=dt.strptime('Fri Jul 1 00:00:00 +0000 2022 ','%a %b %d %X %z %Y ')
-                for i in range (self.df_data.shape[0]):
-                    if self.df_data['profile'][i] is None or self.df_data['profile'][i]['created_at'] is None:
+                for i in range (self.df_users.shape[0]):
+                    if self.df_users['profile'][i] is None or self.df_users['profile'][i]['created_at'] is None:
                         active_days.append(0)
                     else:
-                        date=dt.strptime(self.df_data['profile'][i]['created_at'],'%a %b %d %X %z %Y ')
+                        date=dt.strptime(self.df_users['profile'][i]['created_at'],'%a %b %d %X %z %Y ')
                         active_days.append((date0-date).days)
                 active_days=torch.tensor(np.array(active_days,dtype=np.float32)).to(self.device)
                 if self.save:
@@ -251,7 +251,7 @@ class TwibotSmallTruncatedSVD(Dataset):
             statuses_count=(statuses_count-statuses_count.mean())/statuses_count.std()
             statuses_count=torch.tensor(np.array(statuses_count))
 
-            num_prop=torch.cat((followers_count.reshape([self.df_data.shape[0],1]),friends_count.reshape([self.df_data.shape[0],1]),favourites_count.reshape([self.df_data.shape[0],1]),statuses_count.reshape([self.df_data.shape[0],1]),screen_name_length_days.reshape([self.df_data.shape[0],1]),active_days.reshape([self.df_data.shape[0],1])),1).to(self.device)
+            num_prop=torch.cat((followers_count.reshape([self.df_users.shape[0],1]),friends_count.reshape([self.df_users.shape[0],1]),favourites_count.reshape([self.df_users.shape[0],1]),statuses_count.reshape([self.df_users.shape[0],1]),screen_name_length_days.reshape([self.df_users.shape[0],1]),active_days.reshape([self.df_users.shape[0],1])),1).to(self.device)
 
             if self.save:
                 torch.save(num_prop,self.root + "num_prop.pt")
@@ -267,16 +267,16 @@ class TwibotSmallTruncatedSVD(Dataset):
         if not os.path.exists(path):
             category_properties=[]
             properties=['protected','geo_enabled','verified','contributors_enabled','is_translator','is_translation_enabled','profile_background_tile','profile_use_background_image','has_extended_profile','default_profile','default_profile_image']
-            for i in range (self.df_data.shape[0]):
+            for i in range (self.df_users.shape[0]):
                 prop=[]
-                if self.df_data['profile'][i] is None:
+                if self.df_users['profile'][i] is None:
                     prop = [0] * len(properties)
                 else:
                     for each in properties:
-                        if self.df_data['profile'][i][each] is None:
+                        if self.df_users['profile'][i][each] is None:
                             prop.append(0)
                         else:
-                            if self.df_data['profile'][i][each] == "True ":
+                            if self.df_users['profile'][i][each] == "True ":
                                 prop.append(1)
                             else:
                                 prop.append(0)
@@ -295,10 +295,10 @@ class TwibotSmallTruncatedSVD(Dataset):
         print('Building graph',end='   ')
         path=self.root+'edge_index.pt'
         if not os.path.exists(path):
-            id2index_dict={id:index for index,id in enumerate(self.df_data['ID'])}
+            id2index_dict={id:index for index,id in enumerate(self.df_users['ID'])}
             edge_index=[]
             edge_type=[]
-            for i,relation in enumerate(self.df_data['neighbor']):
+            for i,relation in enumerate(self.df_users['neighbor']):
                 if relation is not None:
                     for each_id in relation['following']:
                         try:
@@ -336,9 +336,9 @@ class TwibotSmallTruncatedSVD(Dataset):
             test_idx=range(8278+2365,8278+2365+1183)
         
         else:
-            train_idx = range(int(0.8*len(self.df_data)))
-            val_idx = range(int(0.8*len(self.df_data)),int(0.9*len(self.df_data)))
-            test_idx = range(int(0.9*len(self.df_data)),len(self.df_data))
+            train_idx = range(int(0.8*len(self.df_users)))
+            val_idx = range(int(0.8*len(self.df_users)),int(0.9*len(self.df_users)))
+            test_idx = range(int(0.9*len(self.df_users)),len(self.df_users))
 
         return train_idx,val_idx,test_idx
 
