@@ -1,0 +1,157 @@
+2022-07-17 11:35:48,679 INFO    MainThread:28816 [internal.py:wandb_internal():93] W&B internal server running at pid: 28816, started at: 2022-07-17 11:35:48.678757
+2022-07-17 11:35:48,681 INFO    WriterThread:28816 [datastore.py:open_for_write():75] open: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/run-g15x0m7e.wandb
+2022-07-17 11:35:48,683 DEBUG   SenderThread:28816 [sender.py:send():236] send: header
+2022-07-17 11:35:48,684 DEBUG   SenderThread:28816 [sender.py:send():236] send: run
+2022-07-17 11:35:49,007 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: check_version
+2022-07-17 11:35:49,010 INFO    SenderThread:28816 [dir_watcher.py:__init__():216] watching files in: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files
+2022-07-17 11:35:49,010 INFO    SenderThread:28816 [sender.py:_start_run_threads():818] run started: g15x0m7e with start time 1658050546
+2022-07-17 11:35:49,010 DEBUG   SenderThread:28816 [sender.py:send():236] send: summary
+2022-07-17 11:35:49,011 INFO    SenderThread:28816 [sender.py:_save_file():952] saving file wandb-summary.json with policy end
+2022-07-17 11:35:49,011 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: check_version
+2022-07-17 11:35:49,229 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: run_start
+2022-07-17 11:35:49,230 DEBUG   HandlerThread:28816 [meta.py:__init__():35] meta init
+2022-07-17 11:35:49,230 DEBUG   HandlerThread:28816 [meta.py:__init__():49] meta init done
+2022-07-17 11:35:49,230 DEBUG   HandlerThread:28816 [meta.py:probe():209] probe
+2022-07-17 11:35:49,232 DEBUG   HandlerThread:28816 [meta.py:_setup_git():199] setup git
+2022-07-17 11:35:49,262 DEBUG   HandlerThread:28816 [meta.py:_setup_git():206] setup git done
+2022-07-17 11:35:49,263 DEBUG   HandlerThread:28816 [meta.py:_save_pip():53] save pip
+2022-07-17 11:35:49,265 DEBUG   HandlerThread:28816 [meta.py:_save_pip():67] save pip done
+2022-07-17 11:35:49,265 DEBUG   HandlerThread:28816 [meta.py:_save_conda():74] save conda
+2022-07-17 11:35:50,018 INFO    Thread-7  :28816 [dir_watcher.py:_on_file_created():269] file/dir created: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/conda-environment.yaml
+2022-07-17 11:35:50,019 INFO    Thread-7  :28816 [dir_watcher.py:_on_file_created():269] file/dir created: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/wandb-summary.json
+2022-07-17 11:35:50,019 INFO    Thread-7  :28816 [dir_watcher.py:_on_file_created():269] file/dir created: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/requirements.txt
+2022-07-17 11:35:54,887 DEBUG   HandlerThread:28816 [meta.py:_save_conda():84] save conda done
+2022-07-17 11:35:54,888 DEBUG   HandlerThread:28816 [meta.py:probe():247] probe done
+2022-07-17 11:35:54,963 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-17 11:35:54,964 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: stop_status
+2022-07-17 11:35:55,037 INFO    Thread-7  :28816 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/conda-environment.yaml
+2022-07-17 11:35:55,037 INFO    Thread-7  :28816 [dir_watcher.py:_on_file_created():269] file/dir created: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/output.log
+2022-07-17 11:35:55,037 INFO    Thread-7  :28816 [dir_watcher.py:_on_file_created():269] file/dir created: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/wandb-metadata.json
+2022-07-17 11:35:55,237 DEBUG   SenderThread:28816 [sender.py:send():236] send: telemetry
+2022-07-17 11:35:55,237 DEBUG   SenderThread:28816 [sender.py:send():236] send: files
+2022-07-17 11:35:55,238 INFO    SenderThread:28816 [sender.py:_save_file():952] saving file wandb-metadata.json with policy now
+2022-07-17 11:35:56,137 INFO    Thread-11 :28816 [upload_job.py:push():138] Uploaded file /var/folders/nq/lylhxfw55sl6q3mpcd3d_8yr0000gn/T/tmpuptn64qvwandb/36d8ffdo-wandb-metadata.json
+2022-07-17 11:35:57,041 INFO    Thread-7  :28816 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/output.log
+2022-07-17 11:35:58,065 DEBUG   SenderThread:28816 [sender.py:send():236] send: telemetry
+2022-07-17 11:35:59,049 INFO    Thread-7  :28816 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/output.log
+2022-07-17 11:36:00,594 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-17 11:36:00,595 DEBUG   SenderThread:28816 [sender.py:send():236] send: exit
+2022-07-17 11:36:00,595 INFO    SenderThread:28816 [sender.py:send_exit():372] handling exit code: 1
+2022-07-17 11:36:00,595 INFO    SenderThread:28816 [sender.py:send_exit():374] handling runtime: 11
+2022-07-17 11:36:00,596 INFO    SenderThread:28816 [sender.py:_save_file():952] saving file wandb-summary.json with policy end
+2022-07-17 11:36:00,597 INFO    SenderThread:28816 [sender.py:send_exit():380] send defer
+2022-07-17 11:36:00,597 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: poll_exit
+2022-07-17 11:36:00,598 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: defer
+2022-07-17 11:36:00,598 INFO    HandlerThread:28816 [handler.py:handle_request_defer():163] handle defer: 0
+2022-07-17 11:36:00,598 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: defer
+2022-07-17 11:36:00,598 INFO    SenderThread:28816 [sender.py:send_request_defer():389] handle sender defer: 0
+2022-07-17 11:36:00,598 INFO    SenderThread:28816 [sender.py:transition_state():393] send defer: 1
+2022-07-17 11:36:00,599 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: defer
+2022-07-17 11:36:00,599 INFO    HandlerThread:28816 [handler.py:handle_request_defer():163] handle defer: 1
+2022-07-17 11:36:00,686 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: defer
+2022-07-17 11:36:00,686 INFO    SenderThread:28816 [sender.py:send_request_defer():389] handle sender defer: 1
+2022-07-17 11:36:00,686 INFO    SenderThread:28816 [sender.py:transition_state():393] send defer: 2
+2022-07-17 11:36:00,687 DEBUG   SenderThread:28816 [sender.py:send():236] send: stats
+2022-07-17 11:36:00,688 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: defer
+2022-07-17 11:36:00,688 INFO    HandlerThread:28816 [handler.py:handle_request_defer():163] handle defer: 2
+2022-07-17 11:36:00,688 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: defer
+2022-07-17 11:36:00,688 INFO    SenderThread:28816 [sender.py:send_request_defer():389] handle sender defer: 2
+2022-07-17 11:36:00,688 INFO    SenderThread:28816 [sender.py:transition_state():393] send defer: 3
+2022-07-17 11:36:00,689 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: defer
+2022-07-17 11:36:00,689 INFO    HandlerThread:28816 [handler.py:handle_request_defer():163] handle defer: 3
+2022-07-17 11:36:00,689 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: defer
+2022-07-17 11:36:00,690 INFO    SenderThread:28816 [sender.py:send_request_defer():389] handle sender defer: 3
+2022-07-17 11:36:00,690 INFO    SenderThread:28816 [sender.py:transition_state():393] send defer: 4
+2022-07-17 11:36:00,690 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: defer
+2022-07-17 11:36:00,690 INFO    HandlerThread:28816 [handler.py:handle_request_defer():163] handle defer: 4
+2022-07-17 11:36:00,691 DEBUG   SenderThread:28816 [sender.py:send():236] send: summary
+2022-07-17 11:36:00,691 INFO    SenderThread:28816 [sender.py:_save_file():952] saving file wandb-summary.json with policy end
+2022-07-17 11:36:00,692 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: defer
+2022-07-17 11:36:00,692 INFO    SenderThread:28816 [sender.py:send_request_defer():389] handle sender defer: 4
+2022-07-17 11:36:00,692 INFO    SenderThread:28816 [sender.py:transition_state():393] send defer: 5
+2022-07-17 11:36:00,693 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: defer
+2022-07-17 11:36:00,693 INFO    HandlerThread:28816 [handler.py:handle_request_defer():163] handle defer: 5
+2022-07-17 11:36:00,693 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: defer
+2022-07-17 11:36:00,693 INFO    SenderThread:28816 [sender.py:send_request_defer():389] handle sender defer: 5
+2022-07-17 11:36:00,705 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-17 11:36:01,055 INFO    Thread-7  :28816 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/output.log
+2022-07-17 11:36:01,056 INFO    Thread-7  :28816 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/wandb-summary.json
+2022-07-17 11:36:01,352 INFO    SenderThread:28816 [sender.py:transition_state():393] send defer: 6
+2022-07-17 11:36:01,352 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: poll_exit
+2022-07-17 11:36:01,353 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: defer
+2022-07-17 11:36:01,353 INFO    HandlerThread:28816 [handler.py:handle_request_defer():163] handle defer: 6
+2022-07-17 11:36:01,353 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: defer
+2022-07-17 11:36:01,353 INFO    SenderThread:28816 [sender.py:send_request_defer():389] handle sender defer: 6
+2022-07-17 11:36:01,353 INFO    SenderThread:28816 [dir_watcher.py:finish():353] shutting down directory watcher
+2022-07-17 11:36:01,458 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-17 11:36:02,059 INFO    Thread-7  :28816 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/config.yaml
+2022-07-17 11:36:02,060 INFO    SenderThread:28816 [dir_watcher.py:finish():383] scan: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files
+2022-07-17 11:36:02,060 INFO    SenderThread:28816 [dir_watcher.py:finish():397] scan save: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/requirements.txt requirements.txt
+2022-07-17 11:36:02,060 INFO    SenderThread:28816 [dir_watcher.py:finish():397] scan save: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/output.log output.log
+2022-07-17 11:36:02,064 INFO    SenderThread:28816 [dir_watcher.py:finish():397] scan save: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/config.yaml config.yaml
+2022-07-17 11:36:02,068 INFO    SenderThread:28816 [dir_watcher.py:finish():397] scan save: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/wandb-summary.json wandb-summary.json
+2022-07-17 11:36:02,072 INFO    SenderThread:28816 [dir_watcher.py:finish():397] scan save: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/conda-environment.yaml conda-environment.yaml
+2022-07-17 11:36:02,072 INFO    SenderThread:28816 [dir_watcher.py:finish():397] scan save: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/wandb-metadata.json wandb-metadata.json
+2022-07-17 11:36:02,072 INFO    SenderThread:28816 [sender.py:transition_state():393] send defer: 7
+2022-07-17 11:36:02,073 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: poll_exit
+2022-07-17 11:36:02,083 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: defer
+2022-07-17 11:36:02,084 INFO    HandlerThread:28816 [handler.py:handle_request_defer():163] handle defer: 7
+2022-07-17 11:36:02,084 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: defer
+2022-07-17 11:36:02,085 INFO    SenderThread:28816 [sender.py:send_request_defer():389] handle sender defer: 7
+2022-07-17 11:36:02,085 INFO    SenderThread:28816 [file_pusher.py:finish():171] shutting down file pusher
+2022-07-17 11:36:02,177 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-17 11:36:02,177 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: poll_exit
+2022-07-17 11:36:02,281 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-17 11:36:02,281 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: poll_exit
+2022-07-17 11:36:02,385 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-17 11:36:02,386 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: poll_exit
+2022-07-17 11:36:02,493 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-17 11:36:02,494 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: poll_exit
+2022-07-17 11:36:02,600 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-17 11:36:02,601 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: poll_exit
+2022-07-17 11:36:02,704 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-17 11:36:02,704 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: poll_exit
+2022-07-17 11:36:02,810 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-17 11:36:02,810 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: poll_exit
+2022-07-17 11:36:02,859 INFO    Thread-12 :28816 [upload_job.py:push():138] Uploaded file /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/requirements.txt
+2022-07-17 11:36:02,911 INFO    Thread-16 :28816 [upload_job.py:push():138] Uploaded file /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/conda-environment.yaml
+2022-07-17 11:36:02,912 INFO    Thread-13 :28816 [upload_job.py:push():138] Uploaded file /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/output.log
+2022-07-17 11:36:02,914 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-17 11:36:02,914 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: poll_exit
+2022-07-17 11:36:02,937 INFO    Thread-14 :28816 [upload_job.py:push():138] Uploaded file /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/config.yaml
+2022-07-17 11:36:02,970 INFO    Thread-15 :28816 [upload_job.py:push():138] Uploaded file /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/files/wandb-summary.json
+2022-07-17 11:36:03,018 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-17 11:36:03,018 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: poll_exit
+2022-07-17 11:36:03,122 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-17 11:36:03,122 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: poll_exit
+2022-07-17 11:36:03,171 INFO    Thread-6  :28816 [sender.py:transition_state():393] send defer: 8
+2022-07-17 11:36:03,172 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: defer
+2022-07-17 11:36:03,172 INFO    HandlerThread:28816 [handler.py:handle_request_defer():163] handle defer: 8
+2022-07-17 11:36:03,172 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: defer
+2022-07-17 11:36:03,172 INFO    SenderThread:28816 [sender.py:send_request_defer():389] handle sender defer: 8
+2022-07-17 11:36:03,228 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-17 11:36:03,369 INFO    SenderThread:28816 [sender.py:transition_state():393] send defer: 9
+2022-07-17 11:36:03,369 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: poll_exit
+2022-07-17 11:36:03,369 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: defer
+2022-07-17 11:36:03,370 INFO    HandlerThread:28816 [handler.py:handle_request_defer():163] handle defer: 9
+2022-07-17 11:36:03,370 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: defer
+2022-07-17 11:36:03,370 INFO    SenderThread:28816 [sender.py:send_request_defer():389] handle sender defer: 9
+2022-07-17 11:36:03,370 INFO    SenderThread:28816 [sender.py:transition_state():393] send defer: 10
+2022-07-17 11:36:03,370 DEBUG   SenderThread:28816 [sender.py:send():236] send: final
+2022-07-17 11:36:03,371 DEBUG   SenderThread:28816 [sender.py:send():236] send: footer
+2022-07-17 11:36:03,371 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: defer
+2022-07-17 11:36:03,371 INFO    HandlerThread:28816 [handler.py:handle_request_defer():163] handle defer: 10
+2022-07-17 11:36:03,372 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: defer
+2022-07-17 11:36:03,372 INFO    SenderThread:28816 [sender.py:send_request_defer():389] handle sender defer: 10
+2022-07-17 11:36:03,471 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-17 11:36:03,472 DEBUG   SenderThread:28816 [sender.py:send_request():250] send_request: poll_exit
+2022-07-17 11:36:03,472 INFO    SenderThread:28816 [file_pusher.py:join():176] waiting for file pusher
+2022-07-17 11:36:04,151 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: sampled_history
+2022-07-17 11:36:04,152 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: get_summary
+2022-07-17 11:36:04,154 DEBUG   HandlerThread:28816 [handler.py:handle_request():140] handle_request: shutdown
+2022-07-17 11:36:04,154 INFO    HandlerThread:28816 [handler.py:finish():806] shutting down handler
+2022-07-17 11:36:04,375 INFO    WriterThread:28816 [datastore.py:close():279] close: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220717_113545-g15x0m7e/run-g15x0m7e.wandb
+2022-07-17 11:36:05,045 INFO    SenderThread:28816 [sender.py:finish():1114] shutting down sender
+2022-07-17 11:36:05,045 INFO    SenderThread:28816 [file_pusher.py:finish():171] shutting down file pusher
+2022-07-17 11:36:05,045 INFO    SenderThread:28816 [file_pusher.py:join():176] waiting for file pusher
+2022-07-17 11:36:05,050 INFO    MainThread:28816 [internal.py:handle_exit():80] Internal process exited

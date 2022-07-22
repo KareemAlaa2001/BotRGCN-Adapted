@@ -1,0 +1,20 @@
+importing the dataset...
+Loading train.json
+Loading test.json
+Small dataset version, not loading support.json
+Loading dev.json
+Finished
+Loading labels...   Finished
+Loading user description embeddings
+Finished
+Running tweet embedding
+Finished
+Processing feature3...   Finished
+Processing feature4...   Finished
+Building graph   Finished
+Traceback (most recent call last):
+  File "trainTestHetero.py", line 46, in <module>
+    model = TweetAugmentedHAN(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata()).to(device)
+  File "/Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/model.py", line 83, in __init__
+    HeteroLinear(-1,embedding_dimension),
+TypeError: __init__() missing 1 required positional argument: 'num_types'

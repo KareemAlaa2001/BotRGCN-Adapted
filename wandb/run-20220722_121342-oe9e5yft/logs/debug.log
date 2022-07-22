@@ -1,0 +1,37 @@
+2022-07-22 12:13:42,559 INFO    MainThread:52125 [wandb_setup.py:_flush():76] Configure stats pid to 52125
+2022-07-22 12:13:42,559 INFO    MainThread:52125 [wandb_setup.py:_flush():76] Loading settings from /Users/kareem/.config/wandb/settings
+2022-07-22 12:13:42,559 INFO    MainThread:52125 [wandb_setup.py:_flush():76] Loading settings from /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/settings
+2022-07-22 12:13:42,559 INFO    MainThread:52125 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2022-07-22 12:13:42,559 INFO    MainThread:52125 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'trainTestHetero.py', 'program': 'trainTestHetero.py'}
+2022-07-22 12:13:42,560 INFO    MainThread:52125 [wandb_init.py:_log_setup():461] Logging user logs to /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220722_121342-oe9e5yft/logs/debug.log
+2022-07-22 12:13:42,560 INFO    MainThread:52125 [wandb_init.py:_log_setup():462] Logging internal logs to /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220722_121342-oe9e5yft/logs/debug-internal.log
+2022-07-22 12:13:42,560 INFO    MainThread:52125 [wandb_init.py:init():495] calling init triggers
+2022-07-22 12:13:42,560 INFO    MainThread:52125 [wandb_init.py:init():499] wandb.init called with sweep_config: {}
+config: {}
+2022-07-22 12:13:42,560 INFO    MainThread:52125 [wandb_init.py:init():548] starting backend
+2022-07-22 12:13:42,560 INFO    MainThread:52125 [backend.py:_multiprocessing_setup():99] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2022-07-22 12:13:42,575 INFO    MainThread:52125 [backend.py:ensure_launched():217] starting backend process...
+2022-07-22 12:13:42,588 INFO    MainThread:52125 [backend.py:ensure_launched():222] started backend process with pid: 52138
+2022-07-22 12:13:42,590 INFO    MainThread:52125 [wandb_init.py:init():558] backend started and connected
+2022-07-22 12:13:42,605 INFO    MainThread:52125 [wandb_init.py:init():634] updated telemetry
+2022-07-22 12:13:42,624 INFO    MainThread:52125 [wandb_init.py:init():666] communicating run to backend with 30 second timeout
+2022-07-22 12:13:44,918 INFO    MainThread:52125 [wandb_run.py:_on_init():1919] communicating current version
+2022-07-22 12:13:45,123 INFO    MainThread:52125 [wandb_run.py:_on_init():1923] got version response 
+2022-07-22 12:13:45,124 INFO    MainThread:52125 [wandb_init.py:init():700] starting run threads in backend
+2022-07-22 12:13:49,125 INFO    MainThread:52125 [wandb_run.py:_console_start():1893] atexit reg
+2022-07-22 12:13:49,126 INFO    MainThread:52125 [wandb_run.py:_redirect():1766] redirect: SettingsConsole.REDIRECT
+2022-07-22 12:13:49,126 INFO    MainThread:52125 [wandb_run.py:_redirect():1771] Redirecting console.
+2022-07-22 12:13:49,127 INFO    MainThread:52125 [wandb_run.py:_redirect():1827] Redirects installed.
+2022-07-22 12:13:49,127 INFO    MainThread:52125 [wandb_init.py:init():732] run started, returning control to user process
+2022-07-22 12:13:49,136 INFO    MainThread:52125 [wandb_setup.py:_flush():76] Configure stats pid to 52125
+2022-07-22 12:13:49,136 INFO    MainThread:52125 [wandb_setup.py:_flush():76] Loading settings from /Users/kareem/.config/wandb/settings
+2022-07-22 12:13:49,136 INFO    MainThread:52125 [wandb_setup.py:_flush():76] Loading settings from /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/settings
+2022-07-22 12:13:49,136 INFO    MainThread:52125 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2022-07-22 12:13:49,136 INFO    MainThread:52125 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'trainTestHetero.py', 'program': 'trainTestHetero.py'}
+2022-07-22 12:13:49,136 INFO    MainThread:52125 [wandb_init.py:_log_setup():461] Logging user logs to /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220722_121349-25yvefnl/logs/debug.log
+2022-07-22 12:13:49,136 INFO    MainThread:52125 [wandb_init.py:_log_setup():462] Logging internal logs to /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220722_121349-25yvefnl/logs/debug-internal.log
+2022-07-22 12:13:49,137 INFO    MainThread:52125 [wandb_init.py:init():495] calling init triggers
+2022-07-22 12:13:49,137 INFO    MainThread:52125 [wandb_init.py:init():499] wandb.init called with sweep_config: {}
+config: {}
+2022-07-22 12:13:49,137 INFO    MainThread:52125 [wandb_init.py:init():543] wandb.init() called when a run is still active
+2022-07-22 12:13:53,195 INFO    MainThread:52125 [wandb_run.py:_config_callback():1131] config_cb None None {'model_name': 'TweetAugmentedHAN2ExtraLayer', 'dataset': 'HeteroData', 'embedding_size': 128, 'dropout': 0.3, 'lr': 0.005, 'weight_decay': 0.005, 'svdComponents': 200, 'thirds': True, 'epochs': 60}

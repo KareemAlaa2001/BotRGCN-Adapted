@@ -1,0 +1,29 @@
+importing the dataset...
+Loading train.json
+Loading test.json
+Small dataset version, not loading support.json
+Loading dev.json
+Finished
+Loading labels...   Finished
+Loading user description embeddings
+Finished
+Running tweet embedding
+  0%|                                                                                                                                                                               | 0/100 [00:00<?, ?it/s]
+Finished
+Processing feature3...   Finished
+Processing feature4...   Finished
+Building graph   Finished
+setting up the model...
+
+
+
+
+
+
+
+
+
+
+
+
+

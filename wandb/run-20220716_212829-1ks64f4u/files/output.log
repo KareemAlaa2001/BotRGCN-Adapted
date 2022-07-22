@@ -1,0 +1,36 @@
+importing the dataset...
+Loading train.json
+  0%|                                                                                                                                                                               | 0/100 [00:00<?, ?it/s]
+Loading test.json
+Small dataset version, not loading support.json
+Loading dev.json
+Finished
+Loading labels...   Finished
+Loading user description embeddings
+Finished
+Running tweet embedding
+Finished
+Processing feature3...   Finished
+Processing feature4...   Finished
+Building graph   Finished
+  0%|                                                                                                                                                                               | 0/100 [00:02<?, ?it/s]
+Traceback (most recent call last):
+  File "trainTestHetero.py", line 116, in <module>
+    train(epoch)
+  File "trainTestHetero.py", line 68, in train
+    output = model(dataset)
+  File "/usr/local/anaconda3/envs/mlp/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/model.py", line 109, in forward
+    out = self.han(data.x_dict, data.edge_index_dict)
+  File "/usr/local/anaconda3/envs/mlp/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/usr/local/anaconda3/envs/mlp/lib/python3.7/site-packages/torch_geometric/nn/conv/han_conv.py", line 144, in forward
+    size=None)
+  File "/usr/local/anaconda3/envs/mlp/lib/python3.7/site-packages/torch_geometric/nn/conv/message_passing.py", line 310, in propagate
+    size, kwargs)
+  File "/usr/local/anaconda3/envs/mlp/lib/python3.7/site-packages/torch_geometric/nn/conv/message_passing.py", line 202, in __collect__
+    data = self.__lift__(data, edge_index, dim)
+  File "/usr/local/anaconda3/envs/mlp/lib/python3.7/site-packages/torch_geometric/nn/conv/message_passing.py", line 172, in __lift__
+    return src.index_select(self.node_dim, index)
+IndexError: index out of range in self

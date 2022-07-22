@@ -36,3 +36,11 @@ Replacing RGCN with something else that supports full hetero
 
 Area under the precision-recall curve (rather than ROC curve)
 Explore class imbalance
+
+
+
+## TODOs
+- First check dataset imbalance real quick - DONE
+- Area under prescision-recall curves - AUC ROC TODO
+- get a bayesian optimisation library to use
+- tune hyperparams for each of the experiments

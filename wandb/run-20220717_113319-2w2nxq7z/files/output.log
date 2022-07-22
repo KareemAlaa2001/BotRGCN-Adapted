@@ -1,0 +1,40 @@
+importing the dataset...
+Loading train.json
+Loading test.json
+Small dataset version, not loading support.json
+Loading dev.json
+Finished
+Loading labels...   Finished
+Loading user description embeddings
+Finished
+Running tweet embedding
+  0%|                                                                                                                                                                               | 0/100 [00:00<?, ?it/s]
+Finished
+Processing feature3...   Finished
+Processing feature4...   Finished
+Building graph   Finished
+beginning training...
+<class 'dict'>
+dict_keys(['user', 'tweet'])
+<class 'torch.Tensor'>
+  0%|                                                                                                                                                                               | 0/100 [00:09<?, ?it/s]
+Traceback (most recent call last):
+  File "trainTestHetero.py", line 116, in <module>
+    train(epoch)
+  File "trainTestHetero.py", line 68, in train
+    output = model(dataset)
+  File "/usr/local/anaconda3/envs/mlp/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/model.py", line 120, in forward
+    out=self.linear_relu_output1(out)
+  File "/usr/local/anaconda3/envs/mlp/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/usr/local/anaconda3/envs/mlp/lib/python3.7/site-packages/torch/nn/modules/container.py", line 141, in forward
+    input = module(input)
+  File "/usr/local/anaconda3/envs/mlp/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/usr/local/anaconda3/envs/mlp/lib/python3.7/site-packages/torch_geometric/nn/dense/linear.py", line 118, in forward
+    return F.linear(x, self.weight, self.bias)
+  File "/usr/local/anaconda3/envs/mlp/lib/python3.7/site-packages/torch/nn/functional.py", line 1848, in linear
+    return torch._C._nn.linear(input, weight, bias)
+TypeError: linear(): argument 'input' (position 1) must be Tensor, not dict

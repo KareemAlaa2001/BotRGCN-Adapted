@@ -1,0 +1,22 @@
+importing the dataset...
+Loading train.json
+Loading test.json
+Small dataset version, not loading support.json
+Loading dev.json
+Finished
+Loading labels...   Finished
+Loading user description embeddings
+Finished
+Running tweet embedding
+Traceback (most recent call last):
+  File "trainTestHetero.py", line 133, in <module>
+    trainTestHetero(embedding_size, dropout, lr, weight_decay, svdComponents, thirds, epochs)
+  File "trainTestHetero.py", line 81, in trainTestHetero
+    model = TweetAugmentedHAN2ExtraLayer(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata()).to(device)
+  File "/Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/augmodels.py", line 108, in __init__
+    super(TweetAugmentedHAN2, self).__init__()
+TypeError: super(type, obj): obj must be an instance or subtype of type
+Finished
+Processing feature3...   Finished
+Processing feature4...   Finished
+Building graph   Finished

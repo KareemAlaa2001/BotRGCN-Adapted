@@ -1,0 +1,513 @@
+2022-07-16 14:39:53,431 INFO    MainThread:15886 [internal.py:wandb_internal():93] W&B internal server running at pid: 15886, started at: 2022-07-16 14:39:53.431066
+2022-07-16 14:39:53,436 DEBUG   SenderThread:15886 [sender.py:send():236] send: header
+2022-07-16 14:39:53,436 DEBUG   SenderThread:15886 [sender.py:send():236] send: run
+2022-07-16 14:39:53,438 INFO    WriterThread:15886 [datastore.py:open_for_write():75] open: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/run-3a0171mm.wandb
+2022-07-16 14:39:53,792 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: check_version
+2022-07-16 14:39:53,793 INFO    SenderThread:15886 [dir_watcher.py:__init__():216] watching files in: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files
+2022-07-16 14:39:53,793 INFO    SenderThread:15886 [sender.py:_start_run_threads():818] run started: 3a0171mm with start time 1657975191
+2022-07-16 14:39:53,793 DEBUG   SenderThread:15886 [sender.py:send():236] send: summary
+2022-07-16 14:39:53,794 INFO    SenderThread:15886 [sender.py:_save_file():952] saving file wandb-summary.json with policy end
+2022-07-16 14:39:53,794 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: check_version
+2022-07-16 14:39:54,025 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: run_start
+2022-07-16 14:39:54,028 DEBUG   HandlerThread:15886 [meta.py:__init__():35] meta init
+2022-07-16 14:39:54,028 DEBUG   HandlerThread:15886 [meta.py:__init__():49] meta init done
+2022-07-16 14:39:54,029 DEBUG   HandlerThread:15886 [meta.py:probe():209] probe
+2022-07-16 14:39:54,030 DEBUG   HandlerThread:15886 [meta.py:_setup_git():199] setup git
+2022-07-16 14:39:54,063 DEBUG   HandlerThread:15886 [meta.py:_setup_git():206] setup git done
+2022-07-16 14:39:54,063 DEBUG   HandlerThread:15886 [meta.py:_save_pip():53] save pip
+2022-07-16 14:39:54,064 DEBUG   HandlerThread:15886 [meta.py:_save_pip():67] save pip done
+2022-07-16 14:39:54,064 DEBUG   HandlerThread:15886 [meta.py:_save_conda():74] save conda
+2022-07-16 14:39:54,799 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_created():269] file/dir created: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/requirements.txt
+2022-07-16 14:39:54,800 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_created():269] file/dir created: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/wandb-summary.json
+2022-07-16 14:39:54,801 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_created():269] file/dir created: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/conda-environment.yaml
+2022-07-16 14:39:58,539 DEBUG   HandlerThread:15886 [meta.py:_save_conda():84] save conda done
+2022-07-16 14:39:58,539 DEBUG   HandlerThread:15886 [meta.py:probe():247] probe done
+2022-07-16 14:39:58,647 DEBUG   SenderThread:15886 [sender.py:send():236] send: files
+2022-07-16 14:39:58,647 INFO    SenderThread:15886 [sender.py:_save_file():952] saving file wandb-metadata.json with policy now
+2022-07-16 14:39:58,653 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:39:58,654 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:39:58,821 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/conda-environment.yaml
+2022-07-16 14:39:58,822 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_created():269] file/dir created: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:39:58,822 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_created():269] file/dir created: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/wandb-metadata.json
+2022-07-16 14:39:58,942 DEBUG   SenderThread:15886 [sender.py:send():236] send: telemetry
+2022-07-16 14:39:59,904 INFO    Thread-11 :15886 [upload_job.py:push():138] Uploaded file /var/folders/nq/lylhxfw55sl6q3mpcd3d_8yr0000gn/T/tmpibhgt_ukwandb/1gkd2ux5-wandb-metadata.json
+2022-07-16 14:40:00,823 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:40:01,990 DEBUG   SenderThread:15886 [sender.py:send():236] send: telemetry
+2022-07-16 14:40:02,827 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:40:12,851 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:40:14,208 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:40:14,208 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:40:18,866 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:40:22,777 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:40:24,885 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/config.yaml
+2022-07-16 14:40:29,859 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:40:29,859 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:40:34,920 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:40:45,154 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:40:45,162 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:40:50,979 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:40:53,511 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:41:00,465 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:41:00,466 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:41:07,033 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:41:15,795 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:41:15,802 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:41:21,082 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:41:24,374 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:41:31,080 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:41:31,081 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:41:35,129 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:41:46,364 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:41:46,364 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:41:49,197 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:41:55,182 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:42:01,626 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:42:01,626 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:42:05,264 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:42:16,907 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:42:16,908 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:42:19,308 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:42:26,023 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:42:32,187 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:42:32,187 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:42:35,367 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:42:47,468 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:42:47,469 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:42:49,413 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:42:56,892 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:43:01,448 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:43:02,764 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:43:02,764 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:43:15,479 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:43:18,062 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:43:18,063 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:43:27,716 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:43:29,538 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:43:33,339 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:43:33,339 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:43:45,604 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:43:48,607 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:43:48,607 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:43:58,665 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:43:59,641 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:44:03,885 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:44:03,886 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:44:13,678 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:44:19,194 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:44:19,195 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:44:27,733 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:44:29,466 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:44:34,513 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:44:34,520 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:44:47,822 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:44:49,832 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:44:49,832 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:45:00,266 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:45:03,859 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:45:05,141 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:45:05,142 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:45:19,907 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:45:20,419 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:45:20,420 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:45:31,078 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:45:35,805 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:45:35,805 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:45:35,968 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:45:51,093 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:45:51,093 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:45:52,013 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:46:01,905 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:46:06,392 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:46:06,392 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:46:08,069 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:46:21,677 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:46:21,678 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:46:26,105 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:46:32,746 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:46:36,975 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:46:36,975 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:46:38,137 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:46:52,187 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:46:52,255 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:46:52,256 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:47:03,556 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:47:07,541 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:47:07,542 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:47:10,233 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:47:22,824 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:47:22,828 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:47:26,284 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:47:34,285 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:47:38,088 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:47:38,089 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:47:42,326 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:47:53,379 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:47:53,380 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:47:56,370 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:48:05,046 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:48:08,653 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:48:08,654 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:48:10,433 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:48:23,973 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:48:23,973 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:48:24,489 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:48:35,888 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:48:39,257 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:48:39,257 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:48:40,553 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:48:54,531 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:48:54,532 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:48:54,608 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:49:06,726 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:49:08,656 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:49:09,843 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:49:09,843 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:49:24,719 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:49:25,131 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:49:25,131 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:49:37,617 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:49:38,770 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:49:40,437 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:49:40,438 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:49:52,816 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:49:55,735 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:49:55,736 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:50:06,861 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:50:08,424 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:50:11,038 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:50:11,043 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:50:22,912 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:50:26,440 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:50:26,440 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:50:36,951 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:50:39,299 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:50:41,715 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:50:41,715 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:50:50,991 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:50:57,033 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:50:57,043 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:51:07,048 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:51:10,158 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:51:12,331 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:51:12,332 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:51:21,100 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:51:27,614 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:51:27,614 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:51:35,145 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:51:41,080 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:51:42,942 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:51:42,942 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:51:49,194 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:51:58,221 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:51:58,221 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:52:03,239 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:52:11,938 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:52:13,513 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:52:13,515 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:52:17,286 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:52:28,821 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:52:28,822 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:52:31,337 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:52:42,821 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:52:44,095 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:52:44,097 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:52:45,383 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:52:59,421 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:52:59,440 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:52:59,441 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:53:13,476 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:53:13,723 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:53:14,732 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:53:14,732 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:53:27,517 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:53:30,110 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:53:30,111 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:53:41,582 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:53:44,564 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:53:45,405 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:53:45,405 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:53:55,627 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:54:00,713 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:54:00,714 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:54:09,674 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:54:15,402 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:54:16,039 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:54:16,040 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:54:25,718 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:54:31,371 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:54:31,371 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:54:39,771 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:54:46,214 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:54:46,714 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:54:46,717 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:54:53,798 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:55:01,999 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:55:01,999 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:55:07,862 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:55:17,078 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:55:17,291 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:55:17,292 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:55:23,908 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:55:32,613 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:55:32,613 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:55:37,948 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:55:47,939 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:55:48,058 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:55:48,059 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:55:51,992 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:56:03,335 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:56:03,337 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:56:06,033 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:56:18,632 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:56:18,632 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:56:18,905 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:56:20,084 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:56:33,909 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:56:33,910 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:56:36,133 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:56:49,210 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:56:49,211 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:56:49,575 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:56:50,184 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:57:04,489 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:57:04,490 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:57:06,224 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:57:19,861 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:57:19,862 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:57:20,260 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:57:20,366 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:57:34,318 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:57:35,173 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:57:35,173 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:57:48,357 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:57:50,505 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:57:50,505 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:57:51,148 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:58:04,414 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:58:05,810 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:58:05,810 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:58:16,454 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:58:21,166 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:58:21,167 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:58:21,970 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:58:32,501 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:58:36,450 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:58:36,450 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:58:45,536 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:58:46,542 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:58:51,750 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:58:51,750 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:58:52,808 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:59:00,584 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:59:07,073 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:59:07,075 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:59:16,631 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:59:22,368 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:59:22,369 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:59:23,714 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:59:30,676 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:59:37,652 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:59:37,664 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:59:42,729 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:59:52,996 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 14:59:52,996 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 14:59:54,519 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 14:59:55,769 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 14:59:56,771 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:00:08,308 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:00:08,309 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:00:10,822 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:00:23,619 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:00:23,620 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:00:25,421 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 15:00:26,857 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:00:38,914 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:00:38,923 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:00:40,895 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:00:54,252 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:00:54,256 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:00:56,257 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 15:00:56,957 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:01:09,538 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:01:09,540 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:01:12,013 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:01:13,016 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:01:24,832 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:01:24,833 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:01:25,072 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:01:27,170 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 15:01:39,119 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:01:40,124 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:01:40,124 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:01:51,158 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:01:55,401 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:01:55,402 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:01:58,004 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 15:02:05,211 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:02:10,686 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:02:10,690 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:02:18,258 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:02:19,260 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:02:25,995 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:02:25,996 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:02:28,937 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 15:02:31,301 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:02:41,298 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:02:41,302 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:02:45,344 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:02:56,618 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:02:56,618 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:02:59,393 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:02:59,732 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 15:03:11,437 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:03:11,910 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:03:11,911 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:03:25,481 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:03:26,484 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:03:27,203 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:03:27,204 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:03:30,597 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 15:03:41,516 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:03:42,538 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:03:42,538 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:03:56,566 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:03:57,837 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:03:57,837 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:04:01,403 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 15:04:13,181 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:04:13,182 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:04:13,620 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:04:28,475 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: stop_status
+2022-07-16 15:04:28,476 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: stop_status
+2022-07-16 15:04:30,670 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:04:32,120 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 15:04:36,997 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: partial_history
+2022-07-16 15:04:36,999 DEBUG   SenderThread:15886 [sender.py:send():236] send: history
+2022-07-16 15:04:36,999 DEBUG   SenderThread:15886 [sender.py:send():236] send: summary
+2022-07-16 15:04:36,999 INFO    SenderThread:15886 [sender.py:_save_file():952] saving file wandb-summary.json with policy end
+2022-07-16 15:04:37,010 DEBUG   SenderThread:15886 [sender.py:send():236] send: telemetry
+2022-07-16 15:04:37,691 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/wandb-summary.json
+2022-07-16 15:04:38,695 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:04:39,519 DEBUG   SenderThread:15886 [sender.py:send():236] send: exit
+2022-07-16 15:04:39,519 INFO    SenderThread:15886 [sender.py:send_exit():372] handling exit code: 0
+2022-07-16 15:04:39,520 INFO    SenderThread:15886 [sender.py:send_exit():374] handling runtime: 1485
+2022-07-16 15:04:39,521 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-16 15:04:39,522 INFO    SenderThread:15886 [sender.py:_save_file():952] saving file wandb-summary.json with policy end
+2022-07-16 15:04:39,522 INFO    SenderThread:15886 [sender.py:send_exit():380] send defer
+2022-07-16 15:04:39,522 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: poll_exit
+2022-07-16 15:04:39,523 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: defer
+2022-07-16 15:04:39,524 INFO    HandlerThread:15886 [handler.py:handle_request_defer():163] handle defer: 0
+2022-07-16 15:04:39,524 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: defer
+2022-07-16 15:04:39,524 INFO    SenderThread:15886 [sender.py:send_request_defer():389] handle sender defer: 0
+2022-07-16 15:04:39,524 INFO    SenderThread:15886 [sender.py:transition_state():393] send defer: 1
+2022-07-16 15:04:39,525 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: defer
+2022-07-16 15:04:39,525 INFO    HandlerThread:15886 [handler.py:handle_request_defer():163] handle defer: 1
+2022-07-16 15:04:39,564 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: defer
+2022-07-16 15:04:39,565 INFO    SenderThread:15886 [sender.py:send_request_defer():389] handle sender defer: 1
+2022-07-16 15:04:39,565 INFO    SenderThread:15886 [sender.py:transition_state():393] send defer: 2
+2022-07-16 15:04:39,565 DEBUG   SenderThread:15886 [sender.py:send():236] send: stats
+2022-07-16 15:04:39,566 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: defer
+2022-07-16 15:04:39,566 INFO    HandlerThread:15886 [handler.py:handle_request_defer():163] handle defer: 2
+2022-07-16 15:04:39,566 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: defer
+2022-07-16 15:04:39,567 INFO    SenderThread:15886 [sender.py:send_request_defer():389] handle sender defer: 2
+2022-07-16 15:04:39,567 INFO    SenderThread:15886 [sender.py:transition_state():393] send defer: 3
+2022-07-16 15:04:39,568 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: defer
+2022-07-16 15:04:39,568 INFO    HandlerThread:15886 [handler.py:handle_request_defer():163] handle defer: 3
+2022-07-16 15:04:39,568 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: defer
+2022-07-16 15:04:39,568 INFO    SenderThread:15886 [sender.py:send_request_defer():389] handle sender defer: 3
+2022-07-16 15:04:39,569 INFO    SenderThread:15886 [sender.py:transition_state():393] send defer: 4
+2022-07-16 15:04:39,569 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: defer
+2022-07-16 15:04:39,569 INFO    HandlerThread:15886 [handler.py:handle_request_defer():163] handle defer: 4
+2022-07-16 15:04:39,570 DEBUG   SenderThread:15886 [sender.py:send():236] send: summary
+2022-07-16 15:04:39,571 INFO    SenderThread:15886 [sender.py:_save_file():952] saving file wandb-summary.json with policy end
+2022-07-16 15:04:39,571 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: defer
+2022-07-16 15:04:39,571 INFO    SenderThread:15886 [sender.py:send_request_defer():389] handle sender defer: 4
+2022-07-16 15:04:39,571 INFO    SenderThread:15886 [sender.py:transition_state():393] send defer: 5
+2022-07-16 15:04:39,572 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: defer
+2022-07-16 15:04:39,572 INFO    HandlerThread:15886 [handler.py:handle_request_defer():163] handle defer: 5
+2022-07-16 15:04:39,572 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: defer
+2022-07-16 15:04:39,572 INFO    SenderThread:15886 [sender.py:send_request_defer():389] handle sender defer: 5
+2022-07-16 15:04:39,631 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-16 15:04:39,700 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:04:39,700 INFO    Thread-7  :15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/wandb-summary.json
+2022-07-16 15:04:39,938 INFO    SenderThread:15886 [sender.py:transition_state():393] send defer: 6
+2022-07-16 15:04:39,938 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: poll_exit
+2022-07-16 15:04:39,938 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: defer
+2022-07-16 15:04:39,939 INFO    HandlerThread:15886 [handler.py:handle_request_defer():163] handle defer: 6
+2022-07-16 15:04:39,939 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: defer
+2022-07-16 15:04:39,939 INFO    SenderThread:15886 [sender.py:send_request_defer():389] handle sender defer: 6
+2022-07-16 15:04:39,939 INFO    SenderThread:15886 [dir_watcher.py:finish():353] shutting down directory watcher
+2022-07-16 15:04:40,045 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-16 15:04:40,706 INFO    SenderThread:15886 [dir_watcher.py:_on_file_modified():286] file/dir modified: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/config.yaml
+2022-07-16 15:04:40,707 INFO    SenderThread:15886 [dir_watcher.py:finish():383] scan: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files
+2022-07-16 15:04:40,708 INFO    SenderThread:15886 [dir_watcher.py:finish():397] scan save: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/requirements.txt requirements.txt
+2022-07-16 15:04:40,708 INFO    SenderThread:15886 [dir_watcher.py:finish():397] scan save: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log output.log
+2022-07-16 15:04:40,709 INFO    SenderThread:15886 [dir_watcher.py:finish():397] scan save: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/config.yaml config.yaml
+2022-07-16 15:04:40,714 INFO    SenderThread:15886 [dir_watcher.py:finish():397] scan save: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/wandb-summary.json wandb-summary.json
+2022-07-16 15:04:40,719 INFO    SenderThread:15886 [dir_watcher.py:finish():397] scan save: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/conda-environment.yaml conda-environment.yaml
+2022-07-16 15:04:40,719 INFO    SenderThread:15886 [dir_watcher.py:finish():397] scan save: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/wandb-metadata.json wandb-metadata.json
+2022-07-16 15:04:40,723 INFO    SenderThread:15886 [sender.py:transition_state():393] send defer: 7
+2022-07-16 15:04:40,724 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: poll_exit
+2022-07-16 15:04:40,725 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: defer
+2022-07-16 15:04:40,725 INFO    HandlerThread:15886 [handler.py:handle_request_defer():163] handle defer: 7
+2022-07-16 15:04:40,725 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: defer
+2022-07-16 15:04:40,726 INFO    SenderThread:15886 [sender.py:send_request_defer():389] handle sender defer: 7
+2022-07-16 15:04:40,727 INFO    SenderThread:15886 [file_pusher.py:finish():171] shutting down file pusher
+2022-07-16 15:04:40,827 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-16 15:04:40,827 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: poll_exit
+2022-07-16 15:04:40,930 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-16 15:04:40,931 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: poll_exit
+2022-07-16 15:04:41,037 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-16 15:04:41,037 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: poll_exit
+2022-07-16 15:04:41,147 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-16 15:04:41,149 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: poll_exit
+2022-07-16 15:04:41,257 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-16 15:04:41,257 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: poll_exit
+2022-07-16 15:04:41,363 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-16 15:04:41,363 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: poll_exit
+2022-07-16 15:04:41,470 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-16 15:04:41,470 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: poll_exit
+2022-07-16 15:04:41,575 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-16 15:04:41,575 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: poll_exit
+2022-07-16 15:04:41,680 INFO    Thread-16 :15886 [upload_job.py:push():138] Uploaded file /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/conda-environment.yaml
+2022-07-16 15:04:41,681 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-16 15:04:41,683 INFO    Thread-14 :15886 [upload_job.py:push():138] Uploaded file /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/config.yaml
+2022-07-16 15:04:41,683 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: poll_exit
+2022-07-16 15:04:41,687 INFO    Thread-12 :15886 [upload_job.py:push():138] Uploaded file /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/requirements.txt
+2022-07-16 15:04:41,694 INFO    Thread-15 :15886 [upload_job.py:push():138] Uploaded file /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/wandb-summary.json
+2022-07-16 15:04:41,730 INFO    Thread-13 :15886 [upload_job.py:push():138] Uploaded file /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/files/output.log
+2022-07-16 15:04:41,791 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-16 15:04:41,792 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: poll_exit
+2022-07-16 15:04:41,897 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-16 15:04:41,898 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: poll_exit
+2022-07-16 15:04:41,935 INFO    Thread-6  :15886 [sender.py:transition_state():393] send defer: 8
+2022-07-16 15:04:41,936 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: defer
+2022-07-16 15:04:41,936 INFO    HandlerThread:15886 [handler.py:handle_request_defer():163] handle defer: 8
+2022-07-16 15:04:41,936 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: defer
+2022-07-16 15:04:41,936 INFO    SenderThread:15886 [sender.py:send_request_defer():389] handle sender defer: 8
+2022-07-16 15:04:42,003 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-16 15:04:42,537 INFO    SenderThread:15886 [sender.py:transition_state():393] send defer: 9
+2022-07-16 15:04:42,537 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: poll_exit
+2022-07-16 15:04:42,538 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: defer
+2022-07-16 15:04:42,539 INFO    HandlerThread:15886 [handler.py:handle_request_defer():163] handle defer: 9
+2022-07-16 15:04:42,539 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: defer
+2022-07-16 15:04:42,539 INFO    SenderThread:15886 [sender.py:send_request_defer():389] handle sender defer: 9
+2022-07-16 15:04:42,539 INFO    SenderThread:15886 [sender.py:transition_state():393] send defer: 10
+2022-07-16 15:04:42,540 DEBUG   SenderThread:15886 [sender.py:send():236] send: final
+2022-07-16 15:04:42,541 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: defer
+2022-07-16 15:04:42,542 DEBUG   SenderThread:15886 [sender.py:send():236] send: footer
+2022-07-16 15:04:42,542 INFO    HandlerThread:15886 [handler.py:handle_request_defer():163] handle defer: 10
+2022-07-16 15:04:42,543 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: defer
+2022-07-16 15:04:42,543 INFO    SenderThread:15886 [sender.py:send_request_defer():389] handle sender defer: 10
+2022-07-16 15:04:42,643 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: poll_exit
+2022-07-16 15:04:42,643 DEBUG   SenderThread:15886 [sender.py:send_request():250] send_request: poll_exit
+2022-07-16 15:04:42,643 INFO    SenderThread:15886 [file_pusher.py:join():176] waiting for file pusher
+2022-07-16 15:04:43,338 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: sampled_history
+2022-07-16 15:04:43,343 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: get_summary
+2022-07-16 15:04:43,344 DEBUG   HandlerThread:15886 [handler.py:handle_request():140] handle_request: shutdown
+2022-07-16 15:04:43,344 INFO    HandlerThread:15886 [handler.py:finish():806] shutting down handler
+2022-07-16 15:04:43,546 INFO    WriterThread:15886 [datastore.py:close():279] close: /Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/wandb/run-20220716_143950-3a0171mm/run-3a0171mm.wandb
+2022-07-16 15:04:44,239 INFO    SenderThread:15886 [sender.py:finish():1114] shutting down sender
+2022-07-16 15:04:44,239 INFO    SenderThread:15886 [file_pusher.py:finish():171] shutting down file pusher
+2022-07-16 15:04:44,239 INFO    SenderThread:15886 [file_pusher.py:join():176] waiting for file pusher
+2022-07-16 15:04:44,241 INFO    MainThread:15886 [internal.py:handle_exit():80] Internal process exited

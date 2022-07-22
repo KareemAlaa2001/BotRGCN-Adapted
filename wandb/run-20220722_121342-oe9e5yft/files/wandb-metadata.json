@@ -1,0 +1,22 @@
+{
+    "os": "Darwin-21.2.0-x86_64-i386-64bit",
+    "python": "3.7.11",
+    "heartbeatAt": "2022-07-22T11:13:45.132716",
+    "startedAt": "2022-07-22T11:13:42.553606",
+    "docker": null,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "trainTestHetero.py",
+    "codePath": "trainTestHetero.py",
+    "git": {
+        "remote": "https://github.com/KareemAlaa2001/BotRGCN-Adapted.git",
+        "commit": "783b65aa890381105aae577ab6adcfd62504b4d6"
+    },
+    "email": "kareemalaa2001@gmail.com",
+    "root": "/Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted",
+    "host": "Kareems-MacBook-Pro-2.local",
+    "username": "kareem",
+    "executable": "/usr/local/anaconda3/envs/mlp/bin/python"
+}

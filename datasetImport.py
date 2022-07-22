@@ -3,7 +3,7 @@ from TwibotSmallTruncatedSVD import TwibotSmallTruncatedSVD
 from TwibotSmallAugmentedTSVDHomogeneous import TwibotSmallAugmentedTSVDHomogeneous
 from TwibotSmallEdgeHetero import TwibotSmallEdgeHetero
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-embedding_size,dropout,lr,weight_decay,svdComponents=128,0.3,1e-3,5e-3,100
+embedding_size,dropout,lr,weight_decay,svdComponents=128,0.3,1e-3,5e-3,200
 
 # dataset=Twibot20(device=device,process=True,save=True)
 # dataset = TwibotSmallTruncatedSVD(device=device,process=True,save=True,dev=True)

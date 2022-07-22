@@ -6,7 +6,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import pandas as pd
 import json
 import os
-# from transformers import pipeline
+
 from datetime import datetime as dt
 from torch.utils.data import Dataset
 from tqdm import tqdm
@@ -188,7 +188,6 @@ class TwibotSmallTruncatedSVD(Dataset):
                     for feature_name in numerical_feature_names:
                         torch.save(feature_name,path+feature_name+'.pt') 
                     
-                ## TODO handle this separately from the other classes being cleaned up
                 screen_name_length=[]
                 for i in range (self.df_users.shape[0]):
                     if self.df_users['profile'][i] is None or self.df_users['profile'][i]['screen_name'] is None:
@@ -199,7 +198,6 @@ class TwibotSmallTruncatedSVD(Dataset):
                 if self.save:
                     torch.save(screen_name_length,path+'screen_name_length.pt')
                 
-                ## TODO handle this separately from the other classes being cleaned up
                 active_days=[]
                 date0=dt.strptime('Fri Jul 1 00:00:00 +0000 2022 ','%a %b %d %X %z %Y ')
                 for i in range (self.df_users.shape[0]):

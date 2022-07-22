@@ -1,0 +1,32 @@
+importing the dataset...
+Loading train.json
+Loading test.json
+Small dataset version, not loading support.json
+Loading dev.json
+Finished
+Loading labels...   Finished
+Loading user description embeddings
+Finished
+Running tweet embedding
+  0%|                                                                                                                                                                               | 0/100 [00:00<?, ?it/s]
+Finished
+Processing feature3...   Finished
+Processing feature4...   Finished
+Building graph   Finished
+  0%|                                                                                                                                                                               | 0/100 [00:10<?, ?it/s]
+Traceback (most recent call last):
+  File "trainTestHetero.py", line 116, in <module>
+    train(epoch)
+  File "trainTestHetero.py", line 68, in train
+    output = model(dataset)
+  File "/usr/local/anaconda3/envs/mlp/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/Users/kareem/EdiStuff/Dissertation/Code/BotRGCN-Adapted/model.py", line 116, in forward
+    out=F.dropout(out,p=self.dropout,training=self.training)
+  File "/usr/local/anaconda3/envs/mlp/lib/python3.7/site-packages/torch/nn/functional.py", line 1169, in dropout
+    return _VF.dropout_(input, p, training) if inplace else _VF.dropout(input, p, training)
+TypeError: dropout(): argument 'input' (position 1) must be Tensor, not dict
+<class 'dict'>
+dict_keys(['user', 'tweet'])
+<class 'torch.Tensor'>
+<class 'torch.Tensor'>
