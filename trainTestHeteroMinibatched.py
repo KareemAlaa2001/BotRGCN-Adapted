@@ -82,7 +82,7 @@ def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, w
     dataset = TwibotSmallEdgeHetero(device=device,process=True,save=True,dev=False, svdComponents=svdComponents)
     dataset = initializeHeteroTwibot(dataset)
 
-    kwargs = {'num_workers': torch.cuda.device_count() if torch.cuda.device_count() > 0 else 1, 'persistent_workers': True, 'batch_size': batch_size}
+    kwargs = {'num_workers': min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 else 1, 'persistent_workers': True, 'batch_size': batch_size}
 
     train_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].train_mask), **kwargs)
     val_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].val_mask), **kwargs)
