@@ -40,8 +40,8 @@ def train_minibatched(epoch, model, train_loader, loss, optimizer, device):
         optimizer.step()
 
         total_examples += batch_size
-        total_loss += loss_batch * batch_size
-        total_acc += acc_batch * batch_size
+        total_loss += loss_batch.detach() * batch_size
+        total_acc += acc_batch.detach() * batch_size
 
     
     train_loss = total_loss / total_examples 
