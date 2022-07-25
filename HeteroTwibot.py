@@ -43,9 +43,20 @@ def initializeHeteroTwibot(edgeHetero: TwibotSmallEdgeHetero) -> HeteroData:
     # self.data['user'].x = None
     data['user'].x = torch.cat((des_tensor, category_prop, num_prop), dim=1)
     data['user'].y = labels
+
     data['user'].train_idx = train_idx
+    data['user'].train_mask = torch.zeros(data['user'].x.shape[0], dtype=torch.bool)
+    data['user'].train_mask[train_idx] = 1
+
+
     data['user'].val_idx = val_idx
+    data['user'].val_mask = torch.zeros(data['user'].x.shape[0], dtype=torch.bool)
+    data['user'].val_mask[val_idx] = 1
+
     data['user'].test_idx = test_idx
+    data['user'].test_mask = torch.zeros(data['user'].x.shape[0], dtype=torch.bool)
+    data['user'].test_mask[test_idx] = 1
+    
     data['tweet'].x = tweets_tensor
 
     data['user', 'following', 'user'].edge_index = edge_index[:, (edge_type == 0).nonzero().squeeze()]

@@ -34,7 +34,7 @@ dropout = 0.3
 lr = 1e-3
 weight_decay = 5e-3
 svdComponents = 100
-thirds = True
+thirds = False
 epochs = 60
 
 ## IMPORTING THE DATASET

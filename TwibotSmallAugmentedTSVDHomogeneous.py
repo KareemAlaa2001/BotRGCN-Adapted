@@ -23,7 +23,7 @@ class TwibotSmallAugmentedTSVDHomogeneous(TwibotSmallTruncatedSVD):
 
     def __init__(self, root='./Data/TwibotSmallAugmentedTSVDHomogeneous/',device=torch.device('cpu'), process=True, save=True, dev=False, svdComponents=100):
         self.root = root[:-1]+'Dev/' if dev else root
-
+        self.has_df_tweet = False
         if svdComponents != 100:
             self.root = self.root+'svd'+str(svdComponents)+'/'
             try: 
@@ -88,8 +88,9 @@ class TwibotSmallAugmentedTSVDHomogeneous(TwibotSmallTruncatedSVD):
         print('Running tweet embedding')
         path=self.root+"tweets_tensor.pt"
         if not os.path.exists(path):
-            if not self.df_tweet:
+            if not self.has_df_tweet:
                 self.df_tweet = self.extract_df_tweet()
+                self.has_df_tweet = True
 
             tweets = self.df_tweet['Body'].values
             vectorizer = TfidfVectorizer()
@@ -259,8 +260,9 @@ class TwibotSmallAugmentedTSVDHomogeneous(TwibotSmallTruncatedSVD):
         print('Building graph',end='   ')
         path=self.root+'edge_index.pt'
         if not os.path.exists(path):
-            if not self.df_tweet:
+            if not self.has_df_tweet:
                 self.df_tweet = self.extract_df_tweet()
+                self.has_df_tweet = True
 
             id2index_dict={id:index for index,id in enumerate(self.df_users['ID'])}
             id2index_dict.update({id:index for index,id in enumerate(self.df_tweet['ID'], start=len(self.df_users['ID']))})

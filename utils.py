@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+import wandb
 
 def accuracy(output, labels):
     preds = output.max(1)[1].type_as(labels)
