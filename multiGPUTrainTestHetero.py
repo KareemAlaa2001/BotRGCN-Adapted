@@ -18,11 +18,27 @@ from sklearn.metrics import f1_score, matthews_corrcoef, precision_score, recall
 import wandb
 
 
+def train_minibatched_dataparallel(model, train_loader, loss, dataset, optimizer, device):
+    model.train()
+
+    output = model(train_loader)
+    loss_train = loss(output[dataset['user'].train_idx], dataset['user'].y[dataset['user'].train_idx])
+    acc_train = accuracy(output[dataset['user'].train_idx],  dataset['user'].y[dataset['user'].train_idx])
+    # acc_val = accuracy(output[dataset['user'].val_idx], dataset['user'].y[dataset['user'].val_idx])
+    # loss_val = loss(output[dataset['user'].val_idx], dataset['user'].y[dataset['user'].val_idx])
+    optimizer.zero_grad()
+    loss_train.backward()
+    optimizer.step()
+
+    return loss_train, acc_train
+
 def train_minibatched(epoch, model, train_loader, loss, optimizer, device):
     model.train()
 
     total_examples = total_loss = total_acc = 0
     
+
+
     for data in train_loader:
         data = data.to(device, 'edge_index')
 
