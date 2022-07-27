@@ -61,8 +61,8 @@ def test_minibatched(loader, model, loss, device):
         acc_batch = accuracy(output[:batch_size],  data['user'].y[:batch_size])
 
         total_examples += batch_size
-        total_loss += loss_batch * batch_size
-        total_acc += acc_batch * batch_size
+        total_loss += loss_batch.detach() * batch_size
+        total_acc += acc_batch.detach() * batch_size
 
     test_loss = total_loss / total_examples 
     test_acc = total_acc / total_examples
