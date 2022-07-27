@@ -143,10 +143,10 @@ def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, w
 
     # min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 else 1
     kwargs = {'num_workers': min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 else 1, 'persistent_workers': True, 'batch_size': batch_size}
-
+    kwargs_test = {'num_workers': min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 else 1, 'persistent_workers': True, 'batch_size': ((len(dataset['user'].test_idx) // 2) + 2)}
     train_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].train_mask), **kwargs)
     val_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].val_mask), **kwargs)
-    test_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].test_mask), **kwargs)
+    test_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].test_mask), **kwargs_test)
 
 
     # model = TweetAugmentedHAN2ExtraLayer(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata()).to(device)
