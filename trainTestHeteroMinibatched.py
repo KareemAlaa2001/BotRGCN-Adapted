@@ -128,7 +128,7 @@ def test_minibatched_with_metrics(loader, model, loss, device, **metrics):
     return results
 
 
-def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, weight_decay = 5e-3, svdComponents = 100, thirds = False, epochs = 100, extraLayer=True, numHanLayers = 2, neighboursPerNode = 50, batch_size = 256, testing_enabled = True):
+def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, weight_decay = 5e-3, svdComponents = 100, thirds = False, epochs = 100, extraLayer=True, numHanLayers = 2, neighboursPerNode = 50, batch_size = 256, testing_enabled = True, using_external_config = False):
     wandb.init(project="test-project", entity="graphbois")
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -140,33 +140,34 @@ def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, w
     dataset = initializeHeteroTwibot(dataset).to(device, 'x', 'y')
 
     # min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 else 1
-    kwargs = {'num_workers': min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 else 1, 'persistent_workers': True, 'batch_size': batch_size}
-    kwargs_test = {'num_workers': min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 else 1, 'persistent_workers': True, 'batch_size': ((len(dataset['user'].test_idx) // 2) + 2)}
+    kwargs = {'num_workers': min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 and torch.device.type == 'cuda' else 1, 'persistent_workers': True, 'batch_size': batch_size}
+    kwargs_test = {'num_workers': min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 and torch.device.type == 'cuda' else 1, 'persistent_workers': True, 'batch_size': ((len(dataset['user'].test_idx) // 2) + 2)}
     train_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].train_mask), **kwargs)
     val_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].val_mask), **kwargs)
-    # test_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].test_mask), **kwargs_test)
+    test_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].test_mask), **kwargs_test)
 
 
     # model = TweetAugmentedHAN2ExtraLayer(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata()).to(device)
     model = TweetAugHANConfigurable(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata(), extraLayer=extraLayer,numHanLayers=numHanLayers).to(device)
 
-    wandb.config.update({
-    "model_name": model.__class__.__name__,
-    "dataset": dataset.__class__.__name__,
-    "embedding_size": embedding_size,
-    "dropout": dropout,
-    "lr": lr,
-    "weight_decay": weight_decay, 
-    "svdComponents": svdComponents, 
-    "thirds": thirds,
-    "epochs": epochs
-    })
-
-    if  model.__class__.__name__ == "TweetAugHANConfigurable":
+    if not using_external_config:
         wandb.config.update({
-        "extraLayer": extraLayer,
-        "numHanLayers": numHanLayers
+        "model_name": model.__class__.__name__,
+        "dataset": dataset.__class__.__name__,
+        "embedding_size": embedding_size,
+        "dropout": dropout,
+        "lr": lr,
+        "weight_decay": weight_decay, 
+        "svdComponents": svdComponents, 
+        "thirds": thirds,
+        "epochs": epochs
         })
+
+        if  model.__class__.__name__ == "TweetAugHANConfigurable":
+            wandb.config.update({
+            "extraLayer": extraLayer,
+            "numHanLayers": numHanLayers
+            })
     # wandb.watch(model)
 
     loss=nn.CrossEntropyLoss()
@@ -203,9 +204,8 @@ def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, w
     else:
         return val_acc
 
-if __name__ == '__main__':
-    wandb.init(project="test-project", entity="graphbois")
 
+if __name__ == '__main__':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     ## HYPERPARAMETERS
@@ -215,17 +215,25 @@ if __name__ == '__main__':
     # embedding_size,dropout,lr,weight_decay, svdComponents, thirds=128,0.3,1e-3,5e-3, 100, False
 
     # Current Values
-    embedding_size = 128
-    dropout = 0.5
-    lr = 1e-3
-    weight_decay = 5e-3
-    svdComponents = 200
-    thirds = True
-    epochs = 1
-    extraLayer = True
-    numHanLayers = 4
-    neighboursPerNode = 200
-    batch_size = 1024
-    testing_enabled = False
+    config_defaults = dict(
+        model_name="TweetAugHANConfigurable",
+        dataset="HeteroTwibot",
+        embedding_size = 128,
+        dropout = 0.5,
+        lr = 1e-3,
+        weight_decay = 5e-3,
+        svdComponents = 200,
+        thirds = True,
+        epochs = 50,
+        extraLayer = True,
+        numHanLayers = 4,
+        neighboursPerNode = 200,
+        batch_size = 1024,
+        testing_enabled = False,
+    )
 
-    trainTestHeteroMinibatched(embedding_size, dropout, lr, weight_decay, svdComponents, thirds, epochs, extraLayer, numHanLayers, neighboursPerNode, batch_size, testing_enabled)
+    wandb.init(project="test-project", entity="graphbois",  config=config_defaults)
+
+    config = wandb.config
+
+    trainTestHeteroMinibatched(config.embedding_size, config.dropout, config.lr, config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.extraLayer, config.numHanLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, using_external_config=True)
