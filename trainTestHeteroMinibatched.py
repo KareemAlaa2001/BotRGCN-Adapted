@@ -128,9 +128,7 @@ def test_minibatched_with_metrics(loader, model, loss, device, **metrics):
     return results
 
 
-
-
-def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, weight_decay = 5e-3, svdComponents = 100, thirds = False, epochs = 100, extraLayer=True, numHanLayers = 2, neighboursPerNode = 50, batch_size = 256):
+def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, weight_decay = 5e-3, svdComponents = 100, thirds = False, epochs = 100, extraLayer=True, numHanLayers = 2, neighboursPerNode = 50, batch_size = 256, testing_enabled = True):
     wandb.init(project="test-project", entity="graphbois")
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -196,10 +194,14 @@ def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, w
     
     # results = test_minibatched_with_metrics(test_loader, model, loss, device, **metrics)
     # wandb.log(results)
+    
+    if testing_enabled:
 
-    acc_test,loss_test,f1, roc_auc = test(model, dataset, loss)
+        acc_test,loss_test,f1, roc_auc = test(model, dataset, loss)
 
-    return acc_test,loss_test,f1, roc_auc
+        return acc_test
+    else:
+        return val_acc
 
 if __name__ == '__main__':
     wandb.init(project="test-project", entity="graphbois")
@@ -224,5 +226,6 @@ if __name__ == '__main__':
     numHanLayers = 4
     neighboursPerNode = 200
     batch_size = 1024
+    testing_enabled = False
 
-    trainTestHeteroMinibatched(embedding_size, dropout, lr, weight_decay, svdComponents, thirds, epochs, extraLayer, numHanLayers, neighboursPerNode, batch_size)
+    trainTestHeteroMinibatched(embedding_size, dropout, lr, weight_decay, svdComponents, thirds, epochs, extraLayer, numHanLayers, neighboursPerNode, batch_size, testing_enabled)
