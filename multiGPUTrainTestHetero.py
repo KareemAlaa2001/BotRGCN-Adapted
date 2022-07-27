@@ -199,7 +199,7 @@ def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, w
     print("beginning training...")
 
     for epoch in tqdm(range(epochs), miniters=5): 
-        train_loss, train_acc = train_minibatched(epoch,model, train_loader, loss, optimizer, device)
+        train_loss, train_acc = train_minibatched_dataparallel(model, train_loader, loss, dataset, optimizer, device)
         val_loss, val_acc = test_minibatched(val_loader, model, loss, device)
         wandb.log({"loss_train": train_loss, "acc_train": train_acc, "acc_val": val_acc, "loss_val": val_loss})
 
