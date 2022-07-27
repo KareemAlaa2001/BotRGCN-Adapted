@@ -134,7 +134,7 @@ def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, w
     wandb.init(project="test-project", entity="graphbois")
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
+    device = torch.device('cpu')
     ## IMPORTING THE DATASET
     print("importing the dataset...")
 
@@ -142,7 +142,7 @@ def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, w
     dataset = initializeHeteroTwibot(dataset).to(device, 'x', 'y')
 
     # min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 else 1
-    kwargs = {'num_workers': 4, 'persistent_workers': True, 'batch_size': batch_size}
+    kwargs = {'num_workers': min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 else 1, 'persistent_workers': True, 'batch_size': batch_size}
 
     train_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].train_mask), **kwargs)
     val_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].val_mask), **kwargs)
