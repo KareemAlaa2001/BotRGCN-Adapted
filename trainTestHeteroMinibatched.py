@@ -146,7 +146,7 @@ def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, w
     kwargs_test = {'num_workers': min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 else 1, 'persistent_workers': True, 'batch_size': ((len(dataset['user'].test_idx) // 2) + 2)}
     train_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].train_mask), **kwargs)
     val_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].val_mask), **kwargs)
-    test_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].test_mask), **kwargs_test)
+    # test_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].test_mask), **kwargs_test)
 
 
     # model = TweetAugmentedHAN2ExtraLayer(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata()).to(device)
@@ -193,13 +193,13 @@ def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, w
 
     metrics = {'f1_score': f1_score, 'mcc': matthews_corrcoef, 'prec': precision_score, 'recall': recall_score, 'roc_auc': roc_auc_score}
     
+    
+    # results = test_minibatched_with_metrics(test_loader, model, loss, device, **metrics)
+    # wandb.log(results)
 
-    results = test_minibatched_with_metrics(test_loader, model, loss, device, **metrics)
-    wandb.log(results)
+    acc_test,loss_test,f1, roc_auc = test(model, dataset, loss)
 
-    # acc_test,loss_test,f1, roc_auc = test(model, dataset, loss)
-
-    return results
+    return acc_test,loss_test,f1, roc_auc
 
 if __name__ == '__main__':
     wandb.init(project="test-project", entity="graphbois")
