@@ -1,7 +1,7 @@
 from HeteroTwibot import HeteroTwibot, initializeHeteroTwibot
 from TwibotSmallEdgeHetero import TwibotSmallEdgeHetero
 
-from torch_geometric.loader import DataLoader, NeighborLoader
+from torch_geometric.loader import DataLoader, NeighborLoader, DataListLoader
 from torch_geometric.nn import DataParallel
 
 from augmodels import TweetAugmentedHAN, TweetAugmentedRGCN, TweetAugmentedHAN2, TweetAugmentedHAN2ExtraLayer, TweetAugHetGCN, TweetAugHANConfigurable
@@ -162,6 +162,7 @@ def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, w
     kwargs = {'num_workers': 4, 'persistent_workers': True, 'batch_size': batch_size}
 
     train_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].train_mask), **kwargs)
+    train_loader = DataListLoader(train_loader, shuffle=False, **kwargs)
     val_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].val_mask), **kwargs)
     test_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=False, input_nodes=('user',dataset['user'].test_mask), **kwargs)
 
