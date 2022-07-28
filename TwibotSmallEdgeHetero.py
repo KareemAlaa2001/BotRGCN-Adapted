@@ -9,8 +9,9 @@ class TwibotSmallEdgeHetero(TwibotSmallAugmentedTSVDHomogeneous):
         print('Building graph',end='   ')
         path=self.root+'hetero_edge_index.pt'
         if not os.path.exists(path):
-            if self.df_tweet == None:
+            if not self.has_df_tweet:
                 self.df_tweet = self.extract_df_tweet()
+                self.has_df_tweet = True
 
             id2index_dict={id:index for index,id in enumerate(self.df_users['ID'])}
             id2index_dict.update({id:index for index,id in enumerate(self.df_tweet['ID'], start=len(self.df_users['ID']))})
