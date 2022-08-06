@@ -145,10 +145,11 @@ def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, w
     train_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=True, input_nodes=('user',dataset['user'].train_mask), **kwargs)
     val_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=True, input_nodes=('user',dataset['user'].val_mask), **kwargs)
     test_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=True, input_nodes=('user',dataset['user'].test_mask), **kwargs_test)
-
+    
 
     # model = TweetAugmentedHAN2ExtraLayer(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata()).to(device)
     model = TweetAugHANConfigurable(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata(), extraLayer=extraLayer,numHanLayers=numHanLayers).to(device)
+    # model = TweetAugmentedHAN(embedding_dimension=embedding_size,des_size=svdComponents, twvdComponents, metadeet_size=sata=dataset.metadata()).to(device)
 
     if not using_external_config:
         wandb.config.update({
@@ -218,17 +219,17 @@ if __name__ == '__main__':
     config_defaults = dict(
         model_name="TweetAugHANConfigurable",
         dataset="HeteroTwibot",
-        embedding_size = 128,
-        dropout = 0.5,
-        lr = 1e-3,
-        weight_decay = 5e-3,
-        svdComponents = 200,
+        embedding_size = 204,
+        dropout = 0.18380768518137663,
+        lr = 0.004164987490510339,
+        weight_decay = 0.0027187218127487783,
+        svdComponents = 50,
         thirds = True,
-        epochs = 50,
+        epochs = 60,
         extraLayer = True,
         numHanLayers = 4,
         neighboursPerNode = 200,
-        batch_size = 1024,
+        batch_size = 256,
         testing_enabled = False,
     )
 
@@ -236,4 +237,101 @@ if __name__ == '__main__':
 
     config = wandb.config
 
-    trainTestHeteroMinibatched(config.embedding_size, config.dropout, config.lr, config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.extraLayer, config.numHanLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, using_external_config=True)
+    trainTestHeteroMinibatched(config.embedding_size, config.dropout, config.lr, config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.extraLayer, config.numHanLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, using_external_config=False)
+
+
+"""
+Hyperparameter Search Winner Winner Chicken Dinner
+TODO run this one on server with more epochs and see if it improves
+    {
+    "lr": {
+        "desc": null,
+        "value": 0.004164987490510339
+    },
+    "_wandb": {
+        "desc": null,
+        "value": {
+            "t": {
+                "1": [
+                    1,
+                    5,
+                    53,
+                    55,
+                    77
+                ],
+                "3": [
+                    16,
+                    24
+                ],
+                "4": "3.7.11",
+                "5": "0.12.21",
+                "8": [
+                    5
+                ]
+            },
+            "framework": "torch",
+            "start_time": 1659295416,
+            "cli_version": "0.12.21",
+            "is_jupyter_run": false,
+            "python_version": "3.7.11",
+            "is_kaggle_kernel": false
+        }
+    },
+    "epochs": {
+        "desc": null,
+        "value": 34
+    },
+    "thirds": {
+        "desc": null,
+        "value": false
+    },
+    "dataset": {
+        "desc": null,
+        "value": "HeteroTwibot"
+    },
+    "dropout": {
+        "desc": null,
+        "value": 0.18380768518137663
+    },
+    "batch_size": {
+        "desc": null,
+        "value": 256
+    },
+    "extraLayer": {
+        "desc": null,
+        "value": true
+    },
+    "model_name": {
+        "desc": null,
+        "value": "TweetAugHANConfigurable"
+    },
+    "numHANLayers": {
+        "desc": null,
+        "value": 3
+    },
+    "numHanLayers": {
+        "desc": null,
+        "value": 4
+    },
+    "weight_decay": {
+        "desc": null,
+        "value": 0.0027187218127487783
+    },
+    "svdComponents": {
+        "desc": null,
+        "value": 50
+    },
+    "embedding_size": {
+        "desc": null,
+        "value": 204
+    },
+    "testing_enabled": {
+        "desc": null,
+        "value": false
+    },
+    "neighboursPerNode": {
+        "desc": null,
+        "value": 382
+    }
+}
+"""
