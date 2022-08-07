@@ -227,7 +227,7 @@ if __name__ == '__main__':
         thirds = True,
         epochs = 60,
         extraLayer = True,
-        numHanLayers = 4,
+        numHANLayers = 4,
         neighboursPerNode = 382,
         batch_size = 256,
         testing_enabled = False,
