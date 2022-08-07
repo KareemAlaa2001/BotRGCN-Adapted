@@ -20,4 +20,4 @@ module load anaconda
 source activate botRGCN
 
 # Run the wandb agent for hyperparameter sweeping
-wandb agent graphbois/test-project/3p9u93j8
+wandb agent graphbois/test-project/gwi2p291
