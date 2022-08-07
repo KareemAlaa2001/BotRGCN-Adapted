@@ -1,3 +1,6 @@
 Twibot-20/
 Data/
 __pycache__/
+
+wandb/
+.DS_Store/

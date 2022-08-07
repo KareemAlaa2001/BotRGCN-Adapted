@@ -188,8 +188,8 @@ def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, w
             print('Epoch: {:04d}'.format(epoch+1),
                 'loss_train: {:.4f}'.format(train_loss.item()),
                 'acc_train: {:.4f}'.format(train_acc.item()),
-                'acc_val: {:.4f}'.format(val_loss.item()),
-                'loss_val: {:.4f}'.format(val_acc.item()))
+                'loss_val: {:.4f}'.format(val_loss.item()),
+                'acc_val: {:.4f}'.format(val_acc.item()))
 
     metrics = {'f1_score': f1_score, 'mcc': matthews_corrcoef, 'prec': precision_score, 'recall': recall_score, 'roc_auc': roc_auc_score}
     
