@@ -19,6 +19,7 @@ from utils import accuracy,init_weights
 from sklearn.metrics import f1_score, matthews_corrcoef, precision_score, recall_score, roc_auc_score, precision_recall_curve, confusion_matrix
 import wandb
 
+example_pred_printed = False
 
 def test_minibatched_with_metrics(loader, model, loss, device, **metrics):
     model.eval()
@@ -27,7 +28,7 @@ def test_minibatched_with_metrics(loader, model, loss, device, **metrics):
     metric_totals = {metric: 0.0 for metric in metrics}
 
     total_conf_matrix = torch.zeros((2,2))
-
+    
     for data in loader:
         data = data.to(device, 'edge_index')
 
@@ -40,18 +41,22 @@ def test_minibatched_with_metrics(loader, model, loss, device, **metrics):
         total_examples += batch_size
         total_loss += loss_batch.detach() * batch_size
         total_acc += acc_batch.detach() * batch_size
+        
+        batch_y_pred = output[:batch_size].max(1)[1].detach().numpy()
 
-        y_pred = output[:batch_size].max(1)[1].detach().numpy()
-        y_true = data['user'].y[:batch_size].detach().numpy()
+        if not example_pred_printed:
+            print(batch_y_pred)
+
+        batch_y_true = data['user'].y[:batch_size].detach().numpy()
 
         for metric in metrics:
             try:
-                metric_totals[metric] += metrics[metric](y_pred, y_true) * batch_size
+                metric_totals[metric] += metrics[metric](batch_y_pred, batch_y_true) * batch_size
             except ValueError:
                 print("Got the valueerror from a batch not containing both classes for metric",metric, "continuing..")
                 continue
         
-        conf_matrix_batch = confusion_matrix(y_true, y_pred)
+        conf_matrix_batch = confusion_matrix(batch_y_true, batch_y_pred)
         total_conf_matrix += conf_matrix_batch
 
     test_loss = total_loss / total_examples 
