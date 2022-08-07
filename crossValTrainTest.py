@@ -2,7 +2,7 @@ from HeteroTwibot import HeteroTwibot, initializeHeteroAugTwibot, initHomoAugTwi
 from TwibotSmallEdgeHetero import TwibotSmallEdgeHetero
 from TwibotSmallTruncatedSVD import TwibotSmallTruncatedSVD
 from trainTestHeteroMinibatched import train_minibatched
-
+from scipy.special import softmax
 from torch_geometric.loader import DataLoader, NeighborLoader
 
 from augmodels import TweetAugmentedHAN, TweetAugmentedRGCN, TweetAugmentedHAN2, TweetAugmentedHAN2ExtraLayer, TweetAugHetGCN, TweetAugHANConfigurable
@@ -29,6 +29,9 @@ def test_minibatched_with_metrics(loader, model, loss, device, **metrics):
 
     total_conf_matrix = torch.zeros((2,2))
     
+    total_y_pred = np.zeros((0))
+    total_y_true = np.zeros((0))
+    total_y_pred_proba = np.zeros((0,2))
     for data in loader:
         data = data.to(device, 'edge_index')
 
@@ -44,25 +47,40 @@ def test_minibatched_with_metrics(loader, model, loss, device, **metrics):
         
         batch_y_pred = output[:batch_size].max(1)[1].detach().numpy()
 
-        if not example_pred_printed:
-            print(batch_y_pred)
+        batch_y_pred_prob = softmax(output[:batch_size].detach().numpy(), axis=1)
 
         batch_y_true = data['user'].y[:batch_size].detach().numpy()
 
-        for metric in metrics:
-            try:
-                metric_totals[metric] += metrics[metric](batch_y_pred, batch_y_true) * batch_size
-            except ValueError:
-                print("Got the valueerror from a batch not containing both classes for metric",metric, "continuing..")
-                continue
-        
+        total_y_pred = np.concatenate((total_y_pred, batch_y_pred))
+        total_y_true = np.concatenate((total_y_true, batch_y_true))
+        total_y_pred_proba = np.concatenate((total_y_pred_proba, batch_y_pred_prob))
+        #metrics = {'f1_score': f1_score, 'mcc': matthews_corrcoef, 'prec': precision_score, \
+        #'recall': recall_score, 'roc_auc': roc_auc_score}
+        # for metric in metrics:
+        #     try:
+        #         if metric == 'roc_auc':
+        #             metric_totals[metric] += metrics[metric](batch_y_true, batch_y_pred_prob[:,1])
+        #         metric_totals[metric] += metrics[metric](batch_y_true, batch_y_pred) * batch_size
+        #     except ValueError:
+        #         print("Got the valueerror from a batch not containing both classes for metric",metric, "continuing..")
+        #         continue
         conf_matrix_batch = confusion_matrix(batch_y_true, batch_y_pred)
         total_conf_matrix += conf_matrix_batch
 
     test_loss = total_loss / total_examples 
     test_acc = total_acc / total_examples
     
-    results = {metric: metric_totals[metric] / total_examples for metric in metrics}
+    results = {}
+    for metric in metrics:
+        try:
+            if metric == 'roc_auc':
+                results[metric] = metrics[metric](total_y_true, total_y_pred_proba[:,1])
+            results[metric] = metrics[metric](total_y_true, total_y_pred)
+
+        except ValueError:
+            print("Got the valueerror from a batch not containing both classes for metric",metric, "continuing..")
+            continue
+
     results['conf_matrix'] = total_conf_matrix
     results['loss'] = test_loss
     results['acc'] = test_acc
@@ -189,8 +207,8 @@ if __name__ == '__main__':
         lr = 0.004164987490510339,
         weight_decay = 0.0027187218127487783,
         svdComponents = 100,
-        thirds = True,
-        epochs = 1,
+        thirds = False,
+        epochs = 40,
         extraLayer = True,
         numHANLayers = 4,
         neighboursPerNode = 382,
@@ -198,7 +216,7 @@ if __name__ == '__main__':
         # neighboursPerNode = 10,
         # batch_size=1,
         testing_enabled = False,
-        crossValFolds = 3
+        crossValFolds = 5
     )
 
     wandb.init(project="test-project", entity="graphbois",  config=config_defaults)

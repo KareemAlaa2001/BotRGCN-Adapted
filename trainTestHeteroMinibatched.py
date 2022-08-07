@@ -69,63 +69,66 @@ def test_minibatched(loader, model, loss, device):
 
     return test_loss, test_acc
 
-def test_minibatched_with_metrics(loader, model, loss, device, **metrics):
-    model.eval()
-    total_examples = total_loss = total_acc = 0
-
-    metric_totals = {metric: 0.0 for metric in metrics}
-
-    total_conf_matrix = torch.zeros(2, 2)
-
-    for data in loader:
-        data = data.to(device, 'edge_index')
-
-        batch_size = data['user'].batch_size
-        output = model(data)
-
-        loss_batch = loss(output[:batch_size], data['user'].y[:batch_size])
-        acc_batch = accuracy(output[:batch_size],  data['user'].y[:batch_size])
-
-        total_loss += loss_batch * batch_size
-        total_acc += acc_batch * batch_size
-
-        total_examples += batch_size
-
-        y_pred = output[:batch_size].max(1)[1].detach().numpy()
-        y_true = data['user'].y[:batch_size].detach().numpy()
 
 
+## TODO FIX THIS FUNCTION, METRIC APPLICATION BROKEN
+# def test_minibatched_with_metrics(loader, model, loss, device, **metrics):
+#     model.eval()
+#     total_examples = total_loss = total_acc = 0
 
-        for metric in metrics:
-            try:
-                metric_totals[metric] += metrics[metric](y_pred, y_true) * batch_size
-            except ValueError:
-                print("Got the valueerror from a batch not containing both classes, continuing..")
-                continue
-        # f1_batch = f1_score(y_true, y_pred, average='macro')
-        # mcc_batch = matthews_corrcoef(y_true, y_pred)
-        # precision_batch = precision_score(y_true, y_pred, average='macro')
-        # recall_batch = recall_score(y_true, y_pred, average='macro')
-        # roc_auc_batch = roc_auc_score(y_true, y_pred, average='macro')
+#     metric_totals = {metric: 0.0 for metric in metrics}
 
-        # total_f1 += f1_batch * batch_size
-        # total_mcc += mcc_batch * batch_size
-        # total_precision += precision_batch * batch_size
-        # total_recall += recall_batch * batch_size
-        # total_roc_auc += roc_auc_batch * batch_size
+#     total_conf_matrix = torch.zeros(2, 2)
 
-        conf_matrix_batch = confusion_matrix(y_true, y_pred)
-        total_conf_matrix += conf_matrix_batch
+#     for data in loader:
+#         data = data.to(device, 'edge_index')
 
-    test_loss = total_loss / total_examples
-    test_acc = total_acc / total_examples
+#         batch_size = data['user'].batch_size
+#         output = model(data)
 
-    results = {metric: metric_totals[metric] / total_examples for metric in metrics}
-    results['conf_matrix'] = total_conf_matrix
-    results['loss_test'] = test_loss
-    results['acc_test'] = test_acc
+#         loss_batch = loss(output[:batch_size], data['user'].y[:batch_size])
+#         acc_batch = accuracy(output[:batch_size],  data['user'].y[:batch_size])
 
-    return results
+#         total_loss += loss_batch * batch_size
+#         total_acc += acc_batch * batch_size
+
+#         total_examples += batch_size
+
+#         y_pred = output[:batch_size].max(1)[1].detach().numpy()
+#         y_true = data['user'].y[:batch_size].detach().numpy()
+
+
+
+#         for metric in metrics:
+#             try:
+#                 metric_totals[metric] += metrics[metric](y_pred, y_true) * batch_size
+#             except ValueError:
+#                 print("Got the valueerror from a batch not containing both classes, continuing..")
+#                 continue
+#         # f1_batch = f1_score(y_true, y_pred, average='macro')
+#         # mcc_batch = matthews_corrcoef(y_true, y_pred)
+#         # precision_batch = precision_score(y_true, y_pred, average='macro')
+#         # recall_batch = recall_score(y_true, y_pred, average='macro')
+#         # roc_auc_batch = roc_auc_score(y_true, y_pred, average='macro')
+
+#         # total_f1 += f1_batch * batch_size
+#         # total_mcc += mcc_batch * batch_size
+#         # total_precision += precision_batch * batch_size
+#         # total_recall += recall_batch * batch_size
+#         # total_roc_auc += roc_auc_batch * batch_size
+
+#         conf_matrix_batch = confusion_matrix(y_true, y_pred)
+#         total_conf_matrix += conf_matrix_batch
+
+#     test_loss = total_loss / total_examples
+#     test_acc = total_acc / total_examples
+
+#     results = {metric: metric_totals[metric] / total_examples for metric in metrics}
+#     results['conf_matrix'] = total_conf_matrix
+#     results['loss_test'] = test_loss
+#     results['acc_test'] = test_acc
+
+#     return results
 
 
 def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, weight_decay = 5e-3, svdComponents = 100, thirds = False, epochs = 100, extraLayer=True, numHanLayers = 2, neighboursPerNode = 50, batch_size = 256, testing_enabled = True, using_external_config = False):
