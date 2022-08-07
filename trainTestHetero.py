@@ -1,4 +1,4 @@
-from HeteroTwibot import HeteroTwibot, initializeHeteroTwibot
+from HeteroTwibot import HeteroTwibot, initializeHeteroAugTwibot
 from TwibotSmallEdgeHetero import TwibotSmallEdgeHetero
 
 from torch_geometric.loader import DataLoader, NeighborLoader
@@ -30,7 +30,7 @@ def trainTestHetero(embedding_size = 128, dropout = 0.3, lr = 1e-3, weight_decay
     print("importing the dataset...")
 
     dataset = TwibotSmallEdgeHetero(device=device,process=True,save=True,dev=False, svdComponents=svdComponents)
-    dataset = initializeHeteroTwibot(dataset)
+    dataset = initializeHeteroAugTwibot(dataset)
 
     # model = TweetAugmentedHAN2ExtraLayer(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata()).to(device)
     model = TweetAugHANConfigurable(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata(), extraLayer=extraLayer,numHanLayers=numHanLayers).to(device)

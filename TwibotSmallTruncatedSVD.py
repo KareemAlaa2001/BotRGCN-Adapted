@@ -14,12 +14,22 @@ from tqdm import tqdm
 class TwibotSmallTruncatedSVD(Dataset):
     def __init__(self,root='./Data/TruncSVDSmall/',device='cpu',process=True,save=True,dev=False, svdComponents=100):
         self.root = root[:-1]+'Dev/' if dev else './Data/TruncSVDSmall/'
+
+        if svdComponents != 100:
+            self.root = self.root+'svd'+str(svdComponents)+'/'
+            try: 
+                os.mkdir(self.root) 
+            except OSError as error: 
+                # do nothing if the folder already exists
+                pass
+
         self.device = device
         self.device_value = -1 if self.device.type =='cpu' else 0
         self.save=save
         self.svdComponents = svdComponents
         self.process=process
         self.dev = dev
+        
         if process:
             
             if not dev:
@@ -344,7 +354,6 @@ class TwibotSmallTruncatedSVD(Dataset):
         labels=self.load_labels()
         self.preprocess_descriptions()
         des_tensor=self.Des_embbeding()
-        # self.tweets_preprocess()
         tweets_tensor=self.tweets_embedding()
         num_prop=self.num_prop_preprocess()
         category_prop=self.cat_prop_preprocess()

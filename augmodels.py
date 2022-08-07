@@ -63,7 +63,6 @@ class TweetAugHANConfigurable(nn.Module):
             nn.LeakyReLU()
         )
         
-        # TODO check documentation for this TODO check if the 2 value for out_channels is valid if things break
         self.han = HANConv(in_channels=-1, out_channels=embedding_dimension, metadata=metadata, dropout=self.dropout)
         # self.han=HANConv(embedding_dimension,embedding_dimension,num_relations=2)
         
@@ -75,33 +74,59 @@ class TweetAugHANConfigurable(nn.Module):
 
 
     def forward(self,data: HeteroData):
-
         d=self.linear_relu_des(data['user'].des)
         n=self.linear_relu_num_prop(data['user'].num)
         c=self.linear_relu_cat_prop(data['user'].cat)
-
         x=torch.cat((d,n,c),dim=1)
-        t=self.linear_relu_tweet(data['tweet'].x.float())
-        out_dict = {'user':x,'tweet':t}
 
-        ### NOTE making the extra layer an optional hyperparameter
-        if self.extraLayer:
-            out_dict['user'] = self.linear_relu_input(out_dict['user'])
-            out_dict['tweet'] = self.linear_relu_input(out_dict['tweet'])
-
-
-        out = self.han(out_dict, data.edge_index_dict)
-
-        for i in range(self.numHanLayers-1):
-            out = self.han(out, data.edge_index_dict)
-
-        user_type_vec = torch.zeros(out['user'].shape[0])
-        tweet_type_vec = torch.ones(out['tweet'].shape[0])
-        type_vec = torch.cat((user_type_vec,tweet_type_vec),dim=0)
-        out=self.heteroLinear_output1(torch.cat((out['user'], out['tweet']), dim=0), type_vec)
         
-        out = self.relu_output1(out)
-        out=self.heteroLinear_output2(out, type_vec)
+        if len(data.node_types) == 2:
+            t=self.linear_relu_tweet(data['tweet'].x.float())
+            out_dict = {'user':x,'tweet':t}
+
+            ### NOTE making the extra layer an optional hyperparameter
+            if self.extraLayer:
+                out_dict['user'] = self.linear_relu_input(out_dict['user'])
+                out_dict['tweet'] = self.linear_relu_input(out_dict['tweet'])
+
+
+            out = self.han(out_dict, data.edge_index_dict)
+
+            for i in range(self.numHanLayers-1):
+                out = self.han(out, data.edge_index_dict)
+
+            user_type_vec = torch.zeros(out['user'].shape[0])
+            tweet_type_vec = torch.ones(out['tweet'].shape[0])
+            type_vec = torch.cat((user_type_vec,tweet_type_vec),dim=0)
+            out=self.heteroLinear_output1(torch.cat((out['user'], out['tweet']), dim=0), type_vec)
+            
+            out = self.relu_output1(out)
+            out=self.heteroLinear_output2(out, type_vec)
+
+        else:
+            if len(data.node_types) != 1:
+                raise ValueError("Must have 1 or 2 node types")
+
+            t=self.linear_relu_tweet(data['user'].tweet.float())
+            out_dict = {'user': torch.cat((x,t),dim=0)}
+
+            if self.extraLayer:
+                out_dict['user'] = self.linear_relu_input(out_dict['user'])
+            
+            out = self.han(out_dict, data.edge_index_dict)
+
+            for i in range(self.numHanLayers-1):
+                out = self.han(out, data.edge_index_dict)
+
+            type_vec = torch.zeros(out['user'].shape[0])
+
+            out=self.heteroLinear_output1(torch.cat((out['user'], out['tweet']), dim=0), type_vec)
+            
+            out = self.relu_output1(out)
+            out=self.heteroLinear_output2(out, type_vec)
+
+
+
             
         return out
 

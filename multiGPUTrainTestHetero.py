@@ -1,4 +1,4 @@
-from HeteroTwibot import HeteroTwibot, initializeHeteroTwibot
+from HeteroTwibot import HeteroTwibot, initializeHeteroAugTwibot
 from TwibotSmallEdgeHetero import TwibotSmallEdgeHetero
 
 from torch_geometric.loader import DataLoader, NeighborLoader, DataListLoader
@@ -156,7 +156,7 @@ def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, w
     print("importing the dataset...")
 
     dataset = TwibotSmallEdgeHetero(device=device,process=True,save=True,dev=False, svdComponents=svdComponents)
-    dataset = initializeHeteroTwibot(dataset).to(device, 'x', 'y')
+    dataset = initializeHeteroAugTwibot(dataset).to(device, 'x', 'y')
 
     # min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 else 1
     kwargs = {'num_workers': 4, 'persistent_workers': True, 'batch_size': batch_size}

@@ -1,4 +1,4 @@
-from HeteroTwibot import HeteroTwibot, initializeHeteroTwibot
+from HeteroTwibot import HeteroTwibot, initializeHeteroAugTwibot
 from TwibotSmallEdgeHetero import TwibotSmallEdgeHetero
 
 from torch_geometric.loader import DataLoader, NeighborLoader
@@ -137,7 +137,7 @@ def trainTestHeteroMinibatched(embedding_size = 128, dropout = 0.3, lr = 1e-3, w
     print("importing the dataset...")
 
     dataset = TwibotSmallEdgeHetero(device=device,process=True,save=True,dev=False, svdComponents=svdComponents)
-    dataset = initializeHeteroTwibot(dataset).to(device, 'x', 'y')
+    dataset = initializeHeteroAugTwibot(dataset).to(device, 'x', 'y')
 
     # min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 else 1
     kwargs = {'num_workers': min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 and torch.device.type == 'cuda' else 1, 'persistent_workers': True, 'batch_size': batch_size}
@@ -223,12 +223,12 @@ if __name__ == '__main__':
         dropout = 0.18380768518137663,
         lr = 0.004164987490510339,
         weight_decay = 0.0027187218127487783,
-        svdComponents = 50,
+        svdComponents = 100,
         thirds = True,
         epochs = 60,
         extraLayer = True,
         numHanLayers = 4,
-        neighboursPerNode = 200,
+        neighboursPerNode = 382,
         batch_size = 256,
         testing_enabled = False,
     )
@@ -237,7 +237,7 @@ if __name__ == '__main__':
 
     config = wandb.config
 
-    trainTestHeteroMinibatched(config.embedding_size, config.dropout, config.lr, config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.extraLayer, config.numHanLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, using_external_config=False)
+    trainTestHeteroMinibatched(config.embedding_size, config.dropout, config.lr, config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.extraLayer, config.numHANLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, using_external_config=True)
 
 
 """

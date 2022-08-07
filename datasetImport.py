@@ -2,18 +2,19 @@ import torch
 from TwibotSmallTruncatedSVD import TwibotSmallTruncatedSVD
 from TwibotSmallAugmentedTSVDHomogeneous import TwibotSmallAugmentedTSVDHomogeneous
 from TwibotSmallEdgeHetero import TwibotSmallEdgeHetero
-from HeteroTwibot import HeteroTwibot, initializeHeteroTwibot
+from HeteroTwibot import initializeHeteroAugTwibot, initEdgeHeteroTwibotNonAug
 from torch_geometric.loader import DataLoader, NeighborLoader
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-embedding_size,dropout,lr,weight_decay,svdComponents=128,0.3,1e-3,5e-3,400
+embedding_size,dropout,lr,weight_decay,svdComponents=128,0.3,1e-3,5e-3,50
 num_neighbors = 50
 numHanLayers = 2
 # dataset=Twibot20(device=device,process=True,save=True)
-# dataset = TwibotSmallTruncatedSVD(device=device,process=True,save=True,dev=True)
+dataset = TwibotSmallTruncatedSVD(device=device,process=True,save=True,dev=False, svdComponents=svdComponents)
 # dataset = TwibotSmallAugmentedTSVDHomogeneous(device=device,process=True,save=True,dev=False, svdComponents=svdComponents)
-dataset = TwibotSmallEdgeHetero(device=device,process=True,save=True,dev=False, svdComponents=svdComponents)
-dataset = initializeHeteroTwibot(dataset)
+# dataset = TwibotSmallEdgeHetero(device=device,process=True,save=True,dev=False, svdComponents=svdComponents)
+# dataset = initializeHeteroAugTwibot(dataset)
+dataset = initEdgeHeteroTwibotNonAug(dataset)
 
 print("num users", dataset.x_dict['user'].shape)
 
