@@ -138,7 +138,7 @@ def trainValModelForCrossVal(embedding_size = 128, dropout = 0.3, lr = 1e-3, wei
     
     print("Getting model")
     # model = TweetAugmentedHAN2ExtraLayer(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata()).to(device)
-    model = TweetAugHANConfigurable(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata(), extraLayer=extraLayer,numHanLayers=numHanLayers).to(device)
+    model = TweetAugHANConfigurable(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata(), augmented_data=augmentedDataset, extraLayer=extraLayer,numHanLayers=numHanLayers).to(device)
     # model = TweetAugmentedHAN(embedding_dimension=embedding_size,des_size=svdComponents, twvdComponents, metadeet_size=sata=dataset.metadata()).to(device)
 
     if not using_external_config:
@@ -229,7 +229,7 @@ if __name__ == '__main__':
         val_results = trainValModelForCrossVal(config.embedding_size, config.dropout, config.lr, \
             config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.extraLayer, \
                 config.numHANLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, \
-                    using_external_config=True, augmentedDataset=True, datasetVariant=2, crossValFolds=5, \
+                    using_external_config=True, augmentedDataset=False, datasetVariant=0, crossValFolds=5, \
                         crossValIteration=i, dev=False)
         
         for key in val_results:

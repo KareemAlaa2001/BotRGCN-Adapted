@@ -98,8 +98,7 @@ def initEdgeHeteroAugTwibot(edgeHetero: TwibotSmallEdgeHetero, cross_val_enabled
 
     # self.data['user'].x = None
     data['user'].x = torch.cat((des_tensor, category_prop, num_prop), dim=1)
-    print(labels.shape)
-    print(tweets_tensor.shape[0])
+    
     data['user'].y = torch.cat((labels, torch.zeros(tweets_tensor.shape[0])), dim=0)
 
     if cross_val_enabled:

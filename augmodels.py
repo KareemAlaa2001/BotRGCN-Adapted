@@ -7,10 +7,11 @@ from torch_geometric.nn import RGCNConv,FastRGCNConv,GCNConv,GATConv, HANConv, L
 
 
 class TweetAugHANConfigurable(nn.Module):
-    def __init__(self,des_size=100,tweet_size=100,num_prop_size=6,cat_prop_size=11,embedding_dimension=128,dropout=0.3, thirds=False, additional_tweet_features=False, metadata=None, extraLayer=True, numHanLayers=1):
+    def __init__(self,des_size=100,tweet_size=100,num_prop_size=6,cat_prop_size=11,embedding_dimension=128,dropout=0.3, thirds=False, augmented_data=True, metadata=None, extraLayer=True, numHanLayers=1):
         super(TweetAugHANConfigurable, self).__init__()
         self.dropout = dropout
         self.extraLayer = extraLayer
+        self.augmented_data = augmented_data
         if not metadata:
             raise ValueError("Must provide metadata")
 
@@ -18,26 +19,37 @@ class TweetAugHANConfigurable(nn.Module):
             raise ValueError("Must have at least one HAN layer")
 
         self.numHanLayers = numHanLayers
-        ## TODO this is a stop-gap solution, but there should be a more rhobust way of experimenting with the embedding sizes
+        ## TODO this is a stop-gap solution, but there should be a more rhobust way of experimenting with the embedding sizes (let's just keep the stopgap lmao)
         if thirds:
+            if not augmented_data:
+                raise ValueError("Cannot use thirds with unaugmented data")
             if embedding_dimension%3!=0:
                 raise ValueError("embedding_dimension must be divisible by 3")
 
             self.num_prop_size = embedding_dimension // 3
             self.cat_prop_size = embedding_dimension // 3
             self.des_size = embedding_dimension // 3
+            self.tweet_size = embedding_dimension // 3
         
         else:
             if embedding_dimension%4!=0:
                 raise ValueError("embedding_dimension must be divisible by 4")
-            self.num_prop_size = embedding_dimension // 4
-            self.cat_prop_size = embedding_dimension // 4
-            self.des_size = embedding_dimension // 2
+            
+            if augmented_data:
+                self.num_prop_size = embedding_dimension // 4
+                self.cat_prop_size = embedding_dimension // 4
+                self.des_size = embedding_dimension // 2
+                self.tweet_size = embedding_dimension // 2
+            else:
+                self.num_prop_size = embedding_dimension // 4
+                self.cat_prop_size = embedding_dimension // 4
+                self.des_size = embedding_dimension // 4
+                self.tweet_size = embedding_dimension // 4
 
-        if additional_tweet_features:
-            raise ValueError("additional_tweet_features not yet implemented")
-        else:
-            self.tweet_size = embedding_dimension
+        # if additional_tweet_features:
+        #     raise ValueError("additional_tweet_features not yet implemented")
+        # else:
+        #     self.tweet_size = embedding_dimension
 
 
         self.linear_relu_des=nn.Sequential(
@@ -54,7 +66,7 @@ class TweetAugHANConfigurable(nn.Module):
         )
 
         self.linear_relu_tweet=nn.Sequential(
-            nn.Linear(tweet_size,embedding_dimension),
+            nn.Linear(tweet_size,self.tweet_size),
             nn.LeakyReLU()
         )
         
@@ -107,26 +119,35 @@ class TweetAugHANConfigurable(nn.Module):
             if len(data.node_types) != 1:
                 raise ValueError("Must have 1 or 2 node types")
 
-            t=self.linear_relu_tweet(data['user'].tweet.float())
-            out_dict = {'user': torch.cat((x,t),dim=0)}
+            # The problem here is with the minibatching not maintaing the relevant tweets for the users, 
+            # need to depend on the join being completed earlier
+
+            # so we know that if the dataset is augmented, the neighbourloader will give a batch of batch_size User nodes + a bunch of tweet/user nodes. 
+            # Could depend on tweet nodes being last if we weren't minibatched, but that's not necessarilty the case. 
+            # We do know that for tweets, des, num and cat are all zeros. Wait no, we should be applying out the same linear layer to all the nodes.
+            # if augmented, there is no tweet info, it's all in the des embedding!!! So we can just proceed without the tweet info being extra-processed.
+            if self.augmented_data == False:
+                t = self.linear_relu_tweet(data['user'].tweet.float())
+                x = torch.cat((x,t),dim=1)
+
+            out_dict = {'user':x}
 
             if self.extraLayer:
                 out_dict['user'] = self.linear_relu_input(out_dict['user'])
             
             out = self.han(out_dict, data.edge_index_dict)
-
             for i in range(self.numHanLayers-1):
                 out = self.han(out, data.edge_index_dict)
-
+            
             type_vec = torch.zeros(out['user'].shape[0])
 
-            out=self.heteroLinear_output1(torch.cat((out['user'], out['tweet']), dim=0), type_vec)
-            
+            out=self.heteroLinear_output1(out['user'], type_vec)
             out = self.relu_output1(out)
             out=self.heteroLinear_output2(out, type_vec)
 
-
-
+            # TODO adjust tweet embedding size after sorting out input
+            # if data isnt augmented, then we use the same //4 for all component embedding sizes
+            ## if it is, then we want to maintain the //2, //4, //4
             
         return out
 
