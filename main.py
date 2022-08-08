@@ -95,15 +95,18 @@ def train(epoch):
 def test():
     model.eval()
     output = model(des_tensor,tweets_tensor,num_prop,category_prop,edge_index,edge_type)
-    loss_test = loss(output[test_idx], labels[test_idx])
-    acc_test = accuracy(output[test_idx], labels[test_idx])
+    output_probs = torch.softmax(output, dim=1).detach().cpu().numpy()
+    loss_test = loss(output[test_idx], labels[test_idx]).detach()
+    acc_test = accuracy(output[test_idx], labels[test_idx]).detach()
     output = output.max(1)[1].to('cpu').detach().numpy()
     label = labels.to('cpu').detach().numpy()
+
     f1 = f1_score(label[test_idx],output[test_idx])
     mcc = matthews_corrcoef(label[test_idx], output[test_idx])
     prec = precision_score(label[test_idx], output[test_idx])
     recall = recall_score(label[test_idx], output[test_idx])
-    roc_auc = roc_auc_score(label[test_idx], output[test_idx])
+    
+    roc_auc = roc_auc_score(label[test_idx], output_probs[test_idx, 1])
     print("Test set results:",
             "test_loss= {:.4f}".format(loss_test.item()),
             "test_accuracy= {:.4f}".format(acc_test.item()),
