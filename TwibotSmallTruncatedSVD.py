@@ -12,7 +12,7 @@ from torch.utils.data import Dataset
 from tqdm import tqdm
 
 class TwibotSmallTruncatedSVD(Dataset):
-    def __init__(self,root='./Data/TruncSVDSmall/',device='cpu',process=True,save=True,dev=False, svdComponents=100):
+    def __init__(self,root='./Data/TruncSVDSmall/',device='cpu',process=True,save=True,dev=False, svdComponents=100, edgeHetero=True):
         self.root = root[:-1]+'Dev/' if dev else './Data/TruncSVDSmall/'
 
         if svdComponents != 100:
@@ -29,7 +29,7 @@ class TwibotSmallTruncatedSVD(Dataset):
         self.svdComponents = svdComponents
         self.process=process
         self.dev = dev
-        
+        self.edgeHetero = edgeHetero
         if process:
             
             if not dev:
@@ -323,7 +323,11 @@ class TwibotSmallTruncatedSVD(Dataset):
                             continue
                         else:
                             edge_index.append([i,target_index])
-                        edge_type.append(1)
+                        if self.edgeHetero:
+                            edge_type.append(1)
+                        else:
+                            edge_type.append(0)
+                        
                 else:
                     continue
             edge_index=torch.tensor(edge_index,dtype=torch.long).t().contiguous().to(self.device)

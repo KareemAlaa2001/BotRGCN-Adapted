@@ -538,8 +538,8 @@ Then have a dense layer projecting the tweet and user embeddings to the same dim
 This relies on the edge_index matrix using combined indices (and me keeping track of them in the first place)
 
 
-TODO currently relying on an implementation where the tweets are projected to the embedding_dimension, which should thus be smaller than the tweet's svdComponents
-TODO this model only really works for homogeneous nodes, need to implement one for fully heterogeneous graphs
+NOTE currently relying on an implementation where the tweets are projected to the embedding_dimension
+NOTE this model only really works for homogeneous nodes, using HAN fully heterogeneous graphs
 """
 class TweetAugmentedRGCN(nn.Module):
     def __init__(self,des_size=100,tweet_size=100,num_prop_size=6,cat_prop_size=11,embedding_dimension=128,dropout=0.3, thirds=False, additional_tweet_features=False):
