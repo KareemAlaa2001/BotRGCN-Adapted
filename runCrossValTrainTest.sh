@@ -1,13 +1,13 @@
 #!/bin/sh
 # Grid Engine options (lines prefixed with #$)
-#$ -N run_crossValTrainTest
+#$ -N runHANFullHetero
 #$ -cwd
-#$ -l h_rt=24:00:00
+#$ -l h_rt=47:00:00
 #$ -l h_vmem=48G
 #  These options are:
 #  job name: -N
 #  use the current working directory: -cwd
-#  runtime limit of 24 hours: -l h_rt
+#  runtime limit of 47 hours (just in case): -l h_rt
 #  memory limit of 48 Gbyte (dissa ram heavy boi): -l h_vmem
 
 # Initialise the environment modules
@@ -20,4 +20,4 @@ module load anaconda
 source activate botRGCN
 
 # Run the python file for trainTestHeteroMinibatched.py
-python crossValTrainTest.py 
+python crossValTrainTest.py --augmented_dataset True --dataset_variant 2
