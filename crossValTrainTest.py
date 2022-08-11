@@ -5,6 +5,7 @@ from trainTestHeteroMinibatched import train_minibatched
 from scipy.special import softmax
 from torch_geometric.loader import DataLoader, NeighborLoader
 
+import argparse 
 from augmodels import TweetAugmentedHAN, TweetAugmentedRGCN, TweetAugmentedHAN2, TweetAugmentedHAN2ExtraLayer, TweetAugHetGCN, TweetAugHANConfigurable
 from model import BotRGCN
 from trainTestHetero import test
@@ -98,6 +99,7 @@ def trainValModelForCrossVal(embedding_size = 128, dropout = 0.3, lr = 1e-3, wei
     ## IMPORTING THE DATASET
     print("importing the dataset...")
 
+    numNodeTypes = 1
 
     if augmentedDataset:
         dataset = TwibotSmallEdgeHetero(device=device,process=True,save=True,dev=dev, svdComponents=svdComponents)
@@ -111,6 +113,7 @@ def trainValModelForCrossVal(embedding_size = 128, dropout = 0.3, lr = 1e-3, wei
         elif datasetVariant == 2:
             dataset = initializeHeteroAugTwibot(dataset, cross_val_enabled=True, cross_val_folds=crossValFolds, cross_val_iteration=crossValIteration).to(device, 'x', 'y')
             datasetName = "HeteroAugTwibot"
+            numNodeTypes = 2
         else:
             raise ValueError("datasetVariant must be 0,1 or 2")
     else:
@@ -138,7 +141,7 @@ def trainValModelForCrossVal(embedding_size = 128, dropout = 0.3, lr = 1e-3, wei
     
     print("Getting model")
     # model = TweetAugmentedHAN2ExtraLayer(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata()).to(device)
-    model = TweetAugHANConfigurable(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata(), augmented_data=augmentedDataset, extraLayer=extraLayer,numHanLayers=numHanLayers).to(device)
+    model = TweetAugHANConfigurable(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata(), augmented_data=augmentedDataset, extraLayer=extraLayer,numHanLayers=numHanLayers, numNodeTypes=numNodeTypes).to(device)
     # model = TweetAugmentedHAN(embedding_dimension=embedding_size,des_size=svdComponents, twvdComponents, metadeet_size=sata=dataset.metadata()).to(device)
 
     if not using_external_config:
@@ -175,8 +178,8 @@ def trainValModelForCrossVal(embedding_size = 128, dropout = 0.3, lr = 1e-3, wei
     for epoch in tqdm(range(epochs), miniters=5): 
         train_loss, train_acc = train_minibatched(epoch,model, train_loader, loss, optimizer, device)
         val_results = test_minibatched_with_metrics(val_loader, model, loss, device,**metrics)
-
-        wandb.log({"loss_train": train_loss, "acc_train": train_acc, **val_results})
+        val_results_named = {k+"_val":v for k,v in val_results.items()}
+        wandb.log({"loss_train": train_loss, "acc_train": train_acc, **val_results_named})
 
         if (epoch+1)  % 5 == 0:
             print('Epoch: {:04d}'.format(epoch+1),
@@ -198,6 +201,10 @@ def trainValModelForCrossVal(embedding_size = 128, dropout = 0.3, lr = 1e-3, wei
         return val_results
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--dataset_variant', type=int, default=1, help='1 for edge heterogeneous, 0 for edge homogeneous')
+    parser.add_argument('--augmented_dataset', type=bool, default=True, help='True for augmented dataset, False for non-augmented dataset')
+    args = parser.parse_args()
     # Current Values
     config_defaults = dict(
         model_name="TweetAugHANConfigurable",
@@ -208,7 +215,7 @@ if __name__ == '__main__':
         weight_decay = 0.0027187218127487783,
         svdComponents = 100,
         thirds = False,
-        epochs = 40,
+        epochs = 35,
         extraLayer = True,
         numHANLayers = 4,
         neighboursPerNode = 382,
@@ -216,7 +223,9 @@ if __name__ == '__main__':
         # neighboursPerNode = 10,
         # batch_size=1,
         testing_enabled = False,
-        crossValFolds = 5
+        crossValFolds = 5,
+        augmentedDataset = args.augmented_dataset,
+        datasetVariant = args.dataset_variant
     )
 
     wandb.init(project="test-project", entity="graphbois",  config=config_defaults)
@@ -229,7 +238,7 @@ if __name__ == '__main__':
         val_results = trainValModelForCrossVal(config.embedding_size, config.dropout, config.lr, \
             config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.extraLayer, \
                 config.numHANLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, \
-                    using_external_config=True, augmentedDataset=False, datasetVariant=0, crossValFolds=5, \
+                    using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, crossValFolds=5, \
                         crossValIteration=i, dev=False)
         
         for key in val_results:

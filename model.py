@@ -4,7 +4,7 @@ from torch_geometric.nn import RGCNConv,FastRGCNConv,GCNConv,GATConv
 import torch.nn.functional as F
 
 class BotRGCN(nn.Module):
-    def __init__(self,des_size=100,tweet_size=100,num_prop_size=6,cat_prop_size=11,embedding_dimension=128,dropout=0.3):
+    def __init__(self,des_size=100,tweet_size=100,num_prop_size=6,cat_prop_size=11,embedding_dimension=128,dropout=0.3, numRelations=2):
         super(BotRGCN, self).__init__()
         self.dropout = dropout
         self.linear_relu_des=nn.Sequential(
@@ -29,7 +29,7 @@ class BotRGCN(nn.Module):
             nn.LeakyReLU()
         )
         
-        self.rgcn=RGCNConv(embedding_dimension,embedding_dimension,num_relations=2)
+        self.rgcn=RGCNConv(embedding_dimension,embedding_dimension,num_relations=numRelations)
         
         self.linear_relu_output1=nn.Sequential(
             nn.Linear(embedding_dimension,embedding_dimension),

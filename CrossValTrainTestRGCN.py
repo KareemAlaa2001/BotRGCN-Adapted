@@ -89,20 +89,25 @@ def crossValTrainTestBotRGCN(embedding_size = 128, dropout = 0.3, lr = 1e-3, wei
     
     if datasetVariant not in {0,1}:
         raise ValueError("datasetVariant must be 1 or 0")
-
+    
+    numRelations = 2
     print("Importing the dataset...")
     if augmentedDataset:
         
         if datasetVariant == 0:
             dataset = TwibotSmallAugmentedTSVDHomogeneous(device=device,process=True,save=True,dev=dev, svdComponents=svdComponents)
+            numRelations = 1
         else:
             dataset = TwibotSmallEdgeHetero(device=device,process=True,save=True,dev=False, svdComponents=svdComponents)
         
         model = TweetAugmentedRGCN(embedding_dimension=embedding_size, des_size=svdComponents, tweet_size=svdComponents, \
-            dropout=dropout, thirds=thirds).to(device)
+            dropout=dropout, thirds=thirds, numRelations=numRelations).to(device)
     else:
+        if datasetVariant == 0:
+            numRelations = 1
+
         dataset = TwibotSmallTruncatedSVD(device=device,process=True,save=True,dev=dev, svdComponents=svdComponents, edgeHetero=bool(datasetVariant))
-        model = BotRGCN(embedding_dimension=embedding_size, des_size=svdComponents, tweet_size=svdComponents, dropout=dropout).to(device)
+        model = BotRGCN(embedding_dimension=embedding_size, des_size=svdComponents, tweet_size=svdComponents, dropout=dropout, numRelations=numRelations).to(device)
 
     des_tensor,tweets_tensor,num_prop,category_prop,edge_index,edge_type,labels,train_idx,val_idx,test_idx=dataset.dataloader()
 
@@ -153,7 +158,9 @@ def crossValTrainTestBotRGCN(embedding_size = 128, dropout = 0.3, lr = 1e-3, wei
             num_prop, category_prop, edge_index, edge_type, labels, \
                 val_idx,**metrics)
 
-        wandb.log({"acc_train": acc_train, "loss_train": loss_train, **val_results})
+        val_results_named = {k+"_val":v for k,v in val_results.items()}
+
+        wandb.log({"acc_train": acc_train, "loss_train": loss_train, **val_results_named})
     results = val_results
 
     if testing_enabled:
@@ -196,7 +203,9 @@ if __name__ == '__main__':
         # neighboursPerNode = 10,
         # batch_size=1,
         testing_enabled = False,
-        crossValFolds = 5
+        crossValFolds = 5,
+        augmentedDataset = args.augmented_dataset,
+        datasetVariant = args.dataset_variant
     )
 
 
@@ -210,7 +219,7 @@ if __name__ == '__main__':
     for i in range(config.crossValFolds):
         val_results = crossValTrainTestBotRGCN(config.embedding_size, config.dropout, config.lr, \
             config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.testing_enabled, \
-                    using_external_config=True, augmentedDataset=args.augmented_dataset, datasetVariant=args.dataset_variant, \
+                    using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, \
                         crossValFolds=config.crossValFolds, crossValIteration=i, dev=False)
         
         for key in val_results:

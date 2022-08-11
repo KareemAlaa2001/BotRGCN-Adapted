@@ -7,11 +7,12 @@ from torch_geometric.nn import RGCNConv,FastRGCNConv,GCNConv,GATConv, HANConv, L
 
 
 class TweetAugHANConfigurable(nn.Module):
-    def __init__(self,des_size=100,tweet_size=100,num_prop_size=6,cat_prop_size=11,embedding_dimension=128,dropout=0.3, thirds=False, augmented_data=True, metadata=None, extraLayer=True, numHanLayers=1):
+    def __init__(self,des_size=100,tweet_size=100,num_prop_size=6,cat_prop_size=11,embedding_dimension=128,dropout=0.3, thirds=False, augmented_data=True, metadata=None, extraLayer=True, numHanLayers=1, numNodeTypes=2):
         super(TweetAugHANConfigurable, self).__init__()
         self.dropout = dropout
         self.extraLayer = extraLayer
         self.augmented_data = augmented_data
+        self.numNodeTypes = numNodeTypes
         if not metadata:
             raise ValueError("Must provide metadata")
 
@@ -20,6 +21,7 @@ class TweetAugHANConfigurable(nn.Module):
 
         self.numHanLayers = numHanLayers
         ## TODO this is a stop-gap solution, but there should be a more rhobust way of experimenting with the embedding sizes (let's just keep the stopgap lmao)
+        
         if thirds:
             if not augmented_data:
                 raise ValueError("Cannot use thirds with unaugmented data")
@@ -29,7 +31,7 @@ class TweetAugHANConfigurable(nn.Module):
             self.num_prop_size = embedding_dimension // 3
             self.cat_prop_size = embedding_dimension // 3
             self.des_size = embedding_dimension // 3
-            self.tweet_size = embedding_dimension // 3
+            self.tweet_size = embedding_dimension
         
         else:
             if embedding_dimension%4!=0:
@@ -39,13 +41,13 @@ class TweetAugHANConfigurable(nn.Module):
                 self.num_prop_size = embedding_dimension // 4
                 self.cat_prop_size = embedding_dimension // 4
                 self.des_size = embedding_dimension // 2
-                self.tweet_size = embedding_dimension // 2
+                self.tweet_size = embedding_dimension
             else:
                 self.num_prop_size = embedding_dimension // 4
                 self.cat_prop_size = embedding_dimension // 4
                 self.des_size = embedding_dimension // 4
                 self.tweet_size = embedding_dimension // 4
-
+        
         # if additional_tweet_features:
         #     raise ValueError("additional_tweet_features not yet implemented")
         # else:
@@ -70,12 +72,20 @@ class TweetAugHANConfigurable(nn.Module):
             nn.LeakyReLU()
         )
         
+        self.linear_relu_tweet_extra=nn.Sequential(
+            nn.Linear(self.tweet_size,embedding_dimension),
+            nn.LeakyReLU()
+        )
+
         self.linear_relu_input=nn.Sequential(
             nn.Linear(embedding_dimension,embedding_dimension),
             nn.LeakyReLU()
         )
         
-        self.han = HANConv(in_channels=-1, out_channels=embedding_dimension, metadata=metadata, dropout=self.dropout)
+        self.hans = []
+
+        for i in range(self.numHanLayers):
+            self.hans.append(HANConv(in_channels=-1, out_channels=embedding_dimension, metadata=metadata, dropout=self.dropout))
         # self.han=HANConv(embedding_dimension,embedding_dimension,num_relations=2)
         
         self.heteroLinear_output1 = HeteroLinear(-1,embedding_dimension,num_types=2)
@@ -101,11 +111,10 @@ class TweetAugHANConfigurable(nn.Module):
                 out_dict['user'] = self.linear_relu_input(out_dict['user'])
                 out_dict['tweet'] = self.linear_relu_input(out_dict['tweet'])
 
+            out = out_dict
 
-            out = self.han(out_dict, data.edge_index_dict)
-
-            for i in range(self.numHanLayers-1):
-                out = self.han(out, data.edge_index_dict)
+            for han in self.hans:
+                out = han(out, data.edge_index_dict)
 
             user_type_vec = torch.zeros(out['user'].shape[0])
             tweet_type_vec = torch.ones(out['tweet'].shape[0])
@@ -135,9 +144,11 @@ class TweetAugHANConfigurable(nn.Module):
             if self.extraLayer:
                 out_dict['user'] = self.linear_relu_input(out_dict['user'])
             
-            out = self.han(out_dict, data.edge_index_dict)
-            for i in range(self.numHanLayers-1):
-                out = self.han(out, data.edge_index_dict)
+            out = out_dict
+
+            for han in self.hans:
+                out = han(out, data.edge_index_dict)
+
             
             type_vec = torch.zeros(out['user'].shape[0])
 
@@ -542,7 +553,7 @@ NOTE currently relying on an implementation where the tweets are projected to th
 NOTE this model only really works for homogeneous nodes, using HAN fully heterogeneous graphs
 """
 class TweetAugmentedRGCN(nn.Module):
-    def __init__(self,des_size=100,tweet_size=100,num_prop_size=6,cat_prop_size=11,embedding_dimension=128,dropout=0.3, thirds=False, additional_tweet_features=False):
+    def __init__(self,des_size=100,tweet_size=100,num_prop_size=6,cat_prop_size=11,embedding_dimension=128,dropout=0.3, thirds=False, additional_tweet_features=False, numRelations=2):
         super(TweetAugmentedRGCN, self).__init__()
         self.dropout = dropout
 
@@ -591,8 +602,8 @@ class TweetAugmentedRGCN(nn.Module):
             nn.LeakyReLU()
         )
         
-        self.rgcn=RGCNConv(embedding_dimension,embedding_dimension,num_relations=2)
-        
+        self.rgcn=RGCNConv(embedding_dimension,embedding_dimension,num_relations=numRelations)
+        self.rgcn2 = RGCNConv(embedding_dimension,embedding_dimension,num_relations=numRelations)
         self.linear_relu_output1=nn.Sequential(
             nn.Linear(embedding_dimension,embedding_dimension),
             nn.LeakyReLU()
@@ -615,7 +626,7 @@ class TweetAugmentedRGCN(nn.Module):
         x=self.linear_relu_input(x)
         x=self.rgcn(x,edge_index,edge_type)
         x=F.dropout(x,p=self.dropout,training=self.training)
-        x=self.rgcn(x,edge_index,edge_type)
+        x=self.rgcn2(x,edge_index,edge_type)
         x=self.linear_relu_output1(x)
         x=self.linear_output2(x)
             
