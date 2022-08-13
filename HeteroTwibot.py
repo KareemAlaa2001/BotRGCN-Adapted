@@ -82,8 +82,9 @@ def initializeHeteroAugTwibot(edgeHetero: TwibotSmallEdgeHetero, cross_val_enabl
     data['tweet', 'retweets', 'user'].edge_index[0] = data['tweet', 'retweets', 'user'].edge_index[0] - data['user'].x.shape[0]
     data['user','writes', 'tweet'].edge_index[1] = data['user','writes', 'tweet'].edge_index[1] - data['user'].x.shape[0]
 
-    metapaths = [[('user', 'tweet'), ('tweet', 'user')]]
+    metapaths = [[('user', 'writes', 'tweet'), ('tweet','retweets', 'user')], [('user', 'writes', 'tweet'),('tweet', 'mentions', 'user')]]
     data = T.AddMetaPaths(metapaths)(data)
+    
     return data
 
 
@@ -94,14 +95,12 @@ def initEdgeHeteroAugTwibot(edgeHetero: TwibotSmallEdgeHetero, cross_val_enabled
 
     data = HeteroData()
 
-    data['user'].des = torch.cat((des_tensor, tweets_tensor), dim=0)
-    data['user'].cat = torch.cat((category_prop, torch.zeros(tweets_tensor.shape[0], category_prop.shape[1])), dim=0)
-    data['user'].num = torch.cat((num_prop, torch.zeros(tweets_tensor.shape[0], num_prop.shape[1])), dim=0)
+    data['user'].des = torch.cat((des_tensor, tweets_tensor), dim=0).float()
+    data['user'].cat = torch.cat((category_prop, torch.zeros(tweets_tensor.shape[0], category_prop.shape[1])), dim=0).float()
+    data['user'].num = torch.cat((num_prop, torch.zeros(tweets_tensor.shape[0], num_prop.shape[1])), dim=0).float()
 
-    # self.data['user'].x = None
-    data['user'].x = torch.cat((des_tensor, category_prop, num_prop), dim=1)
-    
-    data['user'].y = torch.cat((labels, torch.zeros(tweets_tensor.shape[0])), dim=0)
+    data['user'].x = torch.cat((data['user'].des, data['user'].cat, data['user'].num), dim=1)
+    data['user'].y = torch.cat((labels, torch.zeros(tweets_tensor.shape[0])), dim=0).long()
 
     if cross_val_enabled:
         assert cross_val_folds > 1, "cross_val_folds must be greater than 1"
@@ -140,13 +139,12 @@ def initHomoAugTwibot(edgeHetero: TwibotSmallEdgeHetero, cross_val_enabled=False
 
     data = HeteroData()
 
-    data['user'].des = torch.cat((des_tensor, tweets_tensor), dim=0)
-    data['user'].cat = torch.cat((category_prop, torch.zeros(tweets_tensor.shape[0], category_prop.shape[1])), dim=0)
-    data['user'].num = torch.cat((num_prop, torch.zeros(tweets_tensor.shape[0], num_prop.shape[1])), dim=0)
+    data['user'].des = torch.cat((des_tensor, tweets_tensor), dim=0).float()
+    data['user'].cat = torch.cat((category_prop, torch.zeros(tweets_tensor.shape[0], category_prop.shape[1])), dim=0).float()
+    data['user'].num = torch.cat((num_prop, torch.zeros(tweets_tensor.shape[0], num_prop.shape[1])), dim=0).float()
 
-    # self.data['user'].x = None
-    data['user'].x = torch.cat((des_tensor, category_prop, num_prop), dim=1)
-    data['user'].y = torch.cat((labels, torch.zeros(tweets_tensor.shape[0])), dim=0)
+    data['user'].x = torch.cat((data['user'].des, data['user'].cat, data['user'].num), dim=1)
+    data['user'].y = torch.cat((labels, torch.zeros(tweets_tensor.shape[0])), dim=0).long()
 
     if cross_val_enabled:
         assert cross_val_folds > 1, "cross_val_folds must be greater than 1"

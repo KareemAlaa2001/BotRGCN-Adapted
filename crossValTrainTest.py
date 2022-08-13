@@ -3,7 +3,7 @@ from TwibotSmallEdgeHetero import TwibotSmallEdgeHetero
 from TwibotSmallTruncatedSVD import TwibotSmallTruncatedSVD
 from trainTestHeteroMinibatched import train_minibatched
 from scipy.special import softmax
-from torch_geometric.loader import DataLoader, NeighborLoader
+from torch_geometric.loader import DataLoader, NeighborLoader, NeighborSampler
 
 import argparse 
 from augmodels import TweetAugmentedHAN, TweetAugmentedRGCN, TweetAugmentedHAN2, TweetAugmentedHAN2ExtraLayer, TweetAugHetGCN, TweetAugHANConfigurable
@@ -117,7 +117,7 @@ def trainValModelForCrossVal(embedding_size = 128, dropout = 0.3, lr = 1e-3, wei
         else:
             raise ValueError("datasetVariant must be 0,1 or 2")
     else:
-        dataset = TwibotSmallTruncatedSVD(device=device,process=True,save=True,dev=dev, svdComponents=svdComponents)
+        dataset = TwibotSmallTruncatedSVD(device=device,process=True,save=True,dev=dev, svdComponents=svdComponents, edgeHetero=bool(datasetVariant))
         if datasetVariant == 0:
             dataset = initHomoTwibotNonAug(dataset, cross_val_enabled=True, cross_val_folds=crossValFolds, cross_val_iteration=crossValIteration).to(device, 'x', 'y')
             datasetName = "HomoTwibotNonAug"
@@ -198,6 +198,8 @@ def trainValModelForCrossVal(embedding_size = 128, dropout = 0.3, lr = 1e-3, wei
 
         return results
     else:
+        val_results_named['loss_train'] = train_loss.item()
+        val_results_named['acc_train'] = train_acc.item()
         return val_results
 
 if __name__ == '__main__':
@@ -206,7 +208,9 @@ if __name__ == '__main__':
     parser.add_argument('--augmented_dataset', type=bool, default=True, help='True for augmented dataset, False for non-augmented dataset')
     args = parser.parse_args()
     # Current Values
-    config_defaults = dict(
+
+    ## Values from nice 4 layer run
+    config_4Layer = dict(
         model_name="TweetAugHANConfigurable",
         dataset="HeteroTwibot",
         embedding_size = 204,
@@ -215,7 +219,8 @@ if __name__ == '__main__':
         weight_decay = 0.0027187218127487783,
         svdComponents = 100,
         thirds = False,
-        epochs = 35,
+        # epochs = 35,
+        epochs = 1,
         extraLayer = True,
         numHANLayers = 4,
         neighboursPerNode = 382,
@@ -228,27 +233,54 @@ if __name__ == '__main__':
         datasetVariant = args.dataset_variant
     )
 
-    wandb.init(project="test-project", entity="graphbois",  config=config_defaults)
+    ## values from successful 2 layer run
+    config_2Layer = dict(
+        model_name="TweetAugHANConfigurable",
+        dataset="HeteroTwibot",
+        embedding_size = 240,
+        dropout = 0.510021596798662,
+        lr = 0.00245112889677162,
+        weight_decay = 0.008802588611932448,
+        svdComponents = 100,
+        thirds = False,
+        epochs = 41,
+        extraLayer = True,
+        numHANLayers = 2,
+        neighboursPerNode = 207,
+        batch_size = 1024,
+        # neighboursPerNode = 10,
+        # batch_size=1,
+        testing_enabled = False,
+        crossValFolds = 5,
+        augmentedDataset = args.augmented_dataset,
+        datasetVariant = args.dataset_variant
+    )
+
+
+    wandb.init(project="test-project", entity="graphbois",  config=config_2Layer)
 
     config = wandb.config
 
     aggregate_results = {}
 
+    numRepeats = 3
     for i in range(config.crossValFolds):
-        val_results = trainValModelForCrossVal(config.embedding_size, config.dropout, config.lr, \
-            config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.extraLayer, \
-                config.numHANLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, \
-                    using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, crossValFolds=5, \
-                        crossValIteration=i, dev=False)
+
+        for j in range(numRepeats):
+            val_results = trainValModelForCrossVal(config.embedding_size, config.dropout, config.lr, \
+                config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.extraLayer, \
+                    config.numHANLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, \
+                        using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, crossValFolds=5, \
+                            crossValIteration=i, dev=False)
         
-        for key in val_results:
-            if key not in aggregate_results:
-                aggregate_results[key] = []
-            
-            if key != 'conf_matrix':
-                aggregate_results[key].append(val_results[key])
-            else:
-                aggregate_results[key].append(val_results[key].numpy())
+            for key in val_results:
+                if key not in aggregate_results:
+                    aggregate_results[key] = []
+                
+                if key != 'conf_matrix':
+                    aggregate_results[key].append(val_results[key])
+                else:
+                    aggregate_results[key].append(val_results[key].numpy())
 
     mean_results = {}
     result_stdev = {}

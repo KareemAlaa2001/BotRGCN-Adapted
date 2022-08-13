@@ -110,7 +110,7 @@ class TweetAugHANConfigurable(nn.Module):
             ### NOTE making the extra layer an optional hyperparameter
             if self.extraLayer:
                 out_dict['user'] = self.linear_relu_input(out_dict['user'])
-                out_dict['tweet'] = self.linear_relu_input(out_dict['tweet'])
+                out_dict['tweet'] = self.linear_relu_tweet_extra(out_dict['tweet'])
 
             out = out_dict
 
