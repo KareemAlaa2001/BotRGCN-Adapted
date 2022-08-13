@@ -2,12 +2,12 @@
 # Grid Engine options (lines prefixed with #$)
 #$ -N run_crossValTrainTest
 #$ -cwd
-#$ -l h_rt=24:00:00
+#$ -l h_rt=47:00:00
 #$ -l h_vmem=48G
 #  These options are:
 #  job name: -N
 #  use the current working directory: -cwd
-#  runtime limit of 24 hours: -l h_rt
+#  runtime limit of 47 hours: -l h_rt
 #  memory limit of 48 Gbyte (dissa ram heavy boi): -l h_vmem
 
 # Initialise the environment modules
