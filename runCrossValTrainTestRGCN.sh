@@ -20,4 +20,4 @@ module load anaconda
 source activate botRGCN
 
 # Run the python file for trainTestHeteroMinibatched.py
-python CrossValTrainTestRGCN.py --augmented_dataset True --dataset_variant 1    
+python CrossValTrainTestRGCN.py --augmented_dataset $1 --dataset_variant $2   
