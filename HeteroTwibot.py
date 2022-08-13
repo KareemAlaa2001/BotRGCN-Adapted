@@ -2,7 +2,7 @@ from TwibotSmallEdgeHetero import TwibotSmallEdgeHetero
 from TwibotSmallTruncatedSVD import TwibotSmallTruncatedSVD
 import torch
 from torch_geometric.data import HeteroData
-
+import torch_geometric.transforms as T
 
 class HeteroTwibot():
     def __init__(self, edgeHetero: TwibotSmallEdgeHetero):
@@ -82,6 +82,8 @@ def initializeHeteroAugTwibot(edgeHetero: TwibotSmallEdgeHetero, cross_val_enabl
     data['tweet', 'retweets', 'user'].edge_index[0] = data['tweet', 'retweets', 'user'].edge_index[0] - data['user'].x.shape[0]
     data['user','writes', 'tweet'].edge_index[1] = data['user','writes', 'tweet'].edge_index[1] - data['user'].x.shape[0]
 
+    metapaths = [[('user', 'tweet'), ('tweet', 'user')]]
+    data = T.AddMetaPaths(metapaths)(data)
     return data
 
 
