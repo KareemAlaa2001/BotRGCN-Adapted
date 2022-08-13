@@ -161,8 +161,10 @@ def crossValTrainTestBotRGCN(embedding_size = 128, dropout = 0.3, lr = 1e-3, wei
         val_results_named = {k+"_val":v for k,v in val_results.items()}
 
         wandb.log({"acc_train": acc_train, "loss_train": loss_train, **val_results_named})
-    results = val_results
-
+    results = val_results_named
+    results['acc_train'] = acc_train
+    results['loss_train'] = loss_train
+    
     if testing_enabled:
         results = test(model, loss, des_tensor,tweets_tensor,num_prop,category_prop,edge_index,edge_type,labels,test_idx, val_set=False)
     
@@ -199,7 +201,7 @@ if __name__ == '__main__':
         weight_decay = 0.005,
         svdComponents = 100,
         thirds = False,
-        epochs = 100,
+        epochs = 60,
         # neighboursPerNode = 10,
         # batch_size=1,
         testing_enabled = False,
@@ -215,21 +217,23 @@ if __name__ == '__main__':
 
     
     aggregate_results = {}
+    numRepeats = 3
 
     for i in range(config.crossValFolds):
-        val_results = crossValTrainTestBotRGCN(config.embedding_size, config.dropout, config.lr, \
-            config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.testing_enabled, \
-                    using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, \
-                        crossValFolds=config.crossValFolds, crossValIteration=i, dev=False)
-        
-        for key in val_results:
-            if key not in aggregate_results:
-                aggregate_results[key] = []
+        for j in numRepeats:
+            val_results = crossValTrainTestBotRGCN(config.embedding_size, config.dropout, config.lr, \
+                config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.testing_enabled, \
+                        using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, \
+                            crossValFolds=config.crossValFolds, crossValIteration=i, dev=False)
             
-            if key != 'conf_matrix':
-                aggregate_results[key].append(val_results[key])
-            else:
-                aggregate_results[key].append(val_results[key].numpy())
+            for key in val_results:
+                if key not in aggregate_results:
+                    aggregate_results[key] = []
+                
+                if key != 'conf_matrix':
+                    aggregate_results[key].append(val_results[key])
+                else:
+                    aggregate_results[key].append(val_results[key].numpy())
 
     mean_results = {}
     result_stdev = {}
