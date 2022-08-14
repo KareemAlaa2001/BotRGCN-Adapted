@@ -360,7 +360,9 @@ if __name__ == '__main__':
         crossValFolds = 5,
         augmentedDataset = args.augmented_dataset,
         datasetVariant = args.dataset_variant,
-        dev = False
+        dev = False,
+        numRepeatsTest = 10,
+        numRepeatsPerFold = 3
     )
 
 
@@ -371,7 +373,7 @@ if __name__ == '__main__':
     aggregate_results = {}
     
     if config.testing_enabled:
-        numRepeats = 10
+        numRepeats = config.numRepeatsTest
         for i in range(numRepeats):
             print("Running repeat {}".format(i))
             results = train_on_all_then_test(config.embedding_size, config.dropout, config.lr, \
@@ -386,7 +388,7 @@ if __name__ == '__main__':
                 else:
                     aggregate_results[key] = aggregate_results.get(key, []) + [results[key].numpy()]
     else: 
-        numRepeats = 3
+        numRepeats = config.numRepeatsPerFold
         for i in range(config.crossValFolds):
 
             for j in range(numRepeats):

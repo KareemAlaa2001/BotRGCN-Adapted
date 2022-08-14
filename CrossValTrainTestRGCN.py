@@ -87,6 +87,8 @@ def test(model, loss, des_tensor,tweets_tensor,num_prop,category_prop,edge_index
 def crossValTrainTestBotRGCN(embedding_size = 128, dropout = 0.3, lr = 1e-3, weight_decay = 5e-3, svdComponents = 100, \
     thirds = False, epochs = 100, testing_enabled = True, using_external_config = False, augmentedDataset = True, datasetVariant = 1, crossValFolds = 5, crossValIteration=0, dev=False):
     
+    device = torch.device('cpu')
+
     if datasetVariant not in {0,1}:
         raise ValueError("datasetVariant must be 1 or 0")
     
@@ -164,16 +166,100 @@ def crossValTrainTestBotRGCN(embedding_size = 128, dropout = 0.3, lr = 1e-3, wei
     results = val_results_named
     results['acc_train'] = acc_train
     results['loss_train'] = loss_train
-    
+
     if testing_enabled:
         results = test(model, loss, des_tensor,tweets_tensor,num_prop,category_prop,edge_index,edge_type,labels,test_idx, val_set=False)
     
     return results        
 
+def train_all_then_test_BotRGCN(embedding_size = 128, dropout = 0.3, lr = 1e-3, weight_decay = 5e-3, svdComponents = 100, \
+    thirds = False, epochs = 100, testing_enabled = True, using_external_config = False, augmentedDataset = True, datasetVariant = 1, crossValFolds = 5, crossValIteration=0, dev=False):
+    
+    device = torch.device('cpu')
+
+    if datasetVariant not in {0,1}:
+        raise ValueError("datasetVariant must be 1 or 0")
+    
+    numRelations = 2
+    print("Importing the dataset...")
+    if augmentedDataset:
+        
+        if datasetVariant == 0:
+            dataset = TwibotSmallAugmentedTSVDHomogeneous(device=device,process=True,save=True,dev=dev, svdComponents=svdComponents)
+            numRelations = 1
+        else:
+            dataset = TwibotSmallEdgeHetero(device=device,process=True,save=True,dev=False, svdComponents=svdComponents)
+        
+        model = TweetAugmentedRGCN(embedding_dimension=embedding_size, des_size=svdComponents, tweet_size=svdComponents, \
+            dropout=dropout, thirds=thirds, numRelations=numRelations).to(device)
+    else:
+        if datasetVariant == 0:
+            numRelations = 1
+
+        dataset = TwibotSmallTruncatedSVD(device=device,process=True,save=True,dev=dev, svdComponents=svdComponents, edgeHetero=bool(datasetVariant))
+        model = BotRGCN(embedding_dimension=embedding_size, des_size=svdComponents, tweet_size=svdComponents, dropout=dropout, numRelations=numRelations).to(device)
+
+    des_tensor,tweets_tensor,num_prop,category_prop,edge_index,edge_type,labels,train_idx,val_idx,test_idx=dataset.dataloader()
+
+    assert crossValFolds > 1, "cross_val_folds must be greater than 1"
+    assert crossValIteration < crossValFolds, "cross_val_iteration must be less than cross_val_folds"
+
+    train_val_idx = list(train_idx) + list(val_idx)
+
+    ## IMPORTING THE MODEL
+    print("setting up the model...")
+
+    if not using_external_config:
+        wandb.config.update({
+        "model_name": model.__class__.__name__,
+        "dataset": dataset.__class__.__name__,
+        "embedding_size": embedding_size,
+        "dropout": dropout,
+        "lr": lr,
+        "weight_decay": weight_decay, 
+        "svdComponents": svdComponents, 
+        "thirds": thirds,
+        "epochs": epochs
+        })
+
+    wandb.watch(model)
+
+    loss=nn.CrossEntropyLoss()
+    optimizer = torch.optim.AdamW(model.parameters(),
+                    lr=lr,weight_decay=weight_decay)
+
+    model.apply(init_weights)
+
+    print("beginning training...")
+
+    metrics = {'f1_score': f1_score, 'mcc': matthews_corrcoef, 'prec': precision_score, \
+        'recall': recall_score, 'roc_auc': roc_auc_score, 'conf_mat': confusion_matrix}
+
+    for epoch in tqdm(range(epochs), miniters=5):
+        acc_train,loss_train = train(epoch, model, optimizer, loss, des_tensor, tweets_tensor, \
+            num_prop, category_prop, edge_index, edge_type, labels, train_val_idx)
+
+        wandb.log({"acc_train": acc_train, "loss_train": loss_train})
+    
+    
+    results = test(model, loss, des_tensor, tweets_tensor, \
+            num_prop, category_prop, edge_index, edge_type, labels, \
+                test_idx,**metrics)
+
+    results_named = {k+"_test":v for k,v in results.items()}
+
+    results_named['acc_train'] = acc_train.item()
+    results_named['loss_train'] = loss_train.item()
+
+    return results_named
+        
+    
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset_variant', type=int, default=1, help='1 for edge heterogeneous, 0 for edge homogeneous')
     parser.add_argument('--augmented_dataset', type=bool, default=True, help='True for augmented dataset, False for non-augmented dataset')
+    parser.add_argument('--test_not_val', type=bool, default=False, help='True for testing with val in train, false for running cross-val')
     args = parser.parse_args()
     #device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     device = torch.device('cpu')
@@ -204,10 +290,13 @@ if __name__ == '__main__':
         epochs = 60,
         # neighboursPerNode = 10,
         # batch_size=1,
-        testing_enabled = False,
+        testing_enabled = args.test_not_val,
         crossValFolds = 5,
         augmentedDataset = args.augmented_dataset,
-        datasetVariant = args.dataset_variant
+        datasetVariant = args.dataset_variant,
+        dev = False,
+        numRepeats = 10,
+        numRepeatsPerFold = 3
     )
 
 
@@ -217,23 +306,40 @@ if __name__ == '__main__':
 
     
     aggregate_results = {}
-    numRepeats = 3
 
-    for i in range(config.crossValFolds):
-        for j in numRepeats:
-            val_results = crossValTrainTestBotRGCN(config.embedding_size, config.dropout, config.lr, \
-                config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.testing_enabled, \
-                        using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, \
-                            crossValFolds=config.crossValFolds, crossValIteration=i, dev=False)
-            
-            for key in val_results:
-                if key not in aggregate_results:
-                    aggregate_results[key] = []
-                
-                if key != 'conf_matrix':
-                    aggregate_results[key].append(val_results[key])
+    if config.testing_enabled:
+        numRepeats = config.numRepeats
+
+        for i in range(numRepeats):
+            print("Starting repeat {}".format(i))
+            results = train_all_then_test_BotRGCN(config.embedding_size, config.dropout, config.lr, \
+                    config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.testing_enabled, \
+                            using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, \
+                                crossValFolds=config.crossValFolds, crossValIteration=i, dev=config.dev)
+            wandb.log(results)
+            for key in results:
+                if key != 'conf_matrix_test':
+                    aggregate_results[key] = aggregate_results.get(key, []) + [results[key]]
                 else:
-                    aggregate_results[key].append(val_results[key].numpy())
+                    aggregate_results[key] = aggregate_results.get(key, []) + [results[key].numpy()]
+    else:
+        numRepeats = config.numRepeatsPerFold
+
+        for i in range(config.crossValFolds):
+            for j in range(numRepeats):
+                val_results = crossValTrainTestBotRGCN(config.embedding_size, config.dropout, config.lr, \
+                    config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.testing_enabled, \
+                            using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, \
+                                crossValFolds=config.crossValFolds, crossValIteration=i, dev=config.dev)
+                
+                for key in val_results:
+                    if key not in aggregate_results:
+                        aggregate_results[key] = []
+                    
+                    if key != 'conf_matrix_val':
+                        aggregate_results[key].append(val_results[key])
+                    else:
+                        aggregate_results[key].append(val_results[key].numpy())
 
     mean_results = {}
     result_stdev = {}
@@ -241,6 +347,7 @@ if __name__ == '__main__':
     for key in aggregate_results:
         mean_results["mean_" + key] = np.array(aggregate_results[key]).mean(axis=0)
         result_stdev["stdev_" + key] = np.array(aggregate_results[key]).std(axis=0)
+    
 
     wandb.log(mean_results)
     wandb.log(result_stdev)
