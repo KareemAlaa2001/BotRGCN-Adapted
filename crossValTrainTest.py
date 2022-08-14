@@ -350,14 +350,12 @@ if __name__ == '__main__':
         weight_decay = 0.008802588611932448,
         svdComponents = 100,
         thirds = False,
-        # epochs = 41,
-        epochs = 2,
+        epochs = 41,
+        # epochs = 2,
         extraLayer = True,
         numHANLayers = 2,
         neighboursPerNode = 207,
         batch_size = 1024,
-        # neighboursPerNode = 10,
-        # batch_size=1,
         testing_enabled = args.test_not_val,
         crossValFolds = 5,
         augmentedDataset = args.augmented_dataset,
@@ -379,7 +377,7 @@ if __name__ == '__main__':
             results = train_on_all_then_test(config.embedding_size, config.dropout, config.lr, \
                     config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.extraLayer, \
                         config.numHANLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, \
-                            using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, crossValFolds=5, \
+                            using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, crossValFolds=config.crossValFolds, \
                                 crossValIteration=i, dev=config.dev)
 
             for key in results:
@@ -395,7 +393,7 @@ if __name__ == '__main__':
                 val_results = trainValModelForCrossVal(config.embedding_size, config.dropout, config.lr, \
                     config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.extraLayer, \
                         config.numHANLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, \
-                            using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, crossValFolds=5, \
+                            using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, crossValFolds=config.crossValFolds, \
                                 crossValIteration=i, dev=config.dev)
             
                 for key in val_results:
