@@ -371,7 +371,7 @@ if __name__ == '__main__':
     aggregate_results = {}
     
     if config.testing_enabled:
-        numRepeats = 2
+        numRepeats = 10
         for i in range(numRepeats):
             print("Running repeat {}".format(i))
             results = train_on_all_then_test(config.embedding_size, config.dropout, config.lr, \
@@ -379,7 +379,7 @@ if __name__ == '__main__':
                         config.numHANLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, \
                             using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, crossValFolds=config.crossValFolds, \
                                 crossValIteration=i, dev=config.dev)
-
+            wandb.log(results)
             for key in results:
                 if key != 'conf_matrix_test':
                     aggregate_results[key] = aggregate_results.get(key, []) + [results[key]]
@@ -395,7 +395,6 @@ if __name__ == '__main__':
                         config.numHANLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, \
                             using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, crossValFolds=config.crossValFolds, \
                                 crossValIteration=i, dev=config.dev)
-            
                 for key in val_results:
                     if key not in aggregate_results:
                         aggregate_results[key] = []
