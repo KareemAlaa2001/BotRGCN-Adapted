@@ -311,6 +311,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset_variant', type=int, default=1, help='1 for edge heterogeneous, 0 for edge homogeneous')
     parser.add_argument('--augmented_dataset', type=bool, default=True, help='True for augmented dataset, False for non-augmented dataset')
+    parser.add_argument('--test_not_val', type=bool, default=False, help='True for testing with val in train, false for running cross-val')
     args = parser.parse_args()
     # Current Values
 
@@ -332,7 +333,7 @@ if __name__ == '__main__':
         batch_size = 256,
         # neighboursPerNode = 10,
         # batch_size=1,
-        testing_enabled = False,
+        testing_enabled = args.test_not_val,
         crossValFolds = 5,
         augmentedDataset = args.augmented_dataset,
         datasetVariant = args.dataset_variant, 
@@ -357,7 +358,7 @@ if __name__ == '__main__':
         batch_size = 1024,
         # neighboursPerNode = 10,
         # batch_size=1,
-        testing_enabled = False,
+        testing_enabled = args.test_not_val,
         crossValFolds = 5,
         augmentedDataset = args.augmented_dataset,
         datasetVariant = args.dataset_variant,
