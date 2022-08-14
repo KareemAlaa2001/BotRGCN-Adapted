@@ -202,6 +202,111 @@ def trainValModelForCrossVal(embedding_size = 128, dropout = 0.3, lr = 1e-3, wei
         val_results_named['acc_train'] = train_acc.item()
         return val_results
 
+def train_on_all_then_test(embedding_size = 128, dropout = 0.3, lr = 1e-3, weight_decay = 5e-3, svdComponents = 100, \
+    thirds = False, epochs = 100, extraLayer=True, numHanLayers = 2, neighboursPerNode = 50, batch_size = 256, testing_enabled = True, \
+        using_external_config = False, augmentedDataset = True, datasetVariant = 2, crossValFolds = 5, crossValIteration=0, dev=False):
+
+    wandb.init(project="test-project", entity="graphbois")
+    device = torch.device('cpu')
+
+    numNodeTypes = 1
+
+    if augmentedDataset:
+        dataset = TwibotSmallEdgeHetero(device=device,process=True,save=True,dev=dev, svdComponents=svdComponents)
+
+        if datasetVariant == 0:
+            dataset = initHomoAugTwibot(dataset, cross_val_enabled=True, cross_val_folds=crossValFolds, cross_val_iteration=crossValIteration).to(device, 'x', 'y')
+            datasetName = "HomoAugTwibot"
+        elif datasetVariant == 1:
+            dataset = initEdgeHeteroAugTwibot(dataset, cross_val_enabled=True, cross_val_folds=crossValFolds, cross_val_iteration=crossValIteration).to(device, 'x', 'y')
+            datasetName = "EdgeHeteroAugTwibot"
+        elif datasetVariant == 2:
+            dataset = initializeHeteroAugTwibot(dataset, cross_val_enabled=True, cross_val_folds=crossValFolds, cross_val_iteration=crossValIteration).to(device, 'x', 'y')
+            datasetName = "HeteroAugTwibot"
+            numNodeTypes = 2
+        else:
+            raise ValueError("datasetVariant must be 0,1 or 2")
+    else:
+        dataset = TwibotSmallTruncatedSVD(device=device,process=True,save=True,dev=dev, svdComponents=svdComponents, edgeHetero=bool(datasetVariant))
+        if datasetVariant == 0:
+            dataset = initHomoTwibotNonAug(dataset, cross_val_enabled=True, cross_val_folds=crossValFolds, cross_val_iteration=crossValIteration).to(device, 'x', 'y')
+            datasetName = "HomoTwibotNonAug"
+        elif datasetVariant == 1:
+            dataset = initEdgeHeteroTwibotNonAug(dataset, cross_val_enabled=True, cross_val_folds=crossValFolds, cross_val_iteration=crossValIteration).to(device, 'x', 'y')
+            datasetName = "EdgeHeteroTwibotNonAug"
+        else:
+            raise ValueError("datasetVariant must be 0 or 1 for non augmented dataset")
+
+    kwargs = {'num_workers': min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 and torch.device.type == 'cuda' else 1, 'persistent_workers': True, 'batch_size': batch_size}
+    kwargs_test = {'num_workers': min(torch.cuda.device_count(),4) if torch.cuda.device_count() > 0 and torch.device.type == 'cuda' else 1, 'persistent_workers': True, 'batch_size': len(dataset['user'].test_idx)}
+    
+    ## Editing train and val masks to remove effects of crossVal
+    train_mask = torch.logical_or(dataset['user'].train_mask,dataset['user'].val_mask)
+    train_idx = list(dataset['user'].train_idx) + list(dataset['user'].val_idx)
+
+    dataset['user'].train_idx = train_idx
+    dataset['user'].train_mask = train_mask
+
+    print("Getting loaders")
+    train_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=True, input_nodes=('user',dataset['user'].train_mask), **kwargs)
+    print("Got train loader")
+
+    test_loader = NeighborLoader(dataset, num_neighbors=[neighboursPerNode] * numHanLayers,shuffle=True, input_nodes=('user',dataset['user'].test_mask), **kwargs_test)
+    print("Got test loader")
+
+    model = TweetAugHANConfigurable(embedding_dimension=embedding_size,des_size=svdComponents, tweet_size=svdComponents, metadata=dataset.metadata(), augmented_data=augmentedDataset, extraLayer=extraLayer,numHanLayers=numHanLayers, numNodeTypes=numNodeTypes).to(device)
+
+    if not using_external_config:
+        wandb.config.update({
+        "model_name": model.__class__.__name__,
+        "dataset": datasetName,
+        "embedding_size": embedding_size,
+        "dropout": dropout,
+        "lr": lr,
+        "weight_decay": weight_decay, 
+        "svdComponents": svdComponents, 
+        "thirds": thirds,
+        "epochs": epochs
+        })
+
+        if  model.__class__.__name__ == "TweetAugHANConfigurable":
+            wandb.config.update({
+            "extraLayer": extraLayer,
+            "numHanLayers": numHanLayers
+            })
+    
+    loss=nn.CrossEntropyLoss()
+    optimizer = torch.optim.AdamW(model.parameters(),
+                        lr=lr,weight_decay=weight_decay)
+
+    model.apply(init_weights)
+
+    print("beginning training...")
+
+    metrics = {'f1_score': f1_score, 'mcc': matthews_corrcoef, 'prec': precision_score, \
+        'recall': recall_score, 'roc_auc': roc_auc_score}
+    
+    for epoch in tqdm(range(epochs), miniters=5): 
+        train_loss, train_acc = train_minibatched(epoch,model, train_loader, loss, optimizer, device)
+        # val_results = test_minibatched_with_metrics(val_loader, model, loss, device,**metrics)
+        # val_results_named = {k+"_val":v for k,v in val_results.items()}
+        wandb.log({"loss_train": train_loss, "acc_train": train_acc})
+
+        if (epoch+1)  % 5 == 0:
+            print('Epoch: {:04d}'.format(epoch+1),
+                'loss_train: {:.4f}'.format(train_loss.item()),
+                'acc_train: {:.4f}'.format(train_acc.item()))
+        
+    results = test_minibatched_with_metrics(test_loader, model, loss, device, **metrics)
+    results_named = {k+"_test":v for k,v in results.items()}
+    results_named['loss_train'] = train_loss.item()
+    results_named['acc_train'] = train_acc.item()
+
+    return results_named
+
+
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset_variant', type=int, default=1, help='1 for edge heterogeneous, 0 for edge homogeneous')
@@ -230,7 +335,8 @@ if __name__ == '__main__':
         testing_enabled = False,
         crossValFolds = 5,
         augmentedDataset = args.augmented_dataset,
-        datasetVariant = args.dataset_variant
+        datasetVariant = args.dataset_variant, 
+        dev = False
     )
 
     ## values from successful 2 layer run
@@ -243,7 +349,8 @@ if __name__ == '__main__':
         weight_decay = 0.008802588611932448,
         svdComponents = 100,
         thirds = False,
-        epochs = 41,
+        # epochs = 41,
+        epochs = 2,
         extraLayer = True,
         numHANLayers = 2,
         neighboursPerNode = 207,
@@ -253,7 +360,8 @@ if __name__ == '__main__':
         testing_enabled = False,
         crossValFolds = 5,
         augmentedDataset = args.augmented_dataset,
-        datasetVariant = args.dataset_variant
+        datasetVariant = args.dataset_variant,
+        dev = False
     )
 
 
@@ -262,25 +370,41 @@ if __name__ == '__main__':
     config = wandb.config
 
     aggregate_results = {}
+    
+    if config.testing_enabled:
+        numRepeats = 2
+        for i in range(numRepeats):
+            print("Running repeat {}".format(i))
+            results = train_on_all_then_test(config.embedding_size, config.dropout, config.lr, \
+                    config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.extraLayer, \
+                        config.numHANLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, \
+                            using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, crossValFolds=5, \
+                                crossValIteration=i, dev=config.dev)
 
-    numRepeats = 3
-    for i in range(config.crossValFolds):
-
-        for j in range(numRepeats):
-            val_results = trainValModelForCrossVal(config.embedding_size, config.dropout, config.lr, \
-                config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.extraLayer, \
-                    config.numHANLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, \
-                        using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, crossValFolds=5, \
-                            crossValIteration=i, dev=False)
-        
-            for key in val_results:
-                if key not in aggregate_results:
-                    aggregate_results[key] = []
-                
-                if key != 'conf_matrix':
-                    aggregate_results[key].append(val_results[key])
+            for key in results:
+                if key != 'conf_matrix_test':
+                    aggregate_results[key] = aggregate_results.get(key, []) + [results[key]]
                 else:
-                    aggregate_results[key].append(val_results[key].numpy())
+                    aggregate_results[key] = aggregate_results.get(key, []) + [results[key].numpy()]
+    else: 
+        numRepeats = 3
+        for i in range(config.crossValFolds):
+
+            for j in range(numRepeats):
+                val_results = trainValModelForCrossVal(config.embedding_size, config.dropout, config.lr, \
+                    config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.extraLayer, \
+                        config.numHANLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, \
+                            using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, crossValFolds=5, \
+                                crossValIteration=i, dev=config.dev)
+            
+                for key in val_results:
+                    if key not in aggregate_results:
+                        aggregate_results[key] = []
+                    
+                    if key != 'conf_matrix_val':
+                        aggregate_results[key].append(val_results[key])
+                    else:
+                        aggregate_results[key].append(val_results[key].numpy())
 
     mean_results = {}
     result_stdev = {}
