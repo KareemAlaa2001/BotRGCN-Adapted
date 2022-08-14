@@ -1,11 +1,12 @@
 #!/bin/sh
-qsub runCrossValParameterised.sh False 0 False
-qsub runCrossValParameterised.sh False 1 False
-qsub runCrossValParameterised.sh True 0 False
-qsub runCrossValParameterised.sh True 1 False
-qsub runCrossValParameterised.sh True 2 False
-qsub runCrossValParameterised.sh False 0 True
-qsub runCrossValParameterised.sh False 1 True
-qsub runCrossValParameterised.sh True 0 True
-qsub runCrossValParameterised.sh True 1 True
-qsub runCrossValParameterised.sh True 2 True
+qsub runCrossValParameterised.sh --cross_val_mode --no_augment 0
+qsub runCrossValParameterised.sh --cross_val_mode --no_augment 1
+qsub runCrossValParameterised.sh --cross_val_mode --augment 0 
+qsub runCrossValParameterised.sh --cross_val_mode --augment 1
+qsub runCrossValParameterised.sh --cross_val_mode --augment 2
+
+qsub runCrossValParameterised.sh --test_mode --no_augment 0
+qsub runCrossValParameterised.sh --test_mode --no_augment 1
+qsub runCrossValParameterised.sh --test_mode --augment 0
+qsub runCrossValParameterised.sh --test_mode --augment 1
+qsub runCrossValParameterised.sh --test_mode --augment 2

@@ -1,9 +1,10 @@
 #!/bin/sh
-qsub runCrossValTrainTestRGCN.sh False 0 False
-qsub runCrossValTrainTestRGCN.sh False 1 False
-qsub runCrossValTrainTestRGCN.sh True 0 False
-qsub runCrossValTrainTestRGCN.sh True 1 False
-qsub runCrossValTrainTestRGCN.sh False 0 True
-qsub runCrossValTrainTestRGCN.sh False 1 True
-qsub runCrossValTrainTestRGCN.sh True 0 True
-qsub runCrossValTrainTestRGCN.sh True 1 True
+qsub runCrossValTrainTestRGCN.sh --cross_val_mode --no_augment 0
+qsub runCrossValTrainTestRGCN.sh --cross_val_mode --no_augment 1
+qsub runCrossValTrainTestRGCN.sh --cross_val_mode --augment 0
+qsub runCrossValTrainTestRGCN.sh --cross_val_mode --augment 1
+
+qsub runCrossValTrainTestRGCN.sh --test_mode --no_augment 0
+qsub runCrossValTrainTestRGCN.sh --test_mode --no_augment 1
+qsub runCrossValTrainTestRGCN.sh --test_mode --augment 0
+qsub runCrossValTrainTestRGCN.sh --test_mode --augment 1

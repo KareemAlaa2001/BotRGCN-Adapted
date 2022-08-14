@@ -257,9 +257,17 @@ def train_all_then_test_BotRGCN(embedding_size = 128, dropout = 0.3, lr = 1e-3, 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+
     parser.add_argument('--dataset_variant', type=int, default=1, help='1 for edge heterogeneous, 0 for edge homogeneous')
-    parser.add_argument('--augmented_dataset', type=bool, default=True, help='True for augmented dataset, False for non-augmented dataset')
-    parser.add_argument('--test_not_val', type=bool, default=False, help='True for testing with val in train, false for running cross-val')
+
+    parser.add_argument('--augment', dest='augmented_dataset', action='store_true')
+    parser.add_argument('--no_augment', dest='augmented_dataset', action='store_false')
+    parser.set_defaults(augmented_dataset=True)
+
+    parser.add_argument('--test_mode', dest='test_not_val', action='store_true')
+    parser.add_argument('--cross_val_mode', dest='test_not_val', action='store_false')
+
+    parser.set_defaults(test_not_val=True)
     args = parser.parse_args()
     #device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     device = torch.device('cpu')
@@ -295,7 +303,7 @@ if __name__ == '__main__':
         augmentedDataset = args.augmented_dataset,
         datasetVariant = args.dataset_variant,
         dev = False,
-        numRepeats = 10,
+        numRepeatsTest = 10,
         numRepeatsPerFold = 3
     )
 
@@ -308,14 +316,14 @@ if __name__ == '__main__':
     aggregate_results = {}
 
     if config.testing_enabled:
-        numRepeats = config.numRepeats
+        numRepeats = config.numRepeatsTest
 
         for i in range(numRepeats):
             print("Starting repeat {}".format(i))
             results = train_all_then_test_BotRGCN(config.embedding_size, config.dropout, config.lr, \
                     config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.testing_enabled, \
                             using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, \
-                                crossValFolds=config.crossValFolds, crossValIteration=i, dev=config.dev)
+                                crossValFolds=config.crossValFolds, crossValIteration=0, dev=config.dev)
             wandb.log(results)
             for key in results:
                 if key != 'conf_matrix_test':

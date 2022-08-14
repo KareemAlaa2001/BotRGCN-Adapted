@@ -310,9 +310,27 @@ def train_on_all_then_test(embedding_size = 128, dropout = 0.3, lr = 1e-3, weigh
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset_variant', type=int, default=1, help='1 for edge heterogeneous, 0 for edge homogeneous')
-    parser.add_argument('--augmented_dataset', type=bool, default=True, help='True for augmented dataset, False for non-augmented dataset')
-    parser.add_argument('--test_not_val', type=bool, default=False, help='True for testing with val in train, false for running cross-val')
+
+    parser.add_argument('--augment', dest='augmented_dataset', action='store_true')
+    parser.add_argument('--no_augment', dest='augmented_dataset', action='store_false')
+    parser.set_defaults(augmented_dataset=True)
+
+    parser.add_argument('--test_mode', dest='test_not_val', action='store_true')
+    parser.add_argument('--cross_val_mode', dest='test_not_val', action='store_false')
+    parser.set_defaults(test_not_val=True)
+
+    # parser.add_argument('--test_not_val', type=bool, default=False, help='True for testing with val in train, false for running cross-val')
     args = parser.parse_args()
+
+    print(type(args.test_not_val))
+    print(args.test_not_val)
+
+    print(type(args.dataset_variant))
+    print(args.dataset_variant)
+    print(type(args.augmented_dataset))
+    print(args.augmented_dataset)
+
+
     # Current Values
 
     ## Values from nice 4 layer run
@@ -337,7 +355,9 @@ if __name__ == '__main__':
         crossValFolds = 5,
         augmentedDataset = args.augmented_dataset,
         datasetVariant = args.dataset_variant, 
-        dev = False
+        dev = False,
+        numRepeatsTest = 10,
+        numRepeatsPerFold = 3
     )
 
     ## values from successful 2 layer run
@@ -380,7 +400,7 @@ if __name__ == '__main__':
                     config.weight_decay, config.svdComponents, config.thirds, config.epochs, config.extraLayer, \
                         config.numHANLayers, config.neighboursPerNode, config.batch_size, config.testing_enabled, \
                             using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, crossValFolds=config.crossValFolds, \
-                                crossValIteration=i, dev=config.dev)
+                                crossValIteration=0, dev=config.dev)
             wandb.log(results)
             for key in results:
                 if key != 'conf_matrix_test':
