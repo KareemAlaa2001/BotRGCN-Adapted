@@ -200,7 +200,7 @@ def trainValModelForCrossVal(embedding_size = 128, dropout = 0.3, lr = 1e-3, wei
     else:
         val_results_named['loss_train'] = train_loss.item()
         val_results_named['acc_train'] = train_acc.item()
-        return val_results
+        return val_results_named
 
 def train_on_all_then_test(embedding_size = 128, dropout = 0.3, lr = 1e-3, weight_decay = 5e-3, svdComponents = 100, \
     thirds = False, epochs = 100, extraLayer=True, numHanLayers = 2, neighboursPerNode = 50, batch_size = 256, testing_enabled = True, \
@@ -418,13 +418,10 @@ if __name__ == '__main__':
                             using_external_config=True, augmentedDataset=config.augmentedDataset, datasetVariant=config.datasetVariant, crossValFolds=config.crossValFolds, \
                                 crossValIteration=i, dev=config.dev)
                 for key in val_results:
-                    if key not in aggregate_results:
-                        aggregate_results[key] = []
-                    
                     if key != 'conf_matrix_val':
-                        aggregate_results[key].append(val_results[key])
+                        aggregate_results[key] = aggregate_results.get(key, []) + [val_results[key]]
                     else:
-                        aggregate_results[key].append(val_results[key].numpy())
+                        aggregate_results[key] = aggregate_results.get(key, []) + [val_results[key].numpy()]
 
     mean_results = {}
     result_stdev = {}

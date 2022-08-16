@@ -164,8 +164,8 @@ def crossValTrainTestBotRGCN(embedding_size = 128, dropout = 0.3, lr = 1e-3, wei
 
         wandb.log({"acc_train": acc_train, "loss_train": loss_train, **val_results_named})
     results = val_results_named
-    results['acc_train'] = acc_train
-    results['loss_train'] = loss_train
+    results['acc_train'] = acc_train.item()
+    results['loss_train'] = loss_train.item()
 
     if testing_enabled:
         results = test(model, loss, des_tensor,tweets_tensor,num_prop,category_prop,edge_index,edge_type,labels,test_idx, val_set=False)
