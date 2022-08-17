@@ -322,6 +322,10 @@ if __name__ == '__main__':
     # parser.add_argument('--test_not_val', type=bool, default=False, help='True for testing with val in train, false for running cross-val')
     args = parser.parse_args()
 
+    print("Using dataset variant: ", args.dataset_variant)
+    print("Using augmented dataset: ", args.augmented_dataset)
+    print("Using test mode: ", args.test_not_val)
+
     # Current Values
 
     ## Values from nice 4 layer run
@@ -347,7 +351,7 @@ if __name__ == '__main__':
         datasetVariant = args.dataset_variant, 
         dev = False,
         numRepeatsTest = 10,
-        numRepeatsPerFold = 3
+        numRepeatsPerFold = 1
     )
 
     ## values from successful 2 layer run
