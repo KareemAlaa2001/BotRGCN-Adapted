@@ -343,8 +343,7 @@ if __name__ == '__main__':
         weight_decay = 0.0027187218127487783,
         svdComponents = 100,
         thirds = False,
-        # epochs = 35,
-        epochs = 1,
+        epochs = 30,
         extraLayer = True,
         numHANLayers = 4,
         neighboursPerNode = 382,
@@ -386,7 +385,7 @@ if __name__ == '__main__':
     )
 
 
-    wandb.init(project="test-project", entity="graphbois",  config=config_2Layer)
+    wandb.init(project="test-project", entity="graphbois",  config=config_4Layer)
 
     config = wandb.config
 
