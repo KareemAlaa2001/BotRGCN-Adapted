@@ -3,4 +3,5 @@ Data/
 __pycache__/
 
 wandb/
+wandb/**
 .DS_Store/

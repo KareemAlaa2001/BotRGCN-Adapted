@@ -62,7 +62,7 @@ def test(model, loss, des_tensor,tweets_tensor,num_prop,category_prop,edge_index
     # wandb.log()
 
     roc_fpr, roc_tpr, roc_thresholds = roc_curve(label[test_idx], output_probs[test_idx,1])
-    roc_display = RocCurveDisplay(fpr=roc_fpr, tpr=roc_tpr).plot()
+    # roc_display = RocCurveDisplay(fpr=roc_fpr, tpr=roc_tpr).plot()
 
     results['roc_curve_fpr'] = roc_fpr
     results['roc_curve_tpr'] = roc_tpr

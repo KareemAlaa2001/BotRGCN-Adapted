@@ -19,6 +19,7 @@ from utils import accuracy,init_weights
 import matplotlib.pyplot as plt
 from sklearn.metrics import f1_score, matthews_corrcoef, precision_score, recall_score, roc_auc_score, precision_recall_curve, confusion_matrix, roc_curve, RocCurveDisplay
 import wandb
+import json
 
 example_pred_printed = False
 
@@ -84,7 +85,7 @@ def test_minibatched_with_metrics(loader, model, loss, device, **metrics):
     
 
     roc_fpr, roc_tpr, roc_thresholds = roc_curve(total_y_true, total_y_pred_proba[:,1])
-    # roc_display = RocCurveDisplay(fpr=roc_fpr, tpr=roc_tpr).plot()
+    roc_display = RocCurveDisplay(fpr=roc_fpr, tpr=roc_tpr).plot()
 
     # np.save('../../Graphs/rocNumpys/roc_fpr_'+wandb.run.name+'.npy',roc_fpr)
     # np.save('../../Graphs/rocNumpys/roc_tpr_'+wandb.run.name+'.npy',roc_tpr)
@@ -331,7 +332,8 @@ if __name__ == '__main__':
     parser.add_argument('--test_mode', dest='test_not_val', action='store_true')
     parser.add_argument('--cross_val_mode', dest='test_not_val', action='store_false')
     parser.set_defaults(test_not_val=True)
-
+    
+    parser.add_argument('--hyperparamConfigFile', type=str, default=None, help='File containing hyperparameter configuration')
     # parser.add_argument('--test_not_val', type=bool, default=False, help='True for testing with val in train, false for running cross-val')
     args = parser.parse_args()
 
@@ -397,8 +399,15 @@ if __name__ == '__main__':
         numRepeatsPerFold = 3
     )
 
+    if args.hyperparamConfigFile is not None:
+        with open(args.hyperparamConfigFile, 'r') as f:
+            config = json.load(f)
+            
+            config = {k:v['value'] for k,v in config.items()}
+    else:
+        config = config_2Layer
 
-    wandb.init(project="test-project", entity="graphbois",  config=config_2Layer)
+    wandb.init(project="test-project", entity="graphbois",  config=config)
 
     config = wandb.config
 

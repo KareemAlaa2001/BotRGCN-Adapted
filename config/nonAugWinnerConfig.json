@@ -1,0 +1,118 @@
+{
+    "lr": {
+        "desc": null,
+        "value": 0.004132550028367118
+    },
+    "dev": {
+        "desc": null,
+        "value": false
+    },
+    "_wandb": {
+        "desc": null,
+        "value": {
+            "t": {
+                "1": [
+                    1,
+                    5,
+                    53,
+                    55,
+                    77
+                ],
+                "2": [
+                    1,
+                    5,
+                    53,
+                    55,
+                    77
+                ],
+                "3": [
+                    16,
+                    24
+                ],
+                "4": "3.7.11",
+                "5": "0.12.21",
+                "8": [
+                    5
+                ]
+            },
+            "framework": "torch",
+            "start_time": 1660853395,
+            "cli_version": "0.12.21",
+            "is_jupyter_run": false,
+            "python_version": "3.7.11",
+            "is_kaggle_kernel": false
+        }
+    },
+    "epochs": {
+        "desc": null,
+        "value": 33
+    },
+    "thirds": {
+        "desc": null,
+        "value": false
+    },
+    "dataset": {
+        "desc": null,
+        "value": "HeteroTwibot"
+    },
+    "dropout": {
+        "desc": null,
+        "value": 0.4695707228907056
+    },
+    "batch_size": {
+        "desc": null,
+        "value": 1024
+    },
+    "extraLayer": {
+        "desc": null,
+        "value": true
+    },
+    "model_name": {
+        "desc": null,
+        "value": "TweetAugHANConfigurable"
+    },
+    "numHANLayers": {
+        "desc": null,
+        "value": 1
+    },
+    "weight_decay": {
+        "desc": null,
+        "value": 0.002451661884705525
+    },
+    "crossValFolds": {
+        "desc": null,
+        "value": 5
+    },
+    "svdComponents": {
+        "desc": null,
+        "value": 50
+    },
+    "datasetVariant": {
+        "desc": null,
+        "value": 1
+    },
+    "embedding_size": {
+        "desc": null,
+        "value": 48
+    },
+    "numRepeatsTest": {
+        "desc": null,
+        "value": 10
+    },
+    "testing_enabled": {
+        "desc": null,
+        "value": false
+    },
+    "augmentedDataset": {
+        "desc": null,
+        "value": false
+    },
+    "neighboursPerNode": {
+        "desc": null,
+        "value": 204
+    },
+    "numRepeatsPerFold": {
+        "desc": null,
+        "value": 3
+    }
+}
