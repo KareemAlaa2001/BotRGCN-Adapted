@@ -309,23 +309,28 @@ def train_on_all_then_test(embedding_size = 128, dropout = 0.3, lr = 1e-3, weigh
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset_variant', type=int, default=1, help='1 for edge heterogeneous, 0 for edge homogeneous')
+    # parser.add_argument('--dataset_variant', type=int, default=1, help='1 for edge heterogeneous, 0 for edge homogeneous')
 
-    parser.add_argument('--augment', dest='augmented_dataset', action='store_true')
-    parser.add_argument('--no_augment', dest='augmented_dataset', action='store_false')
-    parser.set_defaults(augmented_dataset=False)
+    # parser.add_argument('--augment', dest='augmented_dataset', action='store_true')
+    # parser.add_argument('--no_augment', dest='augmented_dataset', action='store_false')
+    # parser.set_defaults(augmented_dataset=False)
 
-    parser.add_argument('--test_mode', dest='test_not_val', action='store_true')
-    parser.add_argument('--cross_val_mode', dest='test_not_val', action='store_false')
-    parser.set_defaults(test_not_val=False)
+    # parser.add_argument('--test_mode', dest='test_not_val', action='store_true')
+    # parser.add_argument('--cross_val_mode', dest='test_not_val', action='store_false')
+    # parser.set_defaults(test_not_val=False)
 
     # parser.add_argument('--test_not_val', type=bool, default=False, help='True for testing with val in train, false for running cross-val')
-    args = parser.parse_args()
+    # args = parser.parse_args()
 
-    print("Using dataset variant: ", args.dataset_variant)
-    print("Using augmented dataset: ", args.augmented_dataset)
-    print("Using test mode: ", args.test_not_val)
+    
 
+    # print("Using dataset variant: ", args.dataset_variant)
+    # print("Using augmented dataset: ", args.augmented_dataset)
+    # print("Using test mode: ", args.test_not_val)
+    
+    datasetVariant = 1
+    augmentedDataset = False
+    test_not_val = False
     # Current Values
 
     ## Values from nice 4 layer run
@@ -345,39 +350,39 @@ if __name__ == '__main__':
         batch_size = 256,
         # neighboursPerNode = 10,
         # batch_size=1,
-        testing_enabled = args.test_not_val,
+        testing_enabled = test_not_val,
         crossValFolds = 5,
-        augmentedDataset = args.augmented_dataset,
-        datasetVariant = args.dataset_variant, 
+        augmentedDataset = augmentedDataset,
+        datasetVariant = datasetVariant, 
         dev = False,
         numRepeatsTest = 10,
         numRepeatsPerFold = 1
     )
 
-    ## values from successful 2 layer run
-    config_2Layer = dict(
-        model_name="TweetAugHANConfigurable",
-        dataset="HeteroTwibot",
-        embedding_size = 240,
-        dropout = 0.510021596798662,
-        lr = 0.00245112889677162,
-        weight_decay = 0.008802588611932448,
-        svdComponents = 100,
-        thirds = False,
-        epochs = 41,
-        # epochs = 2,
-        extraLayer = True,
-        numHANLayers = 2,
-        neighboursPerNode = 207,
-        batch_size = 1024,
-        testing_enabled = args.test_not_val,
-        crossValFolds = 5,
-        augmentedDataset = args.augmented_dataset,
-        datasetVariant = args.dataset_variant,
-        dev = False,
-        numRepeatsTest = 10,
-        numRepeatsPerFold = 3
-    )
+    # ## values from successful 2 layer run
+    # config_2Layer = dict(
+    #     model_name="TweetAugHANConfigurable",
+    #     dataset="HeteroTwibot",
+    #     embedding_size = 240,
+    #     dropout = 0.510021596798662,
+    #     lr = 0.00245112889677162,
+    #     weight_decay = 0.008802588611932448,
+    #     svdComponents = 100,
+    #     thirds = False,
+    #     epochs = 41,
+    #     # epochs = 2,
+    #     extraLayer = True,
+    #     numHANLayers = 2,
+    #     neighboursPerNode = 207,
+    #     batch_size = 1024,
+    #     testing_enabled = args.test_not_val,
+    #     crossValFolds = 5,
+    #     augmentedDataset = args.augmented_dataset,
+    #     datasetVariant = args.dataset_variant,
+    #     dev = False,
+    #     numRepeatsTest = 10,
+    #     numRepeatsPerFold = 3
+    # )
 
 
     wandb.init(project="test-project", entity="graphbois",  config=config_4Layer)
