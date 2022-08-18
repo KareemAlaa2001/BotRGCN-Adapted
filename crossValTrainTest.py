@@ -16,8 +16,8 @@ import numpy as np
 
 from torch import nn, svd
 from utils import accuracy,init_weights
-
-from sklearn.metrics import f1_score, matthews_corrcoef, precision_score, recall_score, roc_auc_score, precision_recall_curve, confusion_matrix
+import matplotlib.pyplot as plt
+from sklearn.metrics import f1_score, matthews_corrcoef, precision_score, recall_score, roc_auc_score, precision_recall_curve, confusion_matrix, roc_curve, RocCurveDisplay
 import wandb
 
 example_pred_printed = False
@@ -81,6 +81,19 @@ def test_minibatched_with_metrics(loader, model, loss, device, **metrics):
         except ValueError:
             print("Got the valueerror from a batch not containing both classes for metric",metric, "continuing..")
             continue
+    
+
+    roc_fpr, roc_tpr, roc_thresholds = roc_curve(total_y_true, total_y_pred_proba[:,1])
+    roc_display = RocCurveDisplay(fpr=roc_fpr, tpr=roc_tpr).plot()
+
+    # np.save('../../Graphs/rocNumpys/roc_fpr_'+wandb.run.name+'.npy',roc_fpr)
+    # np.save('../../Graphs/rocNumpys/roc_tpr_'+wandb.run.name+'.npy',roc_tpr)
+    # np.save('../../Graphs/rocNumpys/roc_thresholds_'+wandb.run.name+'.npy',roc_thresholds)
+
+    results['roc_curve_fpr'] = roc_fpr
+    results['roc_curve_tpr'] = roc_tpr
+    results['roc_curve_thresholds'] =  roc_thresholds
+
 
     results['conf_matrix'] = total_conf_matrix
     results['loss'] = test_loss
@@ -341,7 +354,7 @@ if __name__ == '__main__':
         dropout = 0.18380768518137663,
         lr = 0.004164987490510339,
         weight_decay = 0.0027187218127487783,
-        svdComponents = 100,
+        svdComponents = 50,
         thirds = False,
         epochs = 30,
         extraLayer = True,
@@ -367,7 +380,7 @@ if __name__ == '__main__':
         dropout = 0.510021596798662,
         lr = 0.00245112889677162,
         weight_decay = 0.008802588611932448,
-        svdComponents = 100,
+        svdComponents = 50,
         thirds = False,
         epochs = 41,
         # epochs = 2,
@@ -385,7 +398,7 @@ if __name__ == '__main__':
     )
 
 
-    wandb.init(project="test-project", entity="graphbois",  config=config_4Layer)
+    wandb.init(project="test-project", entity="graphbois",  config=config_2Layer)
 
     config = wandb.config
 
@@ -424,8 +437,10 @@ if __name__ == '__main__':
 
     mean_results = {}
     result_stdev = {}
-    print(aggregate_results)
+    # print(aggregate_results)
     for key in aggregate_results:
+        if key == 'roc_curve_test':
+            continue
         mean_results["mean_" + key] = np.array(aggregate_results[key]).mean(axis=0)
         result_stdev["stdev_" + key] = np.array(aggregate_results[key]).std(axis=0)
 

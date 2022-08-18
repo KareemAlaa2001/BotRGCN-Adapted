@@ -15,8 +15,10 @@ from torch import nn, svd
 from utils import accuracy,init_weights
 
 from sklearn.metrics import f1_score
-from sklearn.metrics import matthews_corrcoef, precision_score, recall_score, roc_auc_score, precision_recall_curve, confusion_matrix
+from sklearn.metrics import matthews_corrcoef, precision_score, recall_score, roc_auc_score, precision_recall_curve, confusion_matrix, roc_curve, RocCurveDisplay
 import argparse
+import matplotlib.pyplot as plt
+import torch.nn.functional as F
 
 import wandb
 
@@ -56,6 +58,26 @@ def test(model, loss, des_tensor,tweets_tensor,num_prop,category_prop,edge_index
         if metric == 'roc_auc':
             results[metric] = metrics[metric](label[test_idx], output_probs[test_idx,1])
         results[metric] = metrics[metric](label[test_idx], output[test_idx])
+    
+    # wandb.log()
+
+    roc_fpr, roc_tpr, roc_thresholds = roc_curve(label[test_idx], output_probs[test_idx,1])
+    roc_display = RocCurveDisplay(fpr=roc_fpr, tpr=roc_tpr).plot()
+
+    results['roc_curve_fpr'] = roc_fpr
+    results['roc_curve_tpr'] = roc_tpr
+    results['roc_curve_thresholds'] =  roc_thresholds
+
+    # np.save('../../Graphs/rocNumpys/roc_fpr_'+wandb.run.name+'.npy',roc_fpr)
+    # np.save('../../Graphs/rocNumpys/roc_tpr_'+wandb.run.name+'.npy',roc_tpr)
+    # np.save('../../Graphs/rocNumpys/roc_thresholds_'+wandb.run.name+'.npy',roc_thresholds)
+    # plt.show()
+
+    # targets = label[test_idx].reshape(-1)
+    # one_hot_targets = np.eye(2)[targets]
+    # roc = wandb.plot.roc_curve(one_hot_targets, output_probs[test_idx])
+    # plt.show()
+    # wandb.log({'roc_curve': roc_display})
 
     results['loss'] = loss_test.item()
     results['acc'] = acc_test.item()
@@ -351,8 +373,10 @@ if __name__ == '__main__':
 
     mean_results = {}
     result_stdev = {}
-    print(aggregate_results)
+    # print(aggregate_results)
     for key in aggregate_results:
+        if 'roc_curve' in key:
+            continue
         mean_results["mean_" + key] = np.array(aggregate_results[key]).mean(axis=0)
         result_stdev["stdev_" + key] = np.array(aggregate_results[key]).std(axis=0)
     
